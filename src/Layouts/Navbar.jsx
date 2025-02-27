@@ -4,9 +4,10 @@ import { ID, GB } from "country-flag-icons/react/3x2";
 import "../../src/assets/global.css";
 import { VscAccount } from "react-icons/vsc";
 import { IoLocationOutline } from "react-icons/io5";
-import Cart from "../../src/assets/Background/Group.png";
+import Cart from "../../src/assets/ICons/Navbar/Group.png";
 import { FaBars, FaTimes } from "react-icons/fa";
 import IconButton from "../Componets/Elements/Navbar/IconButton";
+import Logo from "../assets/ICons/Navbar/Frame 18.png"
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -46,8 +47,8 @@ const Navbar = () => {
     >
       {/* LOGO  SECTION*/}
       <div className="flex justify-between w-full px-12">
-        <div className="bg-[#D9D9D9] w-25 h-12 flex justify-center items-center font-bold font-Poppins hover:scale-110 transition duration-330 cursor-pointer ease-in ">
-          LOGO
+        <div className="w-50 h-auto flex justify-center items-center font-bold font-Poppins hover:scale-105 transition duration-330 cursor-pointer ease-in ">
+          <img src={Logo} alt="" className="object-cover"/>
         </div>
         {/* HUMBERGER MENU */}
         <div className="flex flex-row gap-4 xl:hidden items-center justify-center ">
@@ -78,10 +79,7 @@ const Navbar = () => {
             </div>
             {/* Flag Button */}
             <div className="flex w-10 h-10 justify-center items-center">
-              <IconButton text="" color="bg-white">
                 <ID title="Indonesia" className="rounded-xs w-6 h-6" />
-                <GB title="Indonesia" className="rounded-xs w-6 h-6" />
-              </IconButton>
             </div>
           </div>
           {/* Daftar Button */}

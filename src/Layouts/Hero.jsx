@@ -1,7 +1,7 @@
 import React from "react";
-import Banner1 from "../../src/assets/Background/anastasia-zhenina-YT_DCMps5Wg-unsplash.jpg";
-import Banner2 from "../../src/assets/Background/jonathan-pielmayer-c69HK1HKHYs-unsplash.jpg";
-import Banner3 from "../../src/assets/Background/v2osk-c9OfrVeD_tQ-unsplash.jpg";
+import Banner1 from "../../src/assets/Background/Hero/anastasia-zhenina-YT_DCMps5Wg-unsplash.jpg";
+import Banner2 from "../../src/assets/Background/Hero/jonathan-pielmayer-c69HK1HKHYs-unsplash.jpg";
+import Banner3 from "../../src/assets/Background/Hero/v2osk-c9OfrVeD_tQ-unsplash.jpg";
 import LogicHero from "../Componets/Elements/Hero/LogicHero";
 
 const Hero = () => {

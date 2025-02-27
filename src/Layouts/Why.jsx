@@ -2,14 +2,14 @@ import React from "react";
 import WhyComRight from "../Componets/Elements/Why/WhyComRight";
 import WhyComLeft from "../Componets/Elements/Why/WhyComLeft";
 import WhyComCenter from "../Componets/Elements/Why/WhyComCenter";
-import Content from "../../src/assets/Background/Rectangle 3.png";
-import HeaderWhy from "../../src/assets/Background/HeaderWhy.png";
-import Icon1 from "../../src/assets/ICons/circum_discount-1.png";
-import Icon2 from "../../src/assets/ICons/fluent_food-pizza-20-regular.png";
-import Icon3 from "../../src/assets/ICons/iconoir_shop.png";
-import Icon4 from "../../src/assets/ICons/ph_clover.png";
-import Icon5 from "../../src/assets/ICons/mdi_donation-outline.png";
-import Icon6 from "../../src/assets/ICons/subway_world-1.png";
+import Content from "../../src/assets/Background/Why/Rectangle 3.png";
+import HeaderWhy from "../../src/assets/Background/Why/HeaderWhy.png";
+import Icon1 from "../../src/assets/ICons/Why/circum_discount-1.png";
+import Icon2 from "../../src/assets/ICons/Why/fluent_food-pizza-20-regular.png";
+import Icon3 from "../../src/assets/ICons/Why/iconoir_shop.png";
+import Icon4 from "../../src/assets/ICons/Why/ph_clover.png";
+import Icon5 from "../../src/assets/ICons/Why/mdi_donation-outline.png";
+import Icon6 from "../../src/assets/ICons/Why/subway_world-1.png";
 
 const Why = () => {
   return (

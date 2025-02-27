@@ -2,6 +2,7 @@ import { useState } from "react";
 import Navbar from "../Layouts/Navbar";
 import Hero from "../Layouts/Hero";
 import Why from "../Layouts/Why";
+import How from "../Layouts/How";
 import BtN from "../Componets/Elements/Hero/PromoNChat";
 import { BsChatSquareText } from "react-icons/bs";
 
@@ -17,6 +18,9 @@ function App() {
         </div>
         <div className="flex-1 w-full">
           <Why />
+        </div>
+        <div className="flex-1 w-full">
+          <How/>
         </div>
       </main>
       <BtN Icon={<BsChatSquareText />} Content="Chat" Variant="bottom-20" />
