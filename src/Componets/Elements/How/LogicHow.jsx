@@ -13,7 +13,7 @@ const LogicHow = ({ slides }) => {
 
     return (
     <div className='relative w-[95%] h-[80%] flex items-center justify-center gap-5 max-xl:flex-col max-xl:bottom-15 max-lg:bottom-45 max-sm:bottom-40'>
-        <div className=' w-[47%] h-[90%] flex flex-col items-center justify-center gap-10 '>
+        <div className=' w-[47%] h-[90%] flex flex-col flex-wrap items-center justify-center gap-10 '>
             <div className=' w-[80%] h-[15%] flex items-center justify-center text-teal-700/85'>
                 <h1 className='font-Poppins font-semibold text-3xl text-center max-xl:text-2xl max-lg:text-xl max-sm:text-lg'>Bagaimana cara memesan makanan</h1>
             </div>
@@ -46,13 +46,13 @@ const LogicHow = ({ slides }) => {
             </div>
         </div>
         <div className=' w-[47%] h-[90%] flex flex-col items-center justify-center gap-25'>
-            <div className='overflow-hidden relative w-[70%] h-[60%] flex items-center justify-center rounded-lg  bg-none drop-shadow-lg' >
+            <div className='overflow-hidden relative w-[60vh] h-auto flex items-center justify-center rounded-lg  bg-none drop-shadow-lg max-2xl:w-[50vh]' >
                 <AnimatePresence mode="wait">
                         <motion.img
                             key={curr} // Agar animasi berjalan saat slide berubah
                             src={slides[curr].Image}
                             alt=""
-                            className="object-cover w-full h-full transition-transform ease-out duration-500"
+                            className="object-cover w-[95%] h-full transition-transform ease-out duration-500 max-xl:w-3/4 rounded-lg"
                             initial={{ x: -100, opacity: 0 }} // Gambar masuk dari kanan
                             animate={{ x: 0, opacity: 1 }} // Gambar ke tengah
                             exit={{ x:  100, opacity:  0}} // Gambar keluar ke kiri
