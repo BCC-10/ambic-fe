@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { ID, GB } from "country-flag-icons/react/3x2";
-import "../../assets/global.css";
+import "../../src/assets/global.css";
 import { VscAccount } from "react-icons/vsc";
 import { IoLocationOutline } from "react-icons/io5";
-import Cart from "../Background/Group.png";
+import Cart from "../../src/assets/Background/Group.png";
 import { FaBars, FaTimes } from "react-icons/fa";
 import IconButton from "../Componets/Elements/Navbar/IconButton";
 

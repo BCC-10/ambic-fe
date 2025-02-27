@@ -1,5 +1,5 @@
 import React from 'react'
-import "../assets/global.css"
+import "../../../assets/global.css"
 
 const PromoNChat = (props) => {
 

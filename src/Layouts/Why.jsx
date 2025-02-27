@@ -2,14 +2,14 @@ import React from "react";
 import WhyComRight from "../Componets/Elements/Why/WhyComRight";
 import WhyComLeft from "../Componets/Elements/Why/WhyComLeft";
 import WhyComCenter from "../Componets/Elements/Why/WhyComCenter";
-import Content from "../Background/Rectangle 3.png";
-import HeaderWhy from "../Background/HeaderWhy.png";
-import Icon1 from "../ICons/circum_discount-1.png";
-import Icon2 from "../ICons/fluent_food-pizza-20-regular.png";
-import Icon3 from "../ICons/iconoir_shop.png";
-import Icon4 from "../ICons/ph_clover.png";
-import Icon5 from "../ICons/mdi_donation-outline.png";
-import Icon6 from "../ICons/subway_world-1.png";
+import Content from "../../src/assets/Background/Rectangle 3.png";
+import HeaderWhy from "../../src/assets/Background/HeaderWhy.png";
+import Icon1 from "../../src/assets/ICons/circum_discount-1.png";
+import Icon2 from "../../src/assets/ICons/fluent_food-pizza-20-regular.png";
+import Icon3 from "../../src/assets/ICons/iconoir_shop.png";
+import Icon4 from "../../src/assets/ICons/ph_clover.png";
+import Icon5 from "../../src/assets/ICons/mdi_donation-outline.png";
+import Icon6 from "../../src/assets/ICons/subway_world-1.png";
 
 const Why = () => {
   return (

@@ -2,7 +2,7 @@ import { useState } from "react";
 import Navbar from "../Layouts/Navbar";
 import Hero from "../Layouts/Hero";
 import Why from "../Layouts/Why";
-import BtN from "../Componets/Elements/Navbar/IconButton";
+import BtN from "../Componets/Elements/Hero/PromoNChat";
 import { BsChatSquareText } from "react-icons/bs";
 
 function App() {
