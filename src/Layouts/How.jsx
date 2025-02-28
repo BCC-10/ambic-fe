@@ -10,11 +10,11 @@ import Image5 from '../assets/Background/How/brooke-lark-IDTEXXXfS44-unsplash.jp
 const How = () => {
 
     const Content = [
-        {item: "Langkah Pertama", text:"Cari atau temukan makanan yang bisa diselamatkan", Image: Image1},
-        {item: "Langkah Kedua", text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit", Image: Image2},
-        {item: "Langkah Ketiga", text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit", Image: Image3},
-        {item: "Langkah KeEmpat", text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit", Image: Image4},
-        {item: "Langkah KeLima", text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit", Image: Image5}
+        {item: "Atur Lokasi", text:"Atur lokasi agar menemukan restoran terdekat.", Image: Image1},
+        {item: "Lihat Makanan Terdekat", text:"Jelajahi menu dari restoran di sekitar.", Image: Image2},
+        {item: "Pilih Makanan", text:"Pilih makanan sesuai selera dan kebutuhan", Image: Image3},
+        {item: "Beli Sekarang", text:"Tambahkan produk ke keranjang dan lanjut ke checkout", Image: Image4},
+        {item: "Bayar", text:"Melakukan pembayaran dan selesaikan transaksi", Image: Image5}
     ]
 
     return (

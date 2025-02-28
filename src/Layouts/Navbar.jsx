@@ -14,7 +14,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY >= 10) {
+      if (window.scrollY >= 50) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -52,12 +52,10 @@ const Navbar = () => {
         </div>
         {/* HUMBERGER MENU */}
         <div className="flex flex-row gap-4 xl:hidden items-center justify-center ">
-          <div className="flex w-10 h-10 justify-center items-center  ">
-            <FaSearch
-              className="hover:text-[#1d8583] transition duration-300 cursor-pointer ease-in"
-              size={20}
-            />
-          </div>
+          <div className="flex items-center justify-center p-2 group hover:border-2 border-teal-700/85  focus:border-teal-700/85 rounded-full  ">
+            <input type="search" placeholder="Selamatkan yuuk.." className="w-0 p-0 group-hover:w-40 group-hover:px-2 duration-330 transition-all focus:outline-none focus:w-40 focus:opacity-100 focus:px-2 group-hover:origin-right placeholder:text-black "/>
+            <FaSearch className="cursor-pointer" />
+            </div>
           <div className="flex w-10 h-10 p-1 justify-center items-center ">
             <ID title="United States" className="rounded-xs" />
           </div>
@@ -69,22 +67,23 @@ const Navbar = () => {
             {isOpen ? <FaBars size={30} /> : <FaTimes size={30} />}
           </div>
         </div>
-        {/* SEARCH */}
-        <div className="hidden xl:flex justify-center items-center w-68 gap-3">
-          {/* Wrapper untuk Search & Flag (Gunakan `group`) */}
-          <div className="flex items-center gap-4 group ">
-            {/* Search Icon - Bergeser saat hover pada Flag */}
-            <div className="flex w-10 h-10 justify-center items-center transition-transform duration-300 ease-in group-hover:-translate-x-10">
-              <FaSearch className="hover:text-[#1d8583] transition duration-300 cursor-pointer ease-in" />
-            </div>
-            {/* Flag Button */}
-            <div className="flex w-10 h-10 justify-center items-center">
-                <ID title="Indonesia" className="rounded-xs w-6 h-6" />
-            </div>
+        {/* WRAPPER SEARCH , FLAG, DAFTAR */}
+        <div className="hidden xl:flex justify-center items-center gap-3 ">
+          {/* SEARCH */}
+          <div className="flex items-center justify-center p-2 group hover:border-2 border-teal-700/85  focus:border-teal-700/85 rounded-full  ">
+            <input type="search" placeholder="Selamatkan yuuk.." className="w-0 p-0 group-hover:w-40 group-hover:px-2 duration-330 transition-all focus:outline-none focus:w-40 focus:opacity-100 focus:px-2 group-hover:origin-right placeholder:text-black "/>
+            <FaSearch className="cursor-pointer" />
           </div>
+          {/* FLAG */}
+          <div className="flex items-center justify-center ">
+              <IconButton text={<GB title="Indonesia" className="rounded-xs w-6 h-6" />} color="bg-white">
+                  <ID title="Indonesia" className="rounded-xs w-6 h-6" />
+              </IconButton>
           {/* Daftar Button */}
-          <div className="w-30 mx-3 flex items-center">
-            <div className="rounded-full bg-[#D9D9D9] px-3 py-2 w-full h-9 flex items-center justify-center gap-2 hover:scale-110 transition duration-335 cursor-pointer ease-in">
+          </div>
+          {/* DAFTAR */}
+          <div>
+            <div className="rounded-full bg-[#D9D9D9] px-3 py-2 w-30 h-9 flex items-center justify-center gap-2 hover:scale-110 transition duration-335 cursor-pointer ease-in">
               <VscAccount className="font-bold" />
               <span className="font-Poppins font-semibold">Daftar</span>
             </div>
@@ -115,7 +114,6 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-
       {/* MOBILE MENU */}
       <div
         className={`xl:hidden bg-white/30 absolute top-22 left-0 min-w-full min-h-screen sm:min-w-full backdrop-blur-xl flex flex-col items-center justify-center transition-transform duration-330 ease-out ${
