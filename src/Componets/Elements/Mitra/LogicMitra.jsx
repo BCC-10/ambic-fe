@@ -24,7 +24,6 @@ const LogicMitra = () => {
         { id: 10, title: "Card 10", description: "This is the tenth card" }
     ];
 
-    // Pastikan ref tombol navigasi tersedia sebelum diberikan ke Swiper
     useEffect(() => {
         if (swiperRef.current && prevRef.current && nextRef.current) {
             swiperRef.current.params.navigation.prevEl = prevRef.current;
@@ -37,10 +36,10 @@ const LogicMitra = () => {
     return (
         <div className='overflow-hidden relative flex flex-col gap-7 max-md:gap-10 max-sm:gap-15'>
             <div className='flex items-center justify-center w-full px-2'>
-                <h1 className='font-Poppins font-bold text-3xl'>Mitra</h1>
+                <h1 className='font-Poppins font-bold text-3xl text-white'>Mitra</h1>
             </div>
             <Swiper
-                ref={swiperRef} // Simpan referensi Swiper
+                ref={swiperRef} 
                 modules={[Navigation, Autoplay]}
                 style={{ cursor: "grab" }}
                 onTouchStart={() => (document.querySelector('.swiper').style.cursor = "grabbing")}
@@ -73,10 +72,10 @@ const LogicMitra = () => {
             </Swiper>
             <div className='flex justify-center items-center gap-4 relative top-3'>
                 <button ref={prevRef} className='flex items-center justify-center w-12 h-12 transition-all duration-330 cursor-pointer'>
-                    <FaChevronLeft className='hover:text-white transition-all duration-330 ease-in-out' size={30}/>
+                    <FaChevronLeft className='hover:text-black transition-all duration-330 ease-in-out text-white' size={30}/>
                 </button>
                 <button ref={nextRef} className='flex items-center justify-center w-12 h-12 transition-all duration-330 cursor-pointer'>
-                    <FaChevronRight className='hover:text-white transition-all duration-330 ease-in-out' size={30}/>
+                    <FaChevronRight className='hover:text-black transition-all duration-330 ease-in-out text-white' size={30}/>
                 </button>
             </div>
         </div>
