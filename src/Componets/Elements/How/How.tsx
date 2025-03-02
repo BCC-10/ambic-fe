@@ -2,7 +2,17 @@ import React, { useState } from "react";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
 
-const LogicHow = ({ slides }) => {
+interface Slide{
+    item: string;
+    text: string;
+    Image: string;
+}
+
+interface How {
+    slides: Slide[];
+}
+
+const How: React.FC<How> = ({ slides }) => {
     const [curr, setCurr] = useState(0);
 
     const prev = () =>
@@ -21,7 +31,7 @@ const LogicHow = ({ slides }) => {
                 <div className="relative flex flex-col items-center w-full ">
                     {/* Tampilan Text */}
                     <div className="overflow-hidden relative w-full h-10 flex items-center justify-center  ">
-                        <h1 className="text-2xl text-teal-700/85 font-semibold font-Poppins max-xl:text-xl max-lg:text-lg max-sm:text-sm" >{slides[curr].item}</h1>
+                        <h1 className="text-2xl text-teal-700/85 font-semibold font-Poppins max-xl:text-xl max-lg:text-lg max-sm:text-sm" >{slides[curr]?.item}</h1>
                     </div>
                     {/* Tombol Prev & Next */}
                     <div className="flex justify-between w-[135%] px-4 max-lg:w-[160%] max-md:w-[180%] ">
@@ -40,7 +50,7 @@ const LogicHow = ({ slides }) => {
                     </div>
                     {/* Display Text */}
                     <div className="overflow-hidden relative bottom-12 w-full h-20 flex items-center justify-center  ">
-                        <h1 className="text-2xl font-semibold font-Poppins text-center max-xl:text-xl max-lg:text-lg  max-sm:text-sm text-teal-700/85">{slides[curr].text}</h1>
+                        <h1 className="text-2xl font-semibold font-Poppins text-center max-xl:text-xl max-lg:text-lg  max-sm:text-sm text-teal-700/85">{slides[curr]?.text}</h1>
                     </div>
                 </div>
             </div>
@@ -50,7 +60,7 @@ const LogicHow = ({ slides }) => {
                 <AnimatePresence mode="wait">
                         <motion.img
                             key={curr} // Agar animasi berjalan saat slide berubah
-                            src={slides[curr].Image}
+                            src={slides[curr]?.Image}
                             alt=""
                             className="object-cover w-[95%] h-full transition-transform ease-out duration-500 max-xl:w-3/4 rounded-lg"
                             initial={{ x: -100, opacity: 0 }} // Gambar masuk dari kanan
@@ -65,4 +75,4 @@ const LogicHow = ({ slides }) => {
     );
 };
 
-export default LogicHow;
+export default How;

@@ -1,18 +1,28 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, ReactNode} from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-const LogicHero = ({ children: slides, autoSlide = false, autoSlideInterval = 3000 }) => {
+interface LogicHero {
+    children: ReactNode;
+    autoSlide?: boolean;
+    autoSlideInterval?: number;
+}
+
+const LogicHero: React.FC<LogicHero> = ({ 
+    children: slides,
+    autoSlide = false,
+    autoSlideInterval = 3000
+    }) => {
     const [curr, setCurr] = useState(0);
 
-    const prev = () => setCurr((curr) => (curr === 0 ? slides.length -1 : curr - 1))
+    const prev = () => setCurr((curr) => (curr === 0 ? React.Children.count(slides) -1 : curr - 1))
     
-    const next = () => setCurr((curr) => (curr === slides.length -1 ? 0 : curr + 1))
+    const next = () => setCurr((curr) => (curr === React.Children.count(slides) -1 ? 0 : curr + 1))
 
     useEffect(() => {
         if(!autoSlide) return
         const slideInterval = setInterval(next, autoSlideInterval) 
         return () => clearInterval(slideInterval)
-    }, [])
+    }, [autoSlide, autoSlideInterval])
 
     return (
         <div className="overflow-hidden relative">
@@ -30,7 +40,7 @@ const LogicHero = ({ children: slides, autoSlide = false, autoSlideInterval = 30
             {/* POINT BELOW */}
             <div className="absolute bottom-4 right-0 left-0">
                 <div className="flex items-center justify-center gap-2">
-                    {slides.map((_, idx) => (
+                    {React.Children.map(slides, (_, idx) => (
                         <div key={idx} className={`transition-all w-3 h-3 outline outline-black rounded-full ${curr === idx ? "p-2 bg-black" : "bg-opacity-50"}`} />
                     ))}
                 </div>

@@ -1,11 +1,9 @@
 import React from "react";
-import Banner1 from "../../src/assets/Background/Hero/anastasia-zhenina-YT_DCMps5Wg-unsplash.jpg";
-import Banner2 from "../../src/assets/Background/Hero/jonathan-pielmayer-c69HK1HKHYs-unsplash.jpg";
-import Banner3 from "../../src/assets/Background/Hero/v2osk-c9OfrVeD_tQ-unsplash.jpg";
+import {slides} from "../data/index";
 import LogicHero from "../Componets/Elements/Hero/LogicHero";
 
-const Hero = () => {
-  const slides = [{ Image: Banner1 }, { Image: Banner2 }, { Image: Banner3 }];
+const Hero: React.FC = () => {
+
 
   return (
     <div className="relative flex mt-1/4 ">

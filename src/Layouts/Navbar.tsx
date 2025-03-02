@@ -4,13 +4,28 @@ import { ID, GB } from "country-flag-icons/react/3x2";
 import "../../src/assets/global.css";
 import { VscAccount } from "react-icons/vsc";
 import { IoLocationOutline } from "react-icons/io5";
-import Cart from "../../src/assets/ICons/Navbar/Group.png";
 import { FaBars, FaTimes } from "react-icons/fa";
-import IconButton from "../Componets/Elements/Navbar/IconButton";
+import IconButton from "../Componets/Elements/Navbar/IconButton.tsx";
 import Logo from "../assets/ICons/Navbar/Frame 18.png"
+import Cart from "../../src/assets/ICons/Navbar/Group.png";
+import {menuItems} from "../data/index.tsx";
+import Modal from "../Componets/Elements/Navbar/ModalLocate";
 
-const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+interface NavbarProps  {
+  setOpen : React.Dispatch<React.SetStateAction<boolean>>
+  open : boolean | undefined
+}
+
+const LocateButton: React.FC<NavbarProps> = ({open,setOpen}) => {
+    
+  return (
+    <button className="rounded-full bg-[#1D8583] opacity-85 flex items-center justify-center font-Poppins font-semibold px-5 py-1 w-40 text-white hover:scale-105 transition duration-300 ease-in cursor-pointer focus:scale-100 focus:outline-2 focus:outline-offset-2 focus:outline-teal-700 active:bg-teal-500" onClick={() => setOpen(true)}>
+          <IoLocationOutline /> <span className="ml-1">Atur Lokasi</span>
+    </button>
+  )
+}
+const Navbar: React.FC<NavbarProps> = ({open,setOpen}) => {
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,16 +43,8 @@ const Navbar = () => {
     };
   }, []);
 
-  const menuItems = [
-    { text: "Beranda" },
-    { text: "Food Waste" },
-    { text: "Mitra" },
-    { text: "Donasi" },
-    { text: "Relawan" },
-    { text: "Tentang Kami" },
-  ];
-
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
+  
 
   return (
     <nav
@@ -106,9 +113,7 @@ const Navbar = () => {
           <div className="rounded-full bg-[#1d8583] opacity-85 flex items-center justify-center font-Poppins font-semibold px-5 py-1 mx-2 w-30 text-white hover:scale-110 transition duration-330 cursor-pointer ease-in">
             Pesan
           </div>
-          <div className="rounded-full bg-[#1D8583] opacity-85 flex items-center justify-center font-Poppins font-semibold px-5 py-1 w-40 text-white hover:scale-110 transition duration-330 ease-in cursor-pointer">
-            <IoLocationOutline /> <span className="ml-1">Atur Lokasi</span>
-          </div>
+          <LocateButton setOpen={setOpen} open={isOpen}/>
           <div className="flex justify-center items-center hover:scale-110 transition duration-330 cursor-pointer ease-in">
             <img src={Cart} alt="" className="w-7 h-7 ml-2" />
           </div>
@@ -138,9 +143,10 @@ const Navbar = () => {
           <div className="rounded-full bg-[#D9D9D9] opacity-85 flex items-center justify-center font-Poppins font-semibold px-5 py-1 mx-2 w-30 hover:scale-110 transition  duration-330 cursor-pointer ease-in">
             Pesan
           </div>
-          <div className="rounded-full bg-[#D9D9D9] opacity-85 flex items-center justify-center font-Poppins font-semibold px-5 py-1 w-40 hover:scale-110 transition duration-330 ease-in cursor-pointer">
+          <button className="rounded-full bg-[#D9D9D9] opacity-85 flex items-center justify-center font-Poppins font-semibold px-5 py-1 w-40 hover:scale-110 transition duration-330 ease-in cursor-pointer" onClick={() => setOpen(prev => !prev)}>
             <IoLocationOutline /> <span className="ml-1">Atur Lokasi</span>
-          </div>
+            <Modal open={open ?? false} onClose={() => setOpen(false)} />
+          </button>
         </div>
       </div>
     </nav>

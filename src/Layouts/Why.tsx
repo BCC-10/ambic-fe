@@ -1,7 +1,5 @@
 import React from "react";
-import WhyComRight from "../Componets/Elements/Why/WhyComRight";
-import WhyComLeft from "../Componets/Elements/Why/WhyComLeft";
-import WhyComCenter from "../Componets/Elements/Why/WhyComCenter";
+import WhyCom from "../Componets/Elements/Why/WhyCom";
 import Content from "../../src/assets/Background/Why/Rectangle 3.png";
 import HeaderWhy from "../../src/assets/Background/Why/HeaderWhy.png";
 import Icon1 from "../../src/assets/ICons/Why/circum_discount-1.png";
@@ -11,9 +9,9 @@ import Icon4 from "../../src/assets/ICons/Why/ph_clover.png";
 import Icon5 from "../../src/assets/ICons/Why/mdi_donation-outline.png";
 import Icon6 from "../../src/assets/ICons/Why/subway_world-1.png";
 
-const Why = () => {
+const Why: React.FC = () => {
   return (
-    <div className="relative flex flex-col min-h-screen bg-[#FFF8F4] opacity-85 items-center max-xl:min-h-380">
+    <div className="relative flex flex-col min-h-screen bg-[#FFF8F4] opacity-85 items-center max-xl:min-h-300 max-lg:min-h-330 max-md:min-h-340 max-sm:min-h-350">
       <div className=" relative top-25 w-full max-w-[90%] flex flex-col py-9 px-5 h-auto items-center  max-h-auto max-xl:top-10 max-xl:gap-4">
         <h1 className="text-black font-Poppins font-semibold text-4xl max-sm:text-center max-xl:text-2xl">
           Kenapa Menggunakan
@@ -23,13 +21,13 @@ const Why = () => {
       <div className="absolute w-[90%] top-75 h-[50%] flex items-center justify-center gap-10 max-xl:hidden">
         <div className="w-100 h-100 flex items-center justify-center">
           <div className="relative flex flex-wrap justify-center gap-40 ">
-            <WhyComRight
-              Variant="justify-end"
+            <WhyCom
+              Variant="left"
               Content="Nikmati makanan enak dengan harga 1/2 atau kurang dari itu"
               Icon={Icon1}
             />
-            <WhyComRight
-              Variant="justify-end"
+            <WhyCom
+              Variant="left"
               Content="Selamatkan makanan di dekat Anda"
               Icon={Icon2}
             />
@@ -42,13 +40,13 @@ const Why = () => {
         </div>
         <div className="w-100 h-100 flex items-center justify-center">
           <div className="flex flex-col justify-center gap-40 ">
-            <WhyComLeft
-              Variant="justify-end"
+            <WhyCom
+              Variant="right"
               Content="Coba sesuatu yang baru dari kafe, toko roti, atau restoran terdekat"
               Icon={Icon3}
             />
-            <WhyComLeft
-              Variant="justify-end"
+            <WhyCom
+              Variant="right"
               Content="Membantu lingkungan dengan mengurangi limbah makanan"
               Icon={Icon6}
             />
@@ -57,21 +55,17 @@ const Why = () => {
       </div>
       <div className="absolute top-220 w-[90%] text-black h-[10%] p-5 flex items-center justify-center gap-25 max-xl:hidden">
         <div className=" max-w-auto p-3">
-          <WhyComCenter
-            Variant={"justify-center gap-4"}
+          <WhyCom
+            Variant={"center"}
             Content="Turut berkontribusi dalam kegiatan donasi"
             Icon={Icon4}
-            Text={"text-2xl"}
-            Size={"w-15"}
           />
         </div>
         <div className=" max-w-auto ">
-          <WhyComCenter
-            Variant={"justify-center gap-4"}
+          <WhyCom
+            Variant={"center"}
             Content="Pesan makanan degan lebih ramah lingkungan"
             Icon={Icon5}
-            Text={"text-2xl"}
-            Size={"w-15"}
           />
         </div>
       </div>
@@ -80,41 +74,31 @@ const Why = () => {
         <div className="w-80 h-auto bg-none drop-shadow-lg transition duration-400 ease-in-out hover:scale-105 hover:drop-shadow-xl">
           <img src={Content} alt="" className="object-cover" />
         </div>
-        <div className="w-full h-full flex justify-center flex-col gap-5 ">
-          <WhyComCenter
-            Variant={"justify-center p-5 gap-3"}
+        <div className="w-full h-full flex justify-center flex-col gap-7 ">
+          <WhyCom
+            Variant={'center'}
             Content="Nikmati makanan enak dengan harga 1/2 atau kurang dari itu"
             Icon={Icon1}
-            Text={"text-lg"}
-            Size={"w-10"}
           />
-          <WhyComCenter
-            Variant={"justify-center p-5 gap-3"}
+          <WhyCom
+            Variant={'center'}
             Content="Selamatkan makanan di dekat Anda"
             Icon={Icon2}
-            Text={"text-lg"}
-            Size={"w-10"}
           />
-          <WhyComCenter
-            Variant={"justify-center p-5 gap-3"}
+          <WhyCom
+            Variant={'center'}
             Content="Coba sesuatu yang baru dari kafe, toko roti, atau restoran terdekat"
             Icon={Icon3}
-            Text={"text-lg"}
-            Size={"w-10"}
           />
-          <WhyComCenter
-            Variant={"justify-center p-5 gap-3"}
+          <WhyCom
+            Variant={'center'}
             Content="Membantu lingkungan dengan mengurangi limbah makanan"
             Icon={Icon6}
-            Text={"text-lg"}
-            Size={"w-10"}
           />
-          <WhyComCenter
-            Variant={"justify-center p-5 gap-3"}
+          <WhyCom
+            Variant={'center'}
             Content="Pesan makanan degan lebih ramah lingkungan"
             Icon={Icon5}
-            Text={"text-lg"}
-            Size={"w-10"}
           />
         </div>
       </div>

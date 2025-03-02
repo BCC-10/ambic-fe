@@ -1,8 +1,15 @@
 import React, {useState, useRef} from 'react'
 
-function IconButton({ children, text, color, ...props}) {
-    const [hovered, setHovered] = useState(false)
-    const ref = useRef(null)
+interface Component{
+    children: React.ReactNode;
+    text: React.ReactNode;
+    color?: string;
+    [key: string]: any;  // Add any other props you want to pass to the button.
+}
+
+const IconButton: React.FC<Component> = ({ children, text, color, ...props}) => {
+    const [hovered, setHovered] = useState<boolean>(false)
+    const ref = useRef<HTMLDivElement | null>(null)
 
     return (
         <button onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} className={`flex p-2 items-center rounded-lg text-white ${color || "bg-gray-600"}`} {...props}  >
