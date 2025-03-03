@@ -18,6 +18,10 @@ import Pertamuda from "../assets/Background/Sponsor/image 2.png"
 import KementerianLingkungan from "../assets/Background/Sponsor/image 3.png"
 import UB from "../assets/Background/Sponsor/image 4.png"
 import BCC from "../assets/Background/Sponsor/image 5.png"
+import { IoMdContact } from "react-icons/io";
+import { MdEmail } from "react-icons/md";
+import { FaLock } from "react-icons/fa";
+import React from "react"
 
 
 const menuItems: Array<{text: string}> = [
@@ -61,7 +65,17 @@ const Sponsors = [
     { id : 5, title : "Card 5", description: BCC},
 ]
 
-export { menuItems, Content, slides, Images, cards, Sponsors };
+const Logins: Array<{name:string, type: string, placeholder: string, icon?: React.ReactNode, content:string}> = [
+    { name: "identifier", type : "identifier" , placeholder : "ex: farid@xml.com", icon: <MdEmail className='relative bottom-8 left-[100%]'/>, content: "Email"},
+    { name:"password", type : "password" , placeholder : "ex: 1@bds;", icon: <FaLock className='relative bottom-8 left-[100%]'/>, content: "password"},
+]
+const Registers: Array<{name?:any, type: string, placeholder: string, icon?: React.ReactNode, content:string}> = [
+    {  name: "username", type : "text" , placeholder : "farid", icon: <IoMdContact className='relative bottom-8 left-[100%]'/>, content: "Username"},
+    {  name: "email", type : "email" , placeholder : "ex: farid@xml.com", icon: <MdEmail className='relative bottom-8 left-[100%]'/>, content: "Email"},
+    { name: "password", type : "password" , placeholder : "ex: 1@bds;", icon: <FaLock className='relative bottom-8 left-[100%]'/>, content: "password"},
+]
+
+export { menuItems, Content, slides, Images, cards, Sponsors, Logins, Registers };
 
 
 

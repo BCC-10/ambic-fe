@@ -29,7 +29,7 @@ const ModalLocate: React.FC<ModalProps> = ({ open, onClose }) => {
     return (
         // Backdrop
         <div 
-            className={`fixed inset-0 flex justify-center items-center bg-black/20 transition-opacity duration-300 ${animate ? "opacity-100" : "opacity-0"}`}
+            className={`fixed inset-0 z-100 flex justify-center items-center bg-black/20 transition-opacity duration-300 ${animate ? "opacity-100" : "opacity-0"}`}
             onClick={onClose}
         >
             {/* Modal */}

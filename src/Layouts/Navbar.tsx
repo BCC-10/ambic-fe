@@ -10,6 +10,7 @@ import Logo from "../assets/ICons/Navbar/Frame 18.png"
 import Cart from "../../src/assets/ICons/Navbar/Group.png";
 import {menuItems} from "../data/index.tsx";
 import Modal from "../Componets/Elements/Navbar/ModalLocate";
+import { Link } from "react-router-dom";
 
 interface NavbarProps  {
   setOpen : React.Dispatch<React.SetStateAction<boolean>>
@@ -92,7 +93,9 @@ const Navbar: React.FC<NavbarProps> = ({open,setOpen}) => {
           <div>
             <div className="rounded-full bg-[#D9D9D9] px-3 py-2 w-30 h-9 flex items-center justify-center gap-2 hover:scale-110 transition duration-335 cursor-pointer ease-in">
               <VscAccount className="font-bold" />
-              <span className="font-Poppins font-semibold">Daftar</span>
+              <Link to="/register" className="font-Poppins font-semibold">
+                Daftar
+              </Link>
             </div>
           </div>
         </div>
