@@ -14,6 +14,7 @@
     "axios": "^1.8.1",
     "class-variance-authority": "^0.7.1",
     "country-flag-icons": "^1.5.18",
+    "crypto-js": "^4.2.0",
     "framer-motion": "^12.4.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

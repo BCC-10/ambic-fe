@@ -11,10 +11,11 @@ import Cart from "../../src/assets/ICons/Navbar/Group.png";
 import {menuItems} from "../data/index.tsx";
 import Modal from "../Componets/Elements/Navbar/ModalLocate";
 import { Link } from "react-router-dom";
+import {useAuth} from "../Componets/Util/AuthContext.tsx"
 
 interface NavbarProps  {
   setOpen : React.Dispatch<React.SetStateAction<boolean>>
-  open : boolean | undefined
+  open? : boolean | undefined
 }
 
 const LocateButton: React.FC<NavbarProps> = ({open,setOpen}) => {
@@ -27,6 +28,7 @@ const LocateButton: React.FC<NavbarProps> = ({open,setOpen}) => {
 }
 const Navbar: React.FC<NavbarProps> = ({open,setOpen}) => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const {isAuthenticated, logout} = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -91,12 +93,17 @@ const Navbar: React.FC<NavbarProps> = ({open,setOpen}) => {
           </div>
           {/* DAFTAR */}
           <div>
-            <div className="rounded-full bg-[#D9D9D9] px-3 py-2 w-30 h-9 flex items-center justify-center gap-2 hover:scale-110 transition duration-335 cursor-pointer ease-in">
+            {isAuthenticated ? (<button className="rounded-full bg-[#D9D9D9] px-3 py-2 w-30 h-9 flex items-center justify-center gap-2 hover:scale-110 transition duration-335 cursor-pointer ease-in" onClick={logout}>
+              <VscAccount className="font-bold" />
+              <Link to="/" className="font-Poppins font-semibold">
+                Logout
+              </Link>
+            </button>) : (<button className="rounded-full bg-[#D9D9D9] px-3 py-2 w-30 h-9 flex items-center justify-center gap-2 hover:scale-110 transition duration-335 cursor-pointer ease-in">
               <VscAccount className="font-bold" />
               <Link to="/register" className="font-Poppins font-semibold">
                 Daftar
               </Link>
-            </div>
+            </button>)}
           </div>
         </div>
       </div>

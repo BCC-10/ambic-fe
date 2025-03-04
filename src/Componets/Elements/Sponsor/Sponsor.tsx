@@ -13,8 +13,6 @@ interface CardItem {
     id: number;
     description: string;
 }
-
-
 const Sponsor: React.FC = () => {
     const prevRef = useRef<HTMLButtonElement | null>(null);
     const nextRef = useRef<HTMLButtonElement | null>(null);
