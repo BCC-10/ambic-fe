@@ -57,9 +57,9 @@ const Navbar: React.FC<NavbarProps> = ({open,setOpen}) => {
     >
       {/* LOGO  SECTION*/}
       <div className="flex justify-between w-full px-12">
-        <div className="w-50 h-auto flex justify-center items-center font-bold font-Poppins hover:scale-105 transition duration-330 cursor-pointer ease-in ">
+        <Link to="/" className="w-50 h-auto flex justify-center items-center font-bold font-Poppins hover:scale-105 transition duration-330 cursor-pointer ease-in ">
           <img src={Logo} alt="" className="object-cover"/>
-        </div>
+        </Link >
         {/* HUMBERGER MENU */}
         <div className="flex flex-row gap-4 xl:hidden items-center justify-center ">
           <div className="flex items-center justify-center p-2 group hover:border-2 border-teal-700/85  focus:border-teal-700/85 rounded-full  ">
@@ -115,7 +115,7 @@ const Navbar: React.FC<NavbarProps> = ({open,setOpen}) => {
               className="cursor-pointer hover:text-[#1d8583] hover:opacity-85 transition duration-300 ease-in"
               key={index}
             >
-              <span>{items.text}</span>
+            {items.to ? (<Link to={items.to}><span>{items.text}</span></Link>) : <span>{items.text}</span>}
             </button>
           ))}
         </div>
@@ -137,17 +137,19 @@ const Navbar: React.FC<NavbarProps> = ({open,setOpen}) => {
       >
         <div className="flex flex-col gap-4 font-Poppins font-semibold items-center">
           <div className="w-30 mx-3 flex items-center">
-            <div className="rounded-full bg-[#D9D9D9] px-3 py-2 w-full h-9 flex items-center justify-center gap-2 hover:scale-110 transition duration-335 cursor-pointer ease-in">
+            <button className="rounded-full bg-[#D9D9D9] px-3 py-2 w-full h-9 flex items-center justify-center gap-2 hover:scale-110 transition duration-335 cursor-pointer ease-in">
               <VscAccount className="font-bold" />
-              <span className="font-Poppins font-semibold">Daftar</span>
-            </div>
+              <Link to="/register" className="font-Poppins font-semibold">
+                Daftar
+              </Link>
+            </button>
           </div>
           {menuItems.map((items, index) => (
             <button
               className="cursor-pointer hover:text-[#1D8583] hover:opacity-85 transition duration-300 ease-in"
               key={index}
             >
-              <span>{items.text}</span>
+              {items.to ? (<Link to={items.to}><span>{items.text}</span></Link>) : <span>{items.text}</span>}
             </button>
           ))}
           <div className="rounded-full bg-[#D9D9D9] opacity-85 flex items-center justify-center font-Poppins font-semibold px-5 py-1 mx-2 w-30 hover:scale-110 transition  duration-330 cursor-pointer ease-in">

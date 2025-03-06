@@ -24,10 +24,10 @@ import { FaLock } from "react-icons/fa";
 import React from "react"
 
 
-const menuItems: Array<{text: string}> = [
-        { text: "Beranda" },
+const menuItems: Array<{text: string, to?:string}> = [
+        { text: "Beranda", to: "/"},
         { text: "Food Waste" },
-        { text: "Mitra" },
+        { text: "Mitra", to: "/mitra"},
         { text: "Donasi" },
         { text: "Relawan" },
         { text: "Tentang Kami" },
@@ -75,7 +75,28 @@ const Registers: Array<{name?:any, type: string, placeholder: string, icon?: Rea
     { name: "password", type : "password" , placeholder : "ex: 1@bds;", icon: <FaLock className='relative bottom-8 left-[100%]'/>, content: "password"},
 ]
 
-export { menuItems, Content, slides, Images, cards, Sponsors, Logins, Registers };
+const PassNew: Array<{name?:any, type: string, placeholder: string, icon: React.ReactNode, content:string }> = [
+    { name: "password", type : "password" , placeholder : "ex: 1@bds;", icon: <FaLock className='relative bottom-8 left-[100%]'/>, content: "Password Baru"},
+    { name: "confirmPassword", type : "password" , placeholder : "ex: 1@bds;", icon: <FaLock className='relative bottom-8 left-[100%]'/>, content: "Konfirmasi Password Baru"},
+]
+
+const Cards: Array<{content: string, text:string}> = [
+    {content : "Waktu penjualan yang fleksibel", text: "Biaya bagi hasil yang sangat rendah"},
+    {content : "Mendapatkan keuntungan menjual makanan dari stok berlebih", text:"dipromosikan diberbagai media dan kegiatan Ambic"},
+    {content : "Dikenal sebagai bisnis yang ramah lingkungan", text: "Menjangkau pelanggan baru"}
+]
+
+const RegisterMitra: Array<{content:string, type:string, placeholder:string, text:string}> = [
+    {content: "Nama Bisnis", type: "text", placeholder: "Nama Bisnis", text: "Farid"},
+    {content: "Jenis Bisnis", type: "text", placeholder: "Jenis Bisnis", text: "Bakery"},
+    {content: "Instagram Bisnis", type: "text", placeholder: "Ig Bisnis", text: "@Farid"},
+    {content: "Alamat Bisnis", type: "text", placeholder: "Alamat Bisnis", text: "Batam"},
+    {content: "Link Posisi Alamat Bisnis", type: "text", placeholder: "", text: "balblabla"},
+    {content: "Kota", type: "text", placeholder: "ex: Semarang", text:"Semarang"},
+]
+
+
+export { menuItems, Content, slides, Images, cards, Sponsors, Logins, Registers, PassNew, Cards, RegisterMitra };
 
 
 
