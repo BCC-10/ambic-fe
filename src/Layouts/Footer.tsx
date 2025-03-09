@@ -1,8 +1,9 @@
 import React from 'react'
 import Logo from "../assets/ICons/Footer/Frame 67.png"
+import Footers from "../assets/ICons/Footer/Rectangle 95.png"
 import { FaInstagram, FaTiktok, FaTwitter } from "react-icons/fa";
 
-const Footer: React.FC<{className?:string}> = ({className}) => {
+const Footer: React.FC<{className?:string|undefined}> = ({className}) => {
 
     const Box = () => {
         return (
@@ -32,11 +33,8 @@ const Footer: React.FC<{className?:string}> = ({className}) => {
                 </div>
             </div>
             <div className='flex items-start justify-center w-auto h-full flex-col p-2 gap-1 max-md:items-center'>
-                <h4 className='font-bold text-xl text-white font-Poppins'>Berita</h4>
                 <div className="flex flex-row gap-4">
-                    {[...Array(3)].map((_,idx) => (
-                        <Box key={idx}/>
-                    ))}
+                    <img src={Footers} alt="" className='relative top-2 w-25'/>
                 </div>
             </div>
         </div>

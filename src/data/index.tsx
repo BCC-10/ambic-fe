@@ -18,6 +18,9 @@ import Pertamuda from "../assets/Background/Sponsor/image 2.png"
 import KementerianLingkungan from "../assets/Background/Sponsor/image 3.png"
 import UB from "../assets/Background/Sponsor/image 4.png"
 import BCC from "../assets/Background/Sponsor/image 5.png"
+import Footer1 from "../assets/ICons/Footer/Rectangle 18.png"
+import Footer2 from "../assets/ICons/Footer/Rectangle 40 (1).png"
+import Footer3 from "../assets/ICons/Footer/Rectangle 41 (1).png"
 import { IoMdContact } from "react-icons/io";
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
@@ -95,8 +98,23 @@ const RegisterMitra: Array<{content:string, type:string, placeholder:string, tex
     {content: "Kota", type: "text", placeholder: "ex: Semarang", text:"Semarang"},
 ]
 
+const RegisterUser = [
+    {content: "Username", type: "text", placeholder:"Your username"},
+    {content: "Nama", type: "text", placeholder:"Your Name"},
+    {content: "Email", type: "email", placeholder:"Your Email"},
+    {content: "Nomor Telepon", type: "number", placeholder:"Your Number Phone"},
+    {content: "jenis Kelamin", type: "text", placeholder:"Your Gender"},
+    {content: "Almat", type: "text", placeholder:"Your Address"},
+]
 
-export { menuItems, Content, slides, Images, cards, Sponsors, Logins, Registers, PassNew, Cards, RegisterMitra };
+const Footers: Array<{Image:string}> = [
+    {Image : Footer1},
+    {Image : Footer2},
+    {Image : Footer3},
+]
+
+
+export { menuItems, Content, slides, Images, cards, Sponsors, Logins, Registers, PassNew, Cards, RegisterMitra, Footers, RegisterUser };
 
 
 

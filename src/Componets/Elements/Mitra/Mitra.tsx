@@ -20,9 +20,7 @@ const LogicMitra = () => {
     const nextRef = useRef<HTMLButtonElement | null>(null);
     const swiperRef = useRef<SwiperType | null>(null); // Simpan referensi Swiper
     const SwiperRef = useRef<SwiperRef  | null>(null); // Simpan referensi Swiper
-
-
-
+    
     useEffect(() => {
         if (swiperRef.current && prevRef.current && nextRef.current) {
             (swiperRef.current.params.navigation as any).prevEl = prevRef.current;

@@ -39,7 +39,6 @@ const Login = () => {
         console.error("Error fetching Google login URL:", error);
       }
     };
-
     fetchGoogleLink();
   }, []);
 
@@ -214,29 +213,29 @@ const Login = () => {
           </p>
         )}
         <div className="flex flex-col items-center justify-start p-2 gap-5 w-full">
-          {Logins.map((field, idx) => (
-            <div key={idx}>
-              <Input
-                type={field.type}
-                placeholder={field.placeholder}
-                content={field.content}
-                icon={field.icon}
-                className="focus:outline-none bg-[#D9D9D9] p-2 rounded-2xl w-full h-[10%] placeholder:text-sm"
-                value={formData[field.name as keyof typeof formData] || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, [field.name]: e.target.value })
-                }
-                color="text-gray-600"
-              />
-              {errors[field.name] && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors[field.name]}
-                </p>
-              )}
-            </div>
-          ))}
+        {Logins.map((field, idx) => (
+          <div key={idx}>
+            <Input
+            type={field.type}
+            placeholder={field.placeholder}
+            content={field.content}
+            icon={field.icon}
+            className="focus:outline-none bg-[#D9D9D9] p-2 rounded-2xl w-full h-[10%] placeholder:text-sm"
+            value={formData[field.name as keyof typeof formData] || ""}
+            onChange={(e) =>
+            setFormData({ ...formData, [field.name]: e.target.value })
+            }
+            color="text-gray-600"
+          />
+          {errors[field.name] && (
+      <p className="text-red-500 text-sm mt-1">
+        {errors[field.name]}
+      </p>
+    )}
+  </div>
+))}
         </div>
-        <p className="">Lupa Password?</p>
+        <Link to="/reset"><p className="">Lupa Password?</p></Link>
         <button
           type="submit"
           className="w-full py-2 rounded-2xl text-white font-Poppins font-semibold bg-teal-700/85 transition-transform duration-300 ease-in hover:scale-95 focus:outline-2 focus:outline-offset-2 focus:outline-offset-teal-700/85 cursor-pointer"

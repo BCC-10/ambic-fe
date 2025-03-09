@@ -21,3 +21,35 @@
 html {
     scroll-behavior: smooth;
 }
+
+@theme {
+    --primary : rgba(29, 133, 131, 0.85);
+    --secondary: rgba(255, 248, 244, 1)
+}
+
+.custom-dialog {
+    width: 20vw !important;
+    border-radius: 15px !important;
+    background: transparent !important;
+    
+}
+
+/* Header */
+ .custom-dialog .p-dialog-header {
+    background: transparent !important;
+    color: white !important;
+}
+
+/* Body */
+.custom-dialog .p-dialog-content {
+    background: transparent !important;
+}
+
+/* Tombol Close */
+.custom-dialog .p-dialog-header-close {
+    color: white !important;
+    background: transparent !important;
+} 
+
+
+

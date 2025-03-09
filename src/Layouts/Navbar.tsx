@@ -10,23 +10,40 @@ import Logo from "../assets/ICons/Navbar/Frame 18.png"
 import Cart from "../../src/assets/ICons/Navbar/Group.png";
 import {menuItems} from "../data/index.tsx";
 import Modal from "../Componets/Elements/Navbar/ModalLocate";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {useAuth} from "../Componets/Util/AuthContext.tsx"
 
 interface NavbarProps  {
-  setOpen : React.Dispatch<React.SetStateAction<boolean>>
+  setOpen : (React.Dispatch<React.SetStateAction<boolean>>)
   open? : boolean | undefined
 }
 
 const LocateButton: React.FC<NavbarProps> = ({open,setOpen}) => {
-    
+
   return (
-    <button className="rounded-full bg-[#1D8583] opacity-85 flex items-center justify-center font-Poppins font-semibold px-5 py-1 w-40 text-white hover:scale-105 transition duration-300 ease-in cursor-pointer focus:scale-100 focus:outline-2 focus:outline-offset-2 focus:outline-teal-700 active:bg-teal-500" onClick={() => setOpen(true)}>
+    <button className="rounded-full bg-[#1D8583] opacity-85 flex items-center justify-center font-Poppins font-semibold px-5 py-1 w-40 text-white hover:scale-95 drop-shadow-lg transition duration-300 ease-in cursor-pointer focus:scale-100 focus:outline-2 focus:outline-offset-2 focus:outline-teal-700 active:bg-teal-500" onClick={() => setOpen(true)}>
           <IoLocationOutline /> <span className="ml-1">Atur Lokasi</span>
     </button>
   )
 }
 const Navbar: React.FC<NavbarProps> = ({open,setOpen}) => {
+  
+  const Navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token)
+  }, [])
+
+
+
+  const handleButtonClick = () => {
+    if(isLoggedIn) {
+      Navigate("/user/profile")
+  } else {
+    Navigate("/register")
+  }
+}
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const {isAuthenticated, logout} = useAuth();
 
@@ -93,9 +110,9 @@ const Navbar: React.FC<NavbarProps> = ({open,setOpen}) => {
           </div>
           {/* DAFTAR */}
           <div>
-            {isAuthenticated ? (<button className="rounded-full bg-[#D9D9D9] px-3 py-2 w-30 h-9 flex items-center justify-center gap-2 hover:scale-110 transition duration-335 cursor-pointer ease-in" onClick={logout}>
+            {isLoggedIn ? (<button className="rounded-full bg-[#D9D9D9] px-3 py-2 w-30 h-9 flex items-center justify-center gap-2 hover:scale-110 transition duration-335 cursor-pointer ease-in" onClick={logout}>
               <VscAccount className="font-bold" />
-              <Link to="/" className="font-Poppins font-semibold">
+              <Link to="/" className="font-Poppins font-semibold" onClick={handleButtonClick}>
                 Logout
               </Link>
             </button>) : (<button className="rounded-full bg-[#D9D9D9] px-3 py-2 w-30 h-9 flex items-center justify-center gap-2 hover:scale-110 transition duration-335 cursor-pointer ease-in">
@@ -120,9 +137,9 @@ const Navbar: React.FC<NavbarProps> = ({open,setOpen}) => {
           ))}
         </div>
         <div className="flex gap-1 items-center jsutify-center w-90 h-8 ">
-          <div className="rounded-full bg-[#1d8583] opacity-85 flex items-center justify-center font-Poppins font-semibold px-5 py-1 mx-2 w-30 text-white hover:scale-110 transition duration-330 cursor-pointer ease-in">
-            Pesan
-          </div>
+
+            <Link to="/order" className="rounded-full bg-[#1d8583] opacity-85 flex items-center justify-center font-Poppins font-semibold px-5 py-1 mx-2 w-30 drop-shadow-lg text-white hover:scale-95 transition duration-330 cursor-pointer ease-in">Pesan</Link>
+
           <LocateButton setOpen={setOpen} open={isOpen}/>
           <div className="flex justify-center items-center hover:scale-110 transition duration-330 cursor-pointer ease-in">
             <img src={Cart} alt="" className="w-7 h-7 ml-2" />
@@ -152,10 +169,10 @@ const Navbar: React.FC<NavbarProps> = ({open,setOpen}) => {
               {items.to ? (<Link to={items.to}><span>{items.text}</span></Link>) : <span>{items.text}</span>}
             </button>
           ))}
-          <div className="rounded-full bg-[#D9D9D9] opacity-85 flex items-center justify-center font-Poppins font-semibold px-5 py-1 mx-2 w-30 hover:scale-110 transition  duration-330 cursor-pointer ease-in">
-            Pesan
-          </div>
-          <button className="rounded-full bg-[#D9D9D9] opacity-85 flex items-center justify-center font-Poppins font-semibold px-5 py-1 w-40 hover:scale-110 transition duration-330 ease-in cursor-pointer" onClick={() => setOpen(prev => !prev)}>
+
+            <Link to="/order" className="rounded-full bg-[#D9D9D9] opacity-85 flex items-center justify-center font-Poppins font-semibold px-5 py-1 mx-2 w-30 hover:scale-95 transition  duration-330 cursor-pointer ease-in-out">Pesan</Link>
+
+          <button className="rounded-full bg-[#D9D9D9] opacity-85 flex items-center justify-center font-Poppins font-semibold px-5 py-1 w-40 hover:scale-95 drop-shadow-lg transition duration-330 ease-in cursor-pointer" onClick={() => setOpen(prev => !prev)}>
             <IoLocationOutline /> <span className="ml-1">Atur Lokasi</span>
             <Modal open={open ?? false} onClose={() => setOpen(false)} />
           </button>
