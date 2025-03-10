@@ -67,7 +67,7 @@ const OrderDescription = () => {
                         </div>
                         <div className='w-full h-auto flex items-center justify-center gap-6'>
                             <button className='font-Poppins text-lg text-white bg-teal-700/85 rounded-xl drop-shadow-lg px-4 py-2 font-semibold transition-transform duration-200 hover:scale-95 cursor-pointer' onClick={() => navigate("/cart")}>Keranjang</button>
-                            <button className='font-Poppins text-lg text-white bg-teal-700/85 rounded-xl drop-shadow-lg px-4 py-2 font-semibold'>Beli Sekarang</button>
+                            <button className='font-Poppins text-lg text-white bg-teal-700/85 rounded-xl drop-shadow-lg px-4 py-2 font-semibold  transition-transform duration-200 hover:scale-95 cursor-pointer' onClick={() => navigate("/payment")}>Beli Sekarang</button>
                         </div>
                     </div>
                 </div>

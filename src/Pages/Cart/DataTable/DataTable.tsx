@@ -8,8 +8,11 @@ import { Checkbox } from "primereact/checkbox";
 import {useNavigate} from "react-router-dom"
 import Swal from "sweetalert2";
 
+interface Carts {
+    isVisible: boolean
+}
 
-const Cart: React.FC = () => {
+const Cart: React.FC<Carts> = ({isVisible}) => {
 const { cart, updateQuantity, removeItem, toggleChecked, checkedTotalPrice, toggleAllChecked  } = useCart();
 
     const checkboxTemplate = (rowData: cartItem) => {
@@ -92,9 +95,12 @@ const handleSelectAll = () => {
     toggleAllChecked(newState);
 };
 
+const navigate = useNavigate()
+
 return (
-    <div className="flex flex-col gap-75">
-        <DataTable value={cart} responsiveLayout="scroll" className="bg-white drop-shadow-xl">
+    <div className="flex flex-col gap-80 h-auto">
+        <div className="flex flex-col justify-center gap-7 items-center w-full ">
+        <DataTable value={cart} responsiveLayout="scroll" className="bg-white drop-shadow-xl" style={{width: "85rem"}}>
             <Column body={checkboxTemplate} style={{ width: "3rem" }} headerStyle={{backgroundColor: "var(--teal-700)", color: "white"}}/>
             <Column header="Produk" body={productTemplate} headerStyle={{backgroundColor: "var(--teal-700)", color: "white"}}/>
             <Column field="price" header="Harga" body={(rowData) => `Rp ${new Intl.NumberFormat("id-ID").format(rowData.price)}`} headerStyle={{backgroundColor: "var(--teal-700)", color: "white"}}/>
@@ -102,6 +108,9 @@ return (
             <Column header="Total" body={totalTemplate} headerStyle={{backgroundColor: "var(--teal-700)", color: "white"}}/>
             <Column header="Aksi" body={deleteTemplate} headerStyle={{backgroundColor: "var(--teal-700)", color: "white"}}/>
         </DataTable>
+            {isVisible === true ? <button className=' top-50 bg-teal-700/85 right-150 px-4 py-2 text-white font-Poppins font-semibold text-lg rounded-full drop-shadow-lg transition-transform duration-200 hover:scale-95 cursor-pointer w-50' onClick={() => navigate("/order")}>Tambah Produk</button> : <></>}
+        </div>
+    
         <div className="flex items-center gap-2 flex-row justify-between h-25 px-10 bg-white drop-shadow-xl">
             <div className="flex gap-6">
                 <Checkbox checked={selectAll} onChange={handleSelectAll} />

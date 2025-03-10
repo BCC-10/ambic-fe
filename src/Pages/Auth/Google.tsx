@@ -18,7 +18,7 @@ const Google = () => {
 
         const verifyAccount = async () => {
             try {
-                const response = await axios.post("https://ambic.live:443/api/v1/auth/google/callback", {state, code})
+                const response = await axios.post("https://ambic.live:443/api/v1/auth/google", {state, code})
                 console.log(response.data);
                 if(response.data.status_code == 200){
                     localStorage.setItem("token", response.data.payload.token);

@@ -25,15 +25,20 @@ import { IoMdContact } from "react-icons/io";
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 import React from "react"
+import Mitra1 from "../assets/Hiasan/Mitra/Rectangle 42.png"
+import Mitra2 from "../assets/Hiasan/Mitra/Rectangle 42 (1).png"
+import Mitra3 from "../assets/Hiasan/Mitra/Rectangle 42 (2).png"
+import Mitra4 from "../assets/Hiasan/Mitra/Rectangle 42 (3).png"
+import Mitra5 from "../assets/Hiasan/Mitra/Rectangle 42 (4).png"
+import Mitra6 from "../assets/Hiasan/Mitra/Rectangle 42 (5).png"
 
 
 const menuItems: Array<{text: string, to?:string}> = [
         { text: "Beranda", to: "/"},
-        { text: "Food Waste" },
+        { text: "Food Waste", to: "/foodweste" },
         { text: "Mitra", to: "/mitra"},
-        { text: "Donasi" },
-        { text: "Relawan" },
-        { text: "Tentang Kami" },
+        { text: "Relawan", to: "/relawan" },
+        { text: "Tentang Kami", to: "/about" },
 ];
 
 const Content: Array<{item: string, text: string, Image: string}> = [
@@ -83,10 +88,13 @@ const PassNew: Array<{name?:any, type: string, placeholder: string, icon: React.
     { name: "confirmPassword", type : "password" , placeholder : "ex: 1@bds;", icon: <FaLock className='relative bottom-8 left-[100%]'/>, content: "Konfirmasi Password Baru"},
 ]
 
-const Cards: Array<{content: string, text:string}> = [
-    {content : "Waktu penjualan yang fleksibel", text: "Biaya bagi hasil yang sangat rendah"},
-    {content : "Mendapatkan keuntungan menjual makanan dari stok berlebih", text:"dipromosikan diberbagai media dan kegiatan Ambic"},
-    {content : "Dikenal sebagai bisnis yang ramah lingkungan", text: "Menjangkau pelanggan baru"}
+const Cards: Array<{content: string, image:string}> = [
+    {content : "Waktu penjualan yang fleksibel", image: Mitra1},
+    {content : "Mendapatkan keuntungan menjual makanan dari stok berlebih", image: Mitra2},
+    {content : "Dikenal sebagai bisnis yang ramah lingkungan", image: Mitra3},
+    {content: "Biaya bagi hasil yang sangat rendah", image: Mitra4},
+    {content:"dipromosikan diberbagai media dan kegiatan Ambic", image: Mitra5},
+    {content: "Menjangkau pelanggan baru", image: Mitra6}
 ]
 
 const RegisterMitra: Array<{content:string, type:string, placeholder:string, text:string}> = [

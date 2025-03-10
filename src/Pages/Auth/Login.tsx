@@ -26,6 +26,13 @@ const Login = () => {
   );
   const [resendDisabled, setResendDisabled] = useState<boolean>(false);
   const [googleLink, setGoogleLink] = useState("");
+  const {isAuthenticated} = useAuth();
+
+  useEffect(() => {
+    if(isAuthenticated) {
+      navigate("/user/profile")
+    }
+  }, [isAuthenticated, navigate])
 
   useEffect(() => {
     const fetchGoogleLink = async () => {

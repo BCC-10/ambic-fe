@@ -8,12 +8,14 @@ import { Link } from "react-router-dom";
 interface cardType {
     content?: string
     variant: string
+    image: string
 }
 
-const Card : React.FC<cardType> = ({content, variant}) => {
+const Card : React.FC<cardType> = ({content, variant, image}) => {
     return (
         <div className='h-auto w-full md:w-[23%] flex flex-col items-center justify-center gap-5 bg-none drop-shadow-xl'>
-            <div className='relative w-[20rem] h-[20rem] bg-[#FFF8F4] flex items-center justify-center '>
+            <div className='relative w-[20rem] h-[20rem]  flex items-center justify-center '>
+                <img src={image} alt="" className='w-full'/>
             </div>
             <div className='w-full h-auto' >
                 <h3 className={`font-Poppins font-semibold ${variant} text-2xl text-center`}>{content}</h3>
@@ -42,16 +44,16 @@ const Mitra: React.FC = () => {
                 <div className='flex w-3/4 items-center justify-center '>
                     <h1 className='font-Poppins text-3xl text-white font-semibold text-center '>Manfaat menjadi mitra kami</h1>
                 </div>
-                <div className='w-full flex max-xl:flex-col gap-10 items-center justify-center px-5 '>
-                    {Cards.map((_,idx) => (
-                        <Card key={idx} content={_.content} variant="text-white"/>
+                <div className='w-[110%] flex max-xl:flex-col gap-10 items-center justify-center px-5 '>
+                    {Cards.slice(0, 3).map((_,idx) => (
+                        <Card key={idx} content={_.content} variant="text-white" image={_.image}/>
                     ))}
                 </div>
             </div>
             <div className='flex bg-[#FFF8F4] items-center justify-center w-full min-h-[55vh] flex-col gap-5 p-5'>
-                <div className='w-full flex max-xl:flex-col gap-10 items-center justify-center px-5 '>
-                    {Cards.map((_,idx) => (
-                        <Card key={idx} content={_.text} variant="text-teal-700/85"/>
+                <div className='w-[110%] flex max-xl:flex-col gap-10 items-center justify-center px-5 '>
+                    {Cards.slice(3, 6).map((_,idx) => (
+                        <Card key={idx} content={_.content} variant="text-teal-700/85" image={_.image}/>
                     ))}
                 </div>
             </div>

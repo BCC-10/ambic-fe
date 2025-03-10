@@ -1,15 +1,13 @@
-import React, {useState, useEffect, useMemo} from 'react'
+import React, {useState} from 'react'
 import Navbar from '../../Layouts/Navbar';
 import Modal from '../../Componets/Elements/Navbar/ModalLocate';
 import Footer from "../../Layouts/Footer";
 import DataTable from "./DataTable/DataTable"
-import { useCart } from "../../Componets/Util/useCart";
-import { Checkbox } from "primereact/checkbox"
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-    const {checkedTotalPrice} = useCart();
     const [open, setOpen] = useState<boolean>(false);
-
+    const navigate = useNavigate()
 
 
     return (
@@ -21,8 +19,9 @@ const Cart = () => {
                 <div className='w-full flex items-start justify-start'>
                     <h1 className='font-Poppins font-semibold text-2xl '>Keranjang</h1>
                 </div>
-                <div className='w-full h-full '>
-                    <DataTable/>
+                <div className='w-full h-auto relative flex flex-col  justify-center '>
+                    
+                    <DataTable isVisible={true}/>
                 </div>
             </div>
             <div>

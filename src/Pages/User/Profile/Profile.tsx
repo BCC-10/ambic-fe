@@ -19,7 +19,7 @@ const Profile: React.FC = () => {
     const handleLogOut = () => {
         localStorage.removeItem("token");
         setIsLoggedIn(false)
-        Navigate("/login")
+        Navigate("/")
         console.log(handleLogOut())
     }
     const [open, setOpen] = useState<boolean>(false);

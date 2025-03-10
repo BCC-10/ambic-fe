@@ -24,11 +24,12 @@ import Order from "./Pages/Order/Order"
 import OderDescription from "./Pages/Order/Description/OrderDescription"
 import OrderDone from "./Pages/Order/Done/OrderDone"
 import OrderActive from "./Pages/Order/Active/OrderActive"
-import CartTable from "./Pages/Cart/DataTable/DataTable"
 import Cart from "./Pages/Cart/Cart"
-
-
-
+import Payment from "./Pages/payment/Payment";
+import FoodWeste from "./Pages/FoodWeste/FoodWeste";
+import Relawan from "./Pages/Relawan/Relawan";
+import About from "./Pages/About/About";
+import Autocomplete from "./assets/test/AutoComplate";
 
 const app: React.FC = () => {
 
@@ -37,8 +38,10 @@ const app: React.FC = () => {
             <Router>
                 <Routes>
                     <Route path="/" element={<LandingPage />} />
-                    <Route path="/login" element={<ProtectedRouters><LoginPage /></ProtectedRouters>}/>
-                    <Route path="/register" element={<ProtectedRouters><RegisterPage /></ProtectedRouters>}/>
+                    <Route element={<ProtectedRouters redirectTo="/user/profile" />}>
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/register" element={<RegisterPage />} />
+                    </Route>
                     <Route path="/verify" element={<VerifyPage />} />
                     <Route path="/google/callback" element={<Google />} />
                     <Route path="/reset" element={<Reset/>}/>
@@ -58,8 +61,12 @@ const app: React.FC = () => {
                     <Route path="/order/description" element={<OderDescription/>}/>
                     <Route path="/order/done" element={<OrderDone/>}/>
                     <Route path="/order/active" element={<OrderActive/>}/>
-                    <Route path="/cart/table" element={<CartTable/>}/>
                     <Route path="/cart" element={<Cart/>}/>
+                    <Route path="/payment" element={<Payment/>}/>
+                    <Route path="/foodweste" element={<FoodWeste/>}/>
+                    <Route path="/relawan" element={<Relawan/>}/>
+                    <Route path="/about" element={<About/>}/>
+                    <Route path="/autocomplete" element={<Autocomplete/>}/>
                 </Routes>
             </Router>
     </AuthProvider>

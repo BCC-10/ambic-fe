@@ -10,7 +10,7 @@ const PaymentMethod: React.FC = () => {
             <div className='flex items-center justify-center '>
                 <h1 className='font-Poppins font-bold text-3xl text-white'>Metode Pembayaran</h1>
             </div>
-            <div className='w-1/2  p-5 grid grid-cols-3 place-content-center place-items-center gap-5 max-lg:grid-cols-2 max-md:grid-cols-1'>
+            <div className='w-[40%]  p-5 grid grid-cols-3 place-content-center place-items-center gap-5 max-lg:grid-cols-2 max-md:grid-cols-1'>
                 {Images.map((_,idx) => (
                     <img key={idx} src={_.Image} alt="" className='max-lg:last:col-span-2 max-md:last:col-span-1 rounded-lg'/>
                 ))}

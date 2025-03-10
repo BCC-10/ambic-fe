@@ -20,26 +20,25 @@ const Register = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [successMessage, setSuccessMessage] = useState("");
   const [googleLink, setGoogleLink] = useState("");
+  
 
-  useEffect(() => {
-    const fetchGoogleLink = async () => {
-      try {
-        const response = await axios.post(
-          "https://ambic.live:443/api/v1/auth/google"
-        );
-        setGoogleLink(response.data.payload);
-        // Sesuaikan dengan format response API
-      } catch (error) {
-        console.error("Error fetching Google login URL:", error);
+  const handleLoginWithGoogle = async () => {
+    try {
+      const response = await axios.get("https://ambic.live/api/v1/auth/google", {withCredentials: true});
+  
+      if (response.data.payload?.url) {
+        window.location.href = response.data.payload.url; // Redirect ke URL yang diberikan API
+      } else {
+        console.error("Google login URL not received");
       }
-    };
-
-    fetchGoogleLink();
-  }, []);
+    } catch (error) {
+      console.error("Error posting Google login request:", error);
+    }
+  };
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/");
+      navigate("/user/profile");
     }
   }, [isAuthenticated, navigate]);
 
@@ -170,7 +169,7 @@ const Register = () => {
           Daftar
         </button>
         <h3 className="font-Poppins text-lg font-semibold">Atau</h3>
-        <Link to={googleLink}>
+        <Link to="#" onClick={handleLoginWithGoogle}>
           <FcGoogle size={40} />
         </Link>
         <div className="lg:hidden flex flex-col gap-5 items-center justify-center ">

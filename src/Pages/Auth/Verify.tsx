@@ -20,7 +20,7 @@ const Verify = () => {
 
         const verifyAccount = async () => {
             try {
-                const response = await axios.post("https://ambic.live:443/api/v1/auth/verify", {token, email})
+                const response = await axios.post("https://ambic.live:443/api/v1/auth/verification", {token, email})
                 console.log(response.data.statusCode);
                 console.log(response.data.status_code);
                 if(response.data.status_code == 200){

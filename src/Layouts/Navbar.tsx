@@ -10,7 +10,7 @@ import Logo from "../assets/ICons/Navbar/Frame 18.png"
 import Cart from "../../src/assets/ICons/Navbar/Group.png";
 import {menuItems} from "../data/index.tsx";
 import Modal from "../Componets/Elements/Navbar/ModalLocate";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {useAuth} from "../Componets/Util/AuthContext.tsx"
 
 interface NavbarProps  {
@@ -64,7 +64,34 @@ const Navbar: React.FC<NavbarProps> = ({open,setOpen}) => {
   }, []);
 
   const [isOpen, setIsOpen] = useState<boolean>(true);
+
+  const StyleMenu: React.FC = () => {
+    const location = useLocation();
+
+    return (
+      <div className="flex gap-7 font-Poppins font-semibold items-center">
+        {menuItems.map((items, index) => {
+          const isActive = location.pathname === items.to; // Cek apakah aktif
   
+          return (
+            <button
+              key={index}
+              className={`cursor-pointer px-4 py-1 rounded-full transition duration-290 ease-linear 
+                ${isActive ? "bg-teal-700/85 text-white" : "bg-transparent text-black hover:text-teal-700/85"}`}
+            >
+              {items.to ? (
+                <Link to={items.to}>
+                  <span>{items.text}</span>
+                </Link>
+              ) : (
+                <span>{items.text}</span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+    );
+  };
 
   return (
     <nav
@@ -112,8 +139,8 @@ const Navbar: React.FC<NavbarProps> = ({open,setOpen}) => {
           <div>
             {isLoggedIn ? (<button className="rounded-full bg-[#D9D9D9] px-3 py-2 w-30 h-9 flex items-center justify-center gap-2 hover:scale-110 transition duration-335 cursor-pointer ease-in" onClick={logout}>
               <VscAccount className="font-bold" />
-              <Link to="/" className="font-Poppins font-semibold" onClick={handleButtonClick}>
-                Logout
+              <Link to="/user/profile" className="font-Poppins font-semibold" onClick={handleButtonClick}>
+                Profile
               </Link>
             </button>) : (<button className="rounded-full bg-[#D9D9D9] px-3 py-2 w-30 h-9 flex items-center justify-center gap-2 hover:scale-110 transition duration-335 cursor-pointer ease-in">
               <VscAccount className="font-bold" />
@@ -126,16 +153,7 @@ const Navbar: React.FC<NavbarProps> = ({open,setOpen}) => {
       </div>
       {/* MENU SECTION */}
       <div className="hidden scale-0 xl:flex xl:scale-100 justify-between w-full mt-6 px-12 list-none no-underline transition-transform duration-330 ease-out ">
-        <div className="flex gap-12 font-Poppins font-semibold items-center">
-          {menuItems.map((items, index) => (
-            <button
-              className="cursor-pointer hover:text-[#1d8583] hover:opacity-85 transition duration-300 ease-in"
-              key={index}
-            >
-            {items.to ? (<Link to={items.to}><span>{items.text}</span></Link>) : <span>{items.text}</span>}
-            </button>
-          ))}
-        </div>
+        <StyleMenu/>
         <div className="flex gap-1 items-center jsutify-center w-90 h-8 ">
 
             <Link to="/order" className="rounded-full bg-[#1d8583] opacity-85 flex items-center justify-center font-Poppins font-semibold px-5 py-1 mx-2 w-30 drop-shadow-lg text-white hover:scale-95 transition duration-330 cursor-pointer ease-in">Pesan</Link>
