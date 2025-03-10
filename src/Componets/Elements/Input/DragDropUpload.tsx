@@ -7,7 +7,7 @@ const DragDropUpload: React.FC<{content?:string, value?:string, onChange?: (e: a
     const [eror, setEror] = useState<string | null>(null)
     const onDrop = useCallback((acceptedFiles: File[], fileRejections: any) => {
         if(fileRejections.length > 0) {
-            setEror("File tidak valid! Pastikan file adalah gambar (PNG, JPG) dan ukurannya < 2MB")
+            setEror("File tidak valid! Pastikan file adalah gambar (PNG, JPG, JPEG) dan ukurannya < 5MB")
             return;
         }
         setFiles(acceptedFiles)
@@ -15,8 +15,8 @@ const DragDropUpload: React.FC<{content?:string, value?:string, onChange?: (e: a
     }, [])
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
-        accept: {'image/png' : [], 'image/jpg' : []},
-        maxSize: 2 * 1024 * 1024,
+        accept: {'image/png' : [], 'image/jpg' : [], 'image/jpeg' : []},
+        maxSize: 5 * 1024 * 1024,
         maxFiles: 1,
         multiple: false
     })

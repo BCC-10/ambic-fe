@@ -101,7 +101,7 @@ const Login = () => {
 
     try {
       await axios.post(
-        "https://ambic.live:443/api/v1/auth/resend-verification",
+        "https://ambic.live:443/api/v1/auth/verification",
         { email: email },
         { headers: { "Content-Type": "application/json" } }
       );

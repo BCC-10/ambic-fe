@@ -16,7 +16,7 @@ const App: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
-    <div className="min-h-screen flex flex-col overflow-x-hidden">
+    <div className="min-h-screen flex flex-col overflow-x-hidden min-w-[560px]">
       <Navbar setOpen={setOpen} open={undefined}/>
       <main className="flex-1 w-full 2xl:overflow-hidden">
         <div className='w-full 2xl:overflow-hidden"'>

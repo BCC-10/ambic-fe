@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import axios from "axios";
 import { debounce } from "lodash";
 
@@ -8,73 +8,94 @@ interface Location {
 }
 
 const Autocomplete = () => {
-    const [query, setQuery] = useState("");
-    const [suggestions, setSuggestions] = useState<Location[]>([]);
-    const [loading, setLoading] = useState(false);
+const [query, setQuery] = useState("");
+const [suggestions, setSuggestions] = useState<Location[]>([]);
+const [loading, setLoading] = useState(false);
+const [latitude, setLatitude] = useState<string | null>(null);
+const [longitude, setLongitude] = useState<string | null>(null);
 
-    // Fungsi untuk mengambil data lokasi dari API
-    const fetchLocations = useCallback(
+// Dapatkan lokasi pengguna saat komponen pertama kali dimuat
+useEffect(() => {
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+        setLatitude(position.coords.latitude.toString());
+        setLongitude(position.coords.longitude.toString());
+        },
+        (error) => {
+        console.error("Error getting location:", error);
+        alert("Gagal mendapatkan lokasi, pastikan izin lokasi diaktifkan.");
+        }
+    );
+    } else {
+    alert("Geolocation tidak didukung di browser ini.");
+    }
+}, []);
+
+// Fungsi untuk mengambil data lokasi dari API
+const fetchLocations = useCallback(
     debounce(async (searchTerm) => {
-        if (!searchTerm) {
+    if (!searchTerm || !latitude || !longitude) {
         setSuggestions([]);
         return;
-        }
+    }
 
-        setLoading(true);
-        try {
-        const response = await axios.get("https://ambic.live:443/api/v1/partners/location", {
-            params: {
+    setLoading(true);
+    try {
+        const response = await axios.get("https://ambic.live:443/api/v1/locations", {
+        params: {
             query: searchTerm,
-            lat: "-7.9611019", // Ganti dengan latitude pengguna jika tersedia
-            long: "112.6066882", // Ganti dengan longitude pengguna jika tersedia
-            radius: "20000", // Radius dalam meter
-            },
-            headers: {
-            Authorization: "Bearer YOUR_ACCESS_TOKEN", // Ganti dengan token autentikasi Anda
-            },
+            lat: latitude, // Menggunakan latitude dari state
+            long: longitude, // Menggunakan longitude dari state
+            radius: "20000",
+        },
+        headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+        },
         });
 
         if (response.data.payload && response.data.payload.locations) {
-            setSuggestions(response.data.payload.locations);
+        setSuggestions(response.data.payload.locations);
         } else {
-            setSuggestions([]);
+        setSuggestions([]);
         }
-        } catch (error) {
+    } catch (error) {
         console.error("Error fetching locations:", error);
         setSuggestions([]);
-        } finally {
+    } finally {
         setLoading(false);
-        }
+    }
     }, 500),
-    []
-    );
+    [latitude, longitude]
+);
 
-    // Handle perubahan input
-    const handleChange = (e) => {
+// Handle perubahan input
+const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setQuery(value);
     fetchLocations(value);
-    };
+};
 
-    return (
+return (
     <div className="autocomplete-container">
-        <input
+    <input
         type="text"
         value={query}
         onChange={handleChange}
         placeholder="Cari lokasi..."
         className="autocomplete-input"
-        />
-        {loading && <p>Loading...</p>}
-        {suggestions.length > 0 && (
+        disabled={!latitude || !longitude} // Disable input jika lokasi belum tersedia
+    />
+    {loading && <p>Loading...</p>}
+    {suggestions.length > 0 && (
         <ul className="autocomplete-suggestions">
-            {suggestions.map((location) => (
+        {suggestions.map((location) => (
             <li key={location.place_id} className="autocomplete-suggestion">
-                {location.name}
+            {location.name}
             </li>
-            ))}
+        ))}
         </ul>
-        )}
+    )}
     </div>
     );
 };

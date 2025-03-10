@@ -9,11 +9,8 @@ import { SwiperRef } from "swiper/react";
 import OrderItem from "../User/MyOrder/Component/OrderItem";
 import {cards} from "../../data/index";
 import { Link, useNavigate } from "react-router-dom";
-import Image1 from "../../assets/Background/OrderItem/Rectangle 76.png"
-import Image2 from "../../assets/Background/OrderItem/Rectangle 76 (1).png"
-import Image3 from "../../assets/Background/OrderItem/Rectangle 76 (2).png"
-import Image4 from "../../assets/Background/OrderItem/Rectangle 76 (3).png"
 import { useCart } from "../../Componets/Util/useCart";
+import { dummyProducts } from '../../data/index';
 
 interface CardItem {
     id: number;
@@ -38,12 +35,6 @@ const Order = () => {
         }
     }, []);
 
-    const dummyProducts = [
-        { id: "1", name: "Black Jack", price: 11000, image: Image1, quantity: 1, checked: false },
-        { id: "2", name: "Alcapone", price: 12000, image: Image2, quantity: 1, checked: false },
-        { id: "3", name: "Copa Banana", price: 8000, image: Image3, quantity: 1, checked: false },
-        { id: "4", name: "Pisang Keju", price: 8000, image: Image4, quantity: 1 , checked: false},
-    ];
 
     return (
         <main className='relative min-h-screen w-full flex flex-col overflow-hidden '>

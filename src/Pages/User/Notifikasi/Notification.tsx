@@ -16,11 +16,7 @@ export const Notif = () => {
                     <p>19-02-2025   11:42</p>
                 </div>
             </div>
-        <div className='mx-5 my-2'>
-            <h1 className='font-Poppins text-xl font-semibold my-2'>Copa Banana</h1>
-            <h2 className='font-Poppins text-lg font-semibold'>Rp 22.000 <span className='line-through relative -top-1 text-xs font-medium text-gray-500'>Rp 30.000</span></h2>
         </div>
-    </div>
     )
 }
 const Notification = () => {

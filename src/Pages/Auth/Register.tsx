@@ -24,8 +24,7 @@ const Register = () => {
 
   const handleLoginWithGoogle = async () => {
     try {
-      const response = await axios.get("https://ambic.live/api/v1/auth/google", {withCredentials: true});
-  
+      const response = await axios.get("https://ambic.live/api/v1/auth/google");
       if (response.data.payload?.url) {
         window.location.href = response.data.payload.url; // Redirect ke URL yang diberikan API
       } else {

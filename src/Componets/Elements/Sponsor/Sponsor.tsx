@@ -63,7 +63,7 @@ const Sponsor: React.FC = () => {
                     swiperRef.current = swiper as SwiperType; // Simpan referensi Swiper
                 }}
                 ref={SwiperRef}
-                className='mySwiper w-full'
+                className='swiper w-full'
             >
                 {Sponsors.map((card: CardItem) => (
                     <SwiperSlide key={card.id} className='w-full'>

@@ -22,9 +22,6 @@ const MOdal: React.FC<OrderItem> = ({onClose}) => {
             <h3 className='text-base font-Poppins font-medium'>Rp 22.000 <span className='line-through text-xs relative -top-1 text-gray-500'>Rp 30.000</span></h3>
             <img src={Stars} alt="" className='w-5'/>
             <h5 className='absolute top-15 left-13 text-gray-500 text-sm '>4.9 (34)</h5>
-            <div className='w-20 h-7 bg-teal-700 rounded-full flex items-center justify-center drop-shadow-lg transition-transform duration-330 hover:scale-95 cursor-pointer absolute right-5 bottom-4'>
-                <button onClick={onClose} className='text-white font-Poppins text-sm font-medium cursor-pointer'>Selesai</button>
-            </div>
         </div>
     </div>
     </main>

@@ -6,18 +6,25 @@ import Image5 from '../assets/Background/How/brooke-lark-IDTEXXXfS44-unsplash.jp
 import Banner1 from "../../src/assets/Background/Hero/anastasia-zhenina-YT_DCMps5Wg-unsplash.jpg";
 import Banner2 from "../../src/assets/Background/Hero/jonathan-pielmayer-c69HK1HKHYs-unsplash.jpg";
 import Banner3 from "../../src/assets/Background/Hero/v2osk-c9OfrVeD_tQ-unsplash.jpg";
-import PaymentMethod1 from "../assets/ICons/PaymenMethod/Rectangle 30.png"
-import PaymentMethod2 from "../assets/ICons/PaymenMethod/Screenshot 2025-03-01 013329.png"
-import PaymentMethod3 from "../assets/ICons/PaymenMethod/Rectangle 41.png"
-import BrandTalk from "../assets/Background/Mitra/image 9 (1).png";
-import JCO from "../assets/Background/Mitra/Group 45.png";
-import RotiO from "../assets/Background/Mitra/Mask group.png";
-import Bakery from "../assets/Background/Mitra/image 10.png";
-import Filkom from "../assets/Background/Sponsor/image 6.png"
-import Pertamuda from "../assets/Background/Sponsor/image 2.png"
-import KementerianLingkungan from "../assets/Background/Sponsor/image 3.png"
-import UB from "../assets/Background/Sponsor/image 4.png"
-import BCC from "../assets/Background/Sponsor/image 5.png"
+import PaymentMethod1 from "../assets/ICons/PaymenMethod/Group 49 (1).png"
+import PaymentMethod2 from "../assets/ICons/PaymenMethod/image (1).png"
+import PaymentMethod3 from "../assets/ICons/PaymenMethod/image (2).png"
+import PaymentMethod4 from "../assets/ICons/PaymenMethod/image.png"
+import RotiO from "../assets/Background/Mitra/Group 47.png"
+import JCO from "../assets/Background/Mitra/Group 48.png"
+import BreadTalk from "../assets/Background/Mitra/Group 49.png"
+import Bakery from "../assets/Background/Mitra/image 10.png"
+import Hokben from "../assets/Background/Mitra/Hokben Logo PNG Vector (AI,  CDR,  EPS,  PDF,  SVG) Free Download.jpeg 1.png"
+import Puyo from "../assets/Background/Mitra/Puyo Desserts Logo.jpeg 1.png"
+import KFC from "../assets/Background/Mitra/WhatsApp Image 2025-03-09 at 21.45.07_56c2d428 1.png"
+import Dapur from "../assets/Background/Mitra/WhatsApp Image 2025-03-09 at 21.45.07_8606fbe1 1.png"
+import Harbour from "../assets/Background/Mitra/WhatsApp Image 2025-03-09 at 21.45.07_8f903960 1.png"
+import Filkom from "../assets/Background/Sponsor/Frame 324.png"
+import Pertamuda from "../assets/Background/Sponsor/Frame 325.png"
+import KementerianLingkungan from "../assets/Background/Sponsor/Frame 327.png"
+import UB from "../assets/Background/Sponsor/Frame 326.png"
+import BCC from "../assets/Background/Sponsor/Frame 328.png"
+import BPN from "../assets/Background/Sponsor/Frame 323.png"
 import Footer1 from "../assets/ICons/Footer/Rectangle 18.png"
 import Footer2 from "../assets/ICons/Footer/Rectangle 40 (1).png"
 import Footer3 from "../assets/ICons/Footer/Rectangle 41 (1).png"
@@ -31,6 +38,10 @@ import Mitra3 from "../assets/Hiasan/Mitra/Rectangle 42 (2).png"
 import Mitra4 from "../assets/Hiasan/Mitra/Rectangle 42 (3).png"
 import Mitra5 from "../assets/Hiasan/Mitra/Rectangle 42 (4).png"
 import Mitra6 from "../assets/Hiasan/Mitra/Rectangle 42 (5).png"
+import Order1 from "../assets/Background/OrderItem/Rectangle 76.png"
+import Order2 from "../assets/Background/OrderItem/Rectangle 76 (1).png"
+import Order3 from "../assets/Background/OrderItem/Rectangle 76 (2).png"
+import Order4 from "../assets/Background/OrderItem/Rectangle 76 (3).png"
 
 
 const menuItems: Array<{text: string, to?:string}> = [
@@ -55,14 +66,19 @@ const Images: Array<{Image: string}> = [
     {Image: PaymentMethod1},
     {Image: PaymentMethod2},
     {Image: PaymentMethod3},
+    {Image: PaymentMethod4},
 ]
 
     const cards = [
-        { id: 1, title: "Card 1", description: BrandTalk },
+        { id: 1, title: "Card 1", description: BreadTalk },
         { id: 2, title: "Card 2", description: JCO },
         { id: 3, title: "Card 3", description:  RotiO },
         { id: 4, title: "Card 4", description: Bakery },
-        
+        { id: 5, title: "Card 5", description: Hokben },
+        { id: 6, title: "Card 6", description: Puyo },
+        { id: 7, title: "Card 7", description: KFC},
+        { id: 8, title: "Card 8", description: Harbour},
+        { id: 9, title: "Card 9", description: Dapur },
     ];
 
 const Sponsors = [
@@ -71,6 +87,7 @@ const Sponsors = [
     { id : 3, title : "Card 3", description: KementerianLingkungan},
     { id : 4, title : "Card 4", description: UB},
     { id : 5, title : "Card 5", description: BCC},
+    { id : 5, title : "Card 5", description: BPN},
 ]
 
 const Logins: Array<{name:string, type: string, placeholder: string, icon?: React.ReactNode, content:string}> = [
@@ -121,8 +138,15 @@ const Footers: Array<{Image:string}> = [
     {Image : Footer3},
 ]
 
+const dummyProducts = [
+    { id: "1", name: "Black Jack", price: 11000, image: Order1, quantity: 1, checked: false },
+    { id: "2", name: "Alcapone", price: 12000, image: Order2, quantity: 1, checked: false },
+    { id: "3", name: "Copa Banana", price: 8000, image: Order3, quantity: 1, checked: false },
+    { id: "4", name: "Pisang Keju", price: 8000, image: Order4, quantity: 1 , checked: false},
+];
 
-export { menuItems, Content, slides, Images, cards, Sponsors, Logins, Registers, PassNew, Cards, RegisterMitra, Footers, RegisterUser };
+
+export { menuItems, Content, slides, Images, cards, Sponsors, Logins, Registers, PassNew, Cards, RegisterMitra, Footers, RegisterUser, dummyProducts};
 
 
 

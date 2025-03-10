@@ -8,10 +8,7 @@ import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import { SwiperRef } from "swiper/react";
-import Image1 from "../../../assets/Background/OrderItem/Rectangle 76.png"
-import Image2 from "../../../assets/Background/OrderItem/Rectangle 76 (1).png"
-import Image3 from "../../../assets/Background/OrderItem/Rectangle 76 (2).png"
-import Image4 from "../../../assets/Background/OrderItem/Rectangle 76 (3).png"
+import { dummyProducts } from '../../../data';
 
 const MyOrder = () => {
     const [open, setOpen] = useState<boolean>(false);
@@ -29,12 +26,7 @@ const MyOrder = () => {
             swiperRef.current.navigation.update();
         }
     }, []);
-    const dummyProducts = [
-        { id: "1", name: "Black Jack", price: 11000, image: Image1, quantity: 1, checked: false },
-        { id: "2", name: "Alcapone", price: 12000, image: Image2, quantity: 1, checked: false },
-        { id: "3", name: "Copa Banana", price: 8000, image: Image3, quantity: 1, checked: false },
-        { id: "4", name: "Pisang Keju", price: 8000, image: Image4, quantity: 1 , checked: false},
-    ];
+
 
     return (
         <main className='min-h-auto w-full overflow-hidden flex flex-col'>

@@ -9,6 +9,7 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import { SwiperRef } from "swiper/react";
 import { Dialog } from "primereact/dialog";
 import Modals from "./ModalLocate/MOdal"
+import { dummyProducts } from '../../../data';
 
 const OrderActive = () => {
     const [open, setOpen] = useState<boolean>(false);const prevRef = useRef<HTMLButtonElement | null>(null);
@@ -62,7 +63,7 @@ const OrderActive = () => {
                     ref={SwiperRef}
                     className='swiper w-[70%]'
                 >
-                        {[...Array(7)].map((_, idx) => (
+                        {dummyProducts.map((_, idx) => (
                             <SwiperSlide><OrderItem onClick={() => setVisible(true)} text="Selesai"/></SwiperSlide>
                         ))}
                     </Swiper>

@@ -7,6 +7,7 @@ import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import { SwiperRef } from "swiper/react";
+import { dummyProducts } from '../../../data';
 
 const OrderDone = () => {
     const [open, setOpen] = useState<boolean>(false);
@@ -61,7 +62,7 @@ const OrderDone = () => {
                     ref={SwiperRef}
                     className='swiper w-[80%]'
                 >
-                        {[...Array(5)].map((_,index)=> (
+                        {dummyProducts.map((_,index)=> (
                             <SwiperSlide><OrderItem text="Nilai"/></SwiperSlide>
                         ))}
                         
@@ -71,6 +72,7 @@ const OrderDone = () => {
             <div>
                 <Footer />
             </div>
+            <Modal open={open} onClose={() => setOpen(false)} />
         </main>
     )
 }
