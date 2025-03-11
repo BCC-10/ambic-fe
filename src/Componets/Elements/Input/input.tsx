@@ -11,9 +11,10 @@ interface Inputs {
     onChange?: (e: any) => void;
     width?:string;
     color?:string
+    select?: boolean
 }
 
-const Input: React.FC<Inputs> = ({ type, placeholder, className, content, icon, value, onChange, width , color, name}) => {
+const Input: React.FC<Inputs> = ({ type, placeholder, className, content, icon, value, onChange, width , color, name, select}) => {
     return (
         <div className={`flex flex-col gap-2 items-start ${width}`}>
             {content && <label className={`font-semibold ${color}`}>{content}</label>}
@@ -26,6 +27,17 @@ const Input: React.FC<Inputs> = ({ type, placeholder, className, content, icon, 
                     value={value}
                     onChange={onChange}
                 />
+                {select === true ? 
+                <select
+                name='gender'
+                value={value}
+                onChange={onChange}
+                className={` p-2 pr-12 rounded-2xl bg-gray-200 focus:outline-none  ${className}`}
+                >
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select> : <></>
+            }
                 {icon && (
                     <div className="absolute inset-y-13 right-8 flex items-center text-gray-600">
                         {icon}

@@ -1,15 +1,24 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import AvatarEditor from "react-avatar-edit";
 import { Dialog } from "primereact/dialog";
 import Profile from "../../../assets/Background/Sponsor/image 4.png"
 import { BiCamera } from "react-icons/bi";
 import axios from 'axios';
 import Swal from 'sweetalert2';
+
+interface userData {
+    photo: string | Blob | File 
+}
 const ChangePicture: React.FC = () => {
-    const [preview, setPreview] = useState<string | null>(null);
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
     const [cropedImage, setCropedImage] = useState<Blob | null>(null)
     const [loading, setLoading] = useState<boolean>(false);
+    const [preview, setPreview] = useState<userData | null >({ photo: Profile  } ) ;
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+            useEffect(() => {
+            const token = localStorage.getItem("token");
+            setIsLoggedIn(!!token)
+            }, [])
 
     const token = localStorage.getItem("token");
 
@@ -20,7 +29,7 @@ const ChangePicture: React.FC = () => {
     };
 
     // Simpan hasil crop ke state
-    const onCrop = (preview: string) => {
+    const onCrop = (preview : any) => {
         setPreview(preview);
 
         fetch(preview)
@@ -30,26 +39,59 @@ const ChangePicture: React.FC = () => {
             })
     };
 
+        useEffect(() => {
+            if(token) {
+                setIsLoggedIn(true);
+                fecthUserData();
+            } else {
+                setIsLoggedIn(false);
+            }
+        }, [])
+
+    const fecthUserData = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.get("https://ambic.live:443/api/v1/users/profile", {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+    
+            if (response.data.status_code === 200) {
+                // Pastikan mengambil data dari response dengan struktur yang benar
+                const apiUser = response.data.payload.user; // Ambil data dari "user"
+                
+                setPreview({
+                    photo: apiUser.photo
+                });
+            }
+        } catch (err: any) {
+            console.log("Error Fetching user data:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
     const uploadProfilePicture = async () => {
         if(!cropedImage) {
             alert("Pilih Gambar Dulu")
             return;
         }
 
-        setLoading(true);
-        const formData = new FormData();
-        formData.append("photo", cropedImage, "profile.jpg");
-
         try {
-            const response = await axios.patch("https://ambic.live:443/api/v1/users", formData, {
+            const formData = new FormData();
+            formData.append("photo", cropedImage);
+            const response = await axios.patch("https://ambic.live:443/api/v1/users", formData,  {
+                // withCredentials: true,
                 headers: {
                     "Authorization": `Bearer ${token}`,
                     "Content-Type": "multipart/form-data",
                 },
             }
         )
-        if(response.data.status_code === 200){
-            alert("foto profile berhasil diperbarui!")
+        if( response.data.status_code === 200){
+            Swal.fire("Berhasil", "Berhasil mengupdate data", "success");
             setIsDialogOpen(false);
         }
         }catch (err : any){
@@ -66,7 +108,14 @@ const ChangePicture: React.FC = () => {
                     title: "Oops...",
                     text: "Gambarmu terlalu besar. Max 5MB",
                 });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Gagal terhubung ke server.",
+                });
             }
+            console.log(err)
         } finally {
             setLoading(false);
         }
@@ -77,7 +126,11 @@ const ChangePicture: React.FC = () => {
             <div className="relative flex flex-col justify-center items-center w-[100px] h-[100px]">
                 {/* Preview Gambar */}
                 <img
-                    src={preview || Profile}
+                    src={typeof preview === "string"
+                        ? preview
+                        : preview instanceof Blob || preview instanceof File
+                        ? URL.createObjectURL(preview)
+                        : Profile}
                     alt="Profile"
                     className="w-[120px] h-[120px] rounded-full object-cover bg-none drop-shadow-xl"
                 />

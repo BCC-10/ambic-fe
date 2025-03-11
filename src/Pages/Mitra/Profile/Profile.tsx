@@ -21,7 +21,7 @@ const Profile: React.FC = () => {
                     <div className='w-[80%] h-[65%] flex items-start flex-col max-md:items-center'>
                         <h1 className='font-Poppins text-xl font-semibold '>Profile Picture</h1>
                         <div className='w-full flex items-center justify-center flex-col'>
-                            <ChangePicture/>
+                            {/* <ChangePicture/> */}
                             <div className='w-full h-full flex justify-center gap-7 max-md:flex-col max-md:items-center'>
                                 <div className='flex flex-col gap-4 w-1/2 h-full'>
                                     {RegisterMitra.slice(0, 3).map((_,idx) => (

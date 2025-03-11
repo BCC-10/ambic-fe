@@ -11,6 +11,15 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from 'axios'
 
+interface userData {
+    username?: string
+    email?: string
+    name: string,
+    phone: string,
+    address: string,
+    gender: string,
+}
+
 const Profile: React.FC = () => {
     const Navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
@@ -38,7 +47,7 @@ const Profile: React.FC = () => {
             });
         };
     const [open, setOpen] = useState<boolean>(false);
-    const [userData, setUserData] = useState({
+    const [userData, setUserData] = useState<userData>({
         name: '',
         phone: '',
         address: '',
@@ -49,7 +58,7 @@ const Profile: React.FC = () => {
     useEffect(() => {
         if(token) {
             setIsLoggedIn(true);
-            // fetchUserData();
+            fecthUserData();
         } else {
             setIsLoggedIn(false);
             Navigate("/login")
@@ -57,29 +66,43 @@ const Profile: React.FC = () => {
     }, [])
 
     const fecthUserData = async () => {
-        try{
+        try {
             setLoading(true);
             const response = await axios.get("https://ambic.live:443/api/v1/users/profile", {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 }
-            })
-            if(response.data.status_code === 200 ) {
-                setUserData(response.data.payload);
+            });
+    
+            if (response.data.status_code === 200) {
+                // Pastikan mengambil data dari response dengan struktur yang benar
+                const apiUser = response.data.payload.user; // Ambil data dari "user"
+                
+                setUserData({
+                    username: apiUser.username || '',
+                    email: apiUser.email || '',
+                    name: apiUser.name || '',
+                    phone: apiUser.phone || '',
+                    address: apiUser.address || '',
+                    gender: apiUser.gender || ''
+                });
             }
-        } catch (err : any) {
-            console.log("Eror Fatching user data : ", err)
+        } catch (err: any) {
+            console.log("Error Fetching user data:", err);
         } finally {
             setLoading(false);
         }
-    }
+    };
+    
 
     const updateUserData = async () => {
         try {
             setLoading(true);
+
             const response = await axios.patch("https://ambic.live:443/api/v1/users", userData, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
                 }
             })
             if(response.data.status_code === 200 ) {
@@ -92,14 +115,13 @@ const Profile: React.FC = () => {
         }
     }
 
-    const handleInputChange = (e : React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value } = e.target;
+    const handleInputChange = (e ) => {
+
         setUserData((prev) => ({
             ...prev, 
-            [name]: value 
+            [e.target.name]: e.target.value 
         }));
     }
-
 
 
     return (
@@ -124,13 +146,13 @@ const Profile: React.FC = () => {
                                     type={_.type}
                                     placeholder={_.placeholder}
                                     width='w-100'
-                                    value={userData[_.name as keyof typeof userData]}
+                                    value={userData[_.name as keyof typeof userData] || ''}
                                     onChange={handleInputChange}
                                 />
                             ))}
                         </div>
                         <div className='flex flex-col items-center justify-center gap-3 max-md:p-2 '>
-                        {RegisterUser.slice(3, 6).map((_,idx)=>(
+                        {RegisterUser.slice(3, 5).map((_,idx)=>(
                                 <Input
                                     key={idx}
                                     name={_.name}
@@ -139,10 +161,25 @@ const Profile: React.FC = () => {
                                     type={_.type}
                                     placeholder={_.placeholder}
                                     width='w-100'
-                                    value={userData[_.name as keyof typeof userData]}
+                                    value={userData[_.name as keyof typeof userData] || ''}
                                     onChange={handleInputChange}
                                 />
                             ))}
+                        {RegisterUser.slice(5, 6).map((_,idx)=>(
+                            <div className='w-full flex flex-col items-start justify-center gap-3 max-md:p-2' key={idx}>
+                                <label htmlFor="" className='font-Poppins font-semibold '>Jenis Kelamin</label>
+                                <select
+                                    name={_.name}
+                                    className='p-2 pr-12 w-full rounded-xl bg-gray-200 focus:outline-none'
+                                    value={userData[_.name as keyof typeof userData] || ''}
+                                    onChange={handleInputChange}
+                            >
+                                <option value="male">Laki-laki</option>
+                                <option value="female">Perempuan</option>
+                                </select>
+                            </div>
+                            )
+                        )}
                         </div>
                     </div>
                     <div className='flex items-center jsutify-center gap-5 w-full h-full flex-col '>

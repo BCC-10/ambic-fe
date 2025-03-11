@@ -1,7 +1,7 @@
 import {useState, useEffect, useMemo} from 'react'
 
 export interface cartItem {
-    id: string
+    id?: string
     name: string
     price: number
     quantity: number

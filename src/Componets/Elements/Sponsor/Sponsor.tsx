@@ -9,10 +9,10 @@ import {Sponsors} from "../../../data/index";
 import { Swiper as SwiperType } from "swiper";
 import { SwiperRef } from "swiper/react";
 
-interface CardItem {
-    id: number;
-    description: string;
-}
+// interface CardItem {
+//     id: number;
+//     description: string;
+// }
 const Sponsor: React.FC = () => {
     const prevRef = useRef<HTMLButtonElement | null>(null);
     const nextRef = useRef<HTMLButtonElement | null>(null);
@@ -65,8 +65,8 @@ const Sponsor: React.FC = () => {
                 ref={SwiperRef}
                 className='swiper w-full'
             >
-                {Sponsors.map((card: CardItem) => (
-                    <SwiperSlide key={card.id} className='w-full'>
+                {Sponsors.map((card, idx) => (
+                    <SwiperSlide key={idx} className='w-full'>
                         <div className="bg-none rounded-xl p-6 text-center w-full flex items-center justify-center">
                             <img src={card.description} alt="" className='w-full h-full  max-sm:w-1/2 object-cover bg-none drop-shadow-xl '/>
                         </div>

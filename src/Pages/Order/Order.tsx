@@ -35,7 +35,6 @@ const Order = () => {
         }
     }, []);
 
-
     return (
         <main className='relative min-h-screen w-full flex flex-col overflow-hidden '>
             <div>
@@ -78,7 +77,7 @@ const Order = () => {
                     className='swiper w-[70%]'
                 >
                         {dummyProducts.map((_,idx)=> (
-                            <SwiperSlide ><OrderItem key={idx} onClick={() => navigate("/order/description")} text="+ Keranjang" product={_} onAddToCart={() => _ && addToCart(_)}/></SwiperSlide>
+                            <SwiperSlide  key={`${_.name}-${idx}`}><OrderItem onClick={() => navigate("/order/description")} text="+ Keranjang" product={_} onAddToCart={() => _ && addToCart(_)}/></SwiperSlide>
                         ))}
                         
                 </Swiper>
@@ -115,9 +114,9 @@ const Order = () => {
                 ref={SwiperRef}
                 className='swiper w-[50%] absolute bottom-20'
             >
-                {cards.map((card, idx) => (
-                    <SwiperSlide key={idx} className='w-full'>
-                        <div className="bg-none rounded-xl p-6 text-center w-full flex items-center justify-center">
+                {cards.map((card, idex) => (
+                    <SwiperSlide key={`${card.id}-${idex}`} className='w-full'>
+                        <div className="bg-none rounded-xl p-6 text-center w-full flex items-center justify-center" >
                             <img src={card.description} alt="" className='w-full h-full  max-sm:w-1/2 object-cover bg-none drop-shadow-xl'/>
                         </div>
                     </SwiperSlide>

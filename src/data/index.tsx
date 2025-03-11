@@ -124,12 +124,12 @@ const RegisterMitra: Array<{content:string, type:string, placeholder:string, tex
 ]
 
 const RegisterUser = [
-    {content: "Username", type: "text", placeholder:"Your username"},
+    {name: "username",content: "Username", type: "text", placeholder:"Your username"},
     {name: "name",content: "Nama", type: "text", placeholder:"Your Name"},
-    {content: "Email", type: "email", placeholder:"Your Email"},
+    {name:"email", content: "Email", type: "email", placeholder:"Your Email"},
     {name: "phone",content: "Nomor Telepon", type: "number", placeholder:"Your Number Phone"},
-    {name: "gender",content: "jenis Kelamin", type: "text", placeholder:"Your Gender"},
     {name: "address",content: "Almat", type: "text", placeholder:"Your Address"},
+    {name: "gender",content: "jenis Kelamin", type: "text", placeholder:"male or female"},
 ]
 
 const Footers: Array<{Image:string}> = [
