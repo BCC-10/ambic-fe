@@ -125,11 +125,11 @@ const RegisterMitra: Array<{content:string, type:string, placeholder:string, tex
 
 const RegisterUser = [
     {content: "Username", type: "text", placeholder:"Your username"},
-    {content: "Nama", type: "text", placeholder:"Your Name"},
+    {name: "name",content: "Nama", type: "text", placeholder:"Your Name"},
     {content: "Email", type: "email", placeholder:"Your Email"},
-    {content: "Nomor Telepon", type: "number", placeholder:"Your Number Phone"},
-    {content: "jenis Kelamin", type: "text", placeholder:"Your Gender"},
-    {content: "Almat", type: "text", placeholder:"Your Address"},
+    {name: "phone",content: "Nomor Telepon", type: "number", placeholder:"Your Number Phone"},
+    {name: "gender",content: "jenis Kelamin", type: "text", placeholder:"Your Gender"},
+    {name: "address",content: "Almat", type: "text", placeholder:"Your Address"},
 ]
 
 const Footers: Array<{Image:string}> = [
@@ -139,10 +139,10 @@ const Footers: Array<{Image:string}> = [
 ]
 
 const dummyProducts = [
-    { id: "1", name: "Black Jack", price: 11000, image: Order1, quantity: 1, checked: false },
-    { id: "2", name: "Alcapone", price: 12000, image: Order2, quantity: 1, checked: false },
-    { id: "3", name: "Copa Banana", price: 8000, image: Order3, quantity: 1, checked: false },
-    { id: "4", name: "Pisang Keju", price: 8000, image: Order4, quantity: 1 , checked: false},
+    {  name: "Black Jack", price: 11000, image: Order1, quantity: 1, checked: false },
+    {  name: "Alcapone", price: 12000, image: Order2, quantity: 1, checked: false },
+    {  name: "Copa Banana", price: 8000, image: Order3, quantity: 1, checked: false },
+    {  name: "Pisang Keju", price: 8000, image: Order4, quantity: 1 , checked: false},
 ];
 
 

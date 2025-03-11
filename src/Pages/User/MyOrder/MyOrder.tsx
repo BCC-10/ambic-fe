@@ -68,7 +68,7 @@ const MyOrder = () => {
                                 ref={SwiperRef}
                                 className='swiper '
                             >
-                                {dummyProducts.map((_,index)=> (
+                                {dummyProducts.map((_)=> (
                                     <SwiperSlide><OrderItem text="Nilai" product={_} key={_.id}/></SwiperSlide>
                                 ))}
                             </Swiper>

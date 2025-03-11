@@ -63,7 +63,7 @@ const OrderActive = () => {
                     ref={SwiperRef}
                     className='swiper w-[70%]'
                 >
-                        {dummyProducts.map((_, idx) => (
+                        {dummyProducts.map((_) => (
                             <SwiperSlide><OrderItem onClick={() => setVisible(true)} text="Selesai"/></SwiperSlide>
                         ))}
                     </Swiper>

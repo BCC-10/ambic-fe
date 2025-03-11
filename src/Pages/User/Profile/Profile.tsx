@@ -8,6 +8,8 @@ import Input from "../../../Componets/Elements/Input/input"
 import { Button } from "primereact/button";
 import {RegisterUser} from "../../../data/index"
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import axios from 'axios'
 
 const Profile: React.FC = () => {
     const Navigate = useNavigate();
@@ -16,13 +18,90 @@ const Profile: React.FC = () => {
         const token = localStorage.getItem("token");
         setIsLoggedIn(!!token)
         }, [])
-    const handleLogOut = () => {
-        localStorage.removeItem("token");
-        setIsLoggedIn(false)
-        Navigate("/")
-        console.log(handleLogOut())
-    }
+        const handleLogOut = () => {
+            Swal.fire({
+                title: "Logout!",
+                text: "Apakah Anda yakin untuk logout?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                cancelButtonText: "Batal",
+                confirmButtonText: "Lanjut!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.removeItem("token");
+                    setIsLoggedIn(false);
+                    Navigate("/");
+                    Swal.fire("Logged Out", "You have been logged out successfully.", "success");
+                }
+            });
+        };
     const [open, setOpen] = useState<boolean>(false);
+    const [userData, setUserData] = useState({
+        name: '',
+        phone: '',
+        address: '',
+        gender: ''
+    });
+    const [loading, setLoading] = useState<boolean>(false)
+    const token = localStorage.getItem("token")
+    useEffect(() => {
+        if(token) {
+            setIsLoggedIn(true);
+            // fetchUserData();
+        } else {
+            setIsLoggedIn(false);
+            Navigate("/login")
+        }
+    }, [])
+
+    const fecthUserData = async () => {
+        try{
+            setLoading(true);
+            const response = await axios.get("https://ambic.live:443/api/v1/users/profile", {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            })
+            if(response.data.status_code === 200 ) {
+                setUserData(response.data.payload);
+            }
+        } catch (err : any) {
+            console.log("Eror Fatching user data : ", err)
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const updateUserData = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.patch("https://ambic.live:443/api/v1/users", userData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            })
+            if(response.data.status_code === 200 ) {
+                Swal.fire("Berhasil", "Berhasil mengupdate data", "success");
+            }
+        } catch (err : any) {
+            console.log("Eror Updating user data : ", err)
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const handleInputChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value } = e.target;
+        setUserData((prev) => ({
+            ...prev, 
+            [name]: value 
+        }));
+    }
+
+
+
     return (
         <main className='min-h-screen w-full flex flex-col  overflow-hidden  '>
             <div>
@@ -39,11 +118,14 @@ const Profile: React.FC = () => {
                             {RegisterUser.slice(0, 3).map((_,idx)=>(
                                 <Input
                                     key={idx}
+                                    name={_.name}
                                     content={_.content}
                                     className='w-full h-auto px-4 rounded-xl'
                                     type={_.type}
                                     placeholder={_.placeholder}
                                     width='w-100'
+                                    value={userData[_.name as keyof typeof userData]}
+                                    onChange={handleInputChange}
                                 />
                             ))}
                         </div>
@@ -51,11 +133,14 @@ const Profile: React.FC = () => {
                         {RegisterUser.slice(3, 6).map((_,idx)=>(
                                 <Input
                                     key={idx}
+                                    name={_.name}
                                     content={_.content}
                                     className='w-full h-auto px-4 rounded-xl'
                                     type={_.type}
                                     placeholder={_.placeholder}
                                     width='w-100'
+                                    value={userData[_.name as keyof typeof userData]}
+                                    onChange={handleInputChange}
                                 />
                             ))}
                         </div>
@@ -68,6 +153,8 @@ const Profile: React.FC = () => {
                             rounded
                             className='w-1/4 h-1/2 px-5 py-3 text-white font-Poppins font-semibold text-xl bg-teal-700/85 rounded-full drop-shadow-xl'
                             style={{backgroundColor: 'var(--teal-700)', border:'none'}}
+                            onClick={updateUserData}
+                            disabled={loading}
                             />
                             
                         </div>

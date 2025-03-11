@@ -62,7 +62,7 @@ const OrderDone = () => {
                     ref={SwiperRef}
                     className='swiper w-[80%]'
                 >
-                        {dummyProducts.map((_,index)=> (
+                        {dummyProducts.map((_)=> (
                             <SwiperSlide><OrderItem text="Nilai"/></SwiperSlide>
                         ))}
                         

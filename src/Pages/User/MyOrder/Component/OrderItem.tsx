@@ -13,7 +13,7 @@ interface OrderItem{
 const OrderItem : React.FC<OrderItem> = ({onClick, text, product, onAddToCart}) => {
     
     return (
-        <button onClick={onClick} className='flex items-start flex-col p-3 cursor-pointer'>
+        <main onClick={onClick} className='flex items-start flex-col p-3 cursor-pointer'>
             <div className='relative min-h-[370px] max-w-[300px] flex items-start justify-start flex-col bg-white drop-shadow-xl rounded-3xl'>
                 <div className='relative w-full flex items-center justify-center rounded-xl h-1/4  '>
                     <img src={product?.image} alt="" />
@@ -34,7 +34,7 @@ const OrderItem : React.FC<OrderItem> = ({onClick, text, product, onAddToCart}) 
                 </div>
             </div>
         </div>
-        </button >
+        </main >
     )
 }
 

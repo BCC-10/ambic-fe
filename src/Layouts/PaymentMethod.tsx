@@ -6,7 +6,7 @@ const PaymentMethod: React.FC = () => {
 
 
     return (
-        <div className='min-h-[50vh] flex flex-col items-center justify-center  bg-teal-700/85 w-full p-10 gap-7'>
+        <div className='min-h-[30vh] flex flex-col items-center justify-center  bg-teal-700/85 w-full p-10 gap-7'>
             <div className='flex items-center justify-center '>
                 <h1 className='font-Poppins font-bold text-3xl text-white'>Metode Pembayaran</h1>
             </div>

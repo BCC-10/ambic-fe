@@ -30,6 +30,7 @@ import FoodWeste from "./Pages/FoodWeste/FoodWeste";
 import Relawan from "./Pages/Relawan/Relawan";
 import About from "./Pages/About/About";
 import Autocomplete from "./assets/test/AutoComplate";
+import Penilaian from "./Pages/Mitra/Penilaian/Index"
 
 const app: React.FC = () => {
 
@@ -67,6 +68,7 @@ const app: React.FC = () => {
                     <Route path="/relawan" element={<Relawan/>}/>
                     <Route path="/about" element={<About/>}/>
                     <Route path="/autocomplete" element={<Autocomplete/>}/>
+                    <Route path="/mitra/penilaian" element={<Penilaian/>}/>
                 </Routes>
             </Router>
     </AuthProvider>

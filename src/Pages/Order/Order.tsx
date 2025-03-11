@@ -12,10 +12,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../Componets/Util/useCart";
 import { dummyProducts } from '../../data/index';
 
-interface CardItem {
-    id: number;
-    description: string;
-}
+// interface CardItem {
+//     id: number;
+//     description: string;
+// }
 const Order = () => {
     const [open, setOpen] = useState<boolean>(false);
     const prevRef = useRef<HTMLButtonElement | null>(null);
@@ -77,8 +77,8 @@ const Order = () => {
                     ref={SwiperRef}
                     className='swiper w-[70%]'
                 >
-                        {dummyProducts.map((_,index)=> (
-                            <SwiperSlide ><OrderItem key={_.id} onClick={() => navigate("/order/description")} text="+ Keranjang" product={_} onAddToCart={() => _ && addToCart(_)}/></SwiperSlide>
+                        {dummyProducts.map((_,idx)=> (
+                            <SwiperSlide ><OrderItem key={idx} onClick={() => navigate("/order/description")} text="+ Keranjang" product={_} onAddToCart={() => _ && addToCart(_)}/></SwiperSlide>
                         ))}
                         
                 </Swiper>
@@ -115,8 +115,8 @@ const Order = () => {
                 ref={SwiperRef}
                 className='swiper w-[50%] absolute bottom-20'
             >
-                {cards.map((card: CardItem) => (
-                    <SwiperSlide key={card.id} className='w-full'>
+                {cards.map((card, idx) => (
+                    <SwiperSlide key={idx} className='w-full'>
                         <div className="bg-none rounded-xl p-6 text-center w-full flex items-center justify-center">
                             <img src={card.description} alt="" className='w-full h-full  max-sm:w-1/2 object-cover bg-none drop-shadow-xl'/>
                         </div>

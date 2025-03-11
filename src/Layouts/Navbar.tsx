@@ -70,12 +70,12 @@ const Navbar: React.FC<NavbarProps> = ({open,setOpen}) => {
 
     return (
       <div className="flex gap-7 font-Poppins font-semibold items-center">
-        {menuItems.map((items, index) => {
+        {menuItems.map((items, idx) => {
           const isActive = location.pathname === items.to; // Cek apakah aktif
   
           return (
             <button
-              key={index}
+              key={idx}
               className={`cursor-pointer px-4 py-1 rounded-full transition duration-290 ease-linear 
                 ${isActive ? "bg-teal-700/85 text-white" : "bg-transparent text-black hover:text-teal-700/85"}`}
             >
@@ -160,7 +160,7 @@ const Navbar: React.FC<NavbarProps> = ({open,setOpen}) => {
 
           <LocateButton setOpen={setOpen} open={isOpen}/>
           <div className="flex justify-center items-center hover:scale-110 transition duration-330 cursor-pointer ease-in">
-            <img src={Cart} alt="" className="w-7 h-7 ml-2" />
+            <button onClick={() => Navigate("/cart")}><img src={Cart} alt="" className="w-7 h-7 ml-2" /></button>
           </div>
         </div>
       </div>

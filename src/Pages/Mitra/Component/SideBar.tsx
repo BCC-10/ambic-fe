@@ -16,7 +16,7 @@ const SideBar = () => {
             <Button path="/mitra/dashboard" content="Dashboard"/>
             <Button path="/mitra/product" content="Produk"/>
             <Button path="/mitra/transaction" content="Transaksi"/>
-            <Button path="/mitra/rating" content="Penilaian"/>
+            <Button path="/mitra/penilaian" content="Penilaian"/>
         </div>
     )
 }

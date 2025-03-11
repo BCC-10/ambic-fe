@@ -35,7 +35,7 @@ html {
 }
 
 /* Header */
- .custom-dialog .p-dialog-header {
+.custom-dialog .p-dialog-header {
     background: transparent !important;
     color: white !important;
 }
@@ -51,5 +51,13 @@ html {
     background: transparent !important;
 } 
 
+.pi-star-fill{
+    color: gold !important;
+}
+
+.p-dialog {
+    border-radius: 20px !important; /* Sesuaikan radius */
+    overflow: hidden; /* Agar sudut modal tidak tertutup */
+}
 
 
