@@ -29,8 +29,10 @@ import Payment from "./Pages/payment/Payment";
 import FoodWeste from "./Pages/FoodWeste/FoodWeste";
 import Relawan from "./Pages/Relawan/Relawan";
 import About from "./Pages/About/About";
-import Autocomplete from "./assets/test/AutoComplate";
 import Penilaian from "./Pages/Mitra/Penilaian/Index"
+import DragDropUpload from "./Componets/Elements/Input/DragDropUpload";
+import Transaction from "./Pages/Mitra/Order/Order";
+import VerifyMitra from "./Pages/Mitra/Daftar/Verify"
 
 const app: React.FC = () => {
 
@@ -46,9 +48,10 @@ const app: React.FC = () => {
                     <Route path="/verify" element={<VerifyPage />} />
                     <Route path="/google/callback" element={<Google />} />
                     <Route path="/reset" element={<Reset/>}/>
-                    <Route path="/newpass" element={<NewPass/>}/>
+                    <Route path="/new-password" element={<NewPass/>}/>
                     <Route path="/mitra" element={<Mitra/>}/>
                     <Route path="/mitra/register" element={<DaftarMitra/>}/>
+                    <Route path="/mitra/verify" element={<VerifyMitra/>}/>
                     <Route path="/mitra/profile" element={<Profile/>}/>
                     <Route path="/mitra/dashboard" element={<DashboardMitra/>}/>
                     <Route path="/mitra/product" element={<Product />}/>
@@ -67,8 +70,9 @@ const app: React.FC = () => {
                     <Route path="/foodweste" element={<FoodWeste/>}/>
                     <Route path="/relawan" element={<Relawan/>}/>
                     <Route path="/about" element={<About/>}/>
-                    <Route path="/autocomplete" element={<Autocomplete/>}/>
                     <Route path="/mitra/penilaian" element={<Penilaian/>}/>
+                    <Route path="/upload" element={<DragDropUpload />}/>
+                    <Route path="/mitra/transaction" element={<Transaction/>}/>
                 </Routes>
             </Router>
     </AuthProvider>

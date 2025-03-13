@@ -7,7 +7,7 @@ interface Location {
     name: string;
 }
 
-const Autocomplete = () => {
+const Autocomplete = ({onChange, name, value}) => {
 const [query, setQuery] = useState("");
 const [suggestions, setSuggestions] = useState<Location[]>([]);
 const [loading, setLoading] = useState(false);
@@ -69,31 +69,49 @@ const fetchLocations = useCallback(
     [latitude, longitude]
 );
 
+useEffect(() => {
+    return () => {
+        fetchLocations.cancel();
+    };
+}, [fetchLocations]);
+
 // Handle perubahan input
-const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setQuery(value);
-    fetchLocations(value);
+
+
+// Handle klik pada suggestion
+const handleSelectLocation = (name: string) => {
+    setQuery(name); // Set input dengan lokasi yang dipilih
+    setSuggestions([]); // Sembunyikan dropdown setelah memilih
 };
 
 return (
-    <div className="autocomplete-container">
+    <div className="relative flex items-start w-[55%] max-sm:w-full max-lg:w-[90%] max-xl:w-[90%] flex-col z-100">
+    <label htmlFor="businessLocation" className="font-Poppins text-md font-semibold text-teal-700">
+        Posisi Bisnis
+    </label>
     <input
+        id="businessLocation"
         type="text"
-        value={query}
-        onChange={handleChange}
+        value={value}
+        name={name}
+        onChange={onChange}
         placeholder="Cari lokasi..."
-        className="autocomplete-input"
-        disabled={!latitude || !longitude} // Disable input jika lokasi belum tersedia
+        className="p-2 bg-gray-200 focus:outline-none w-full rounded-xl"
+        disabled={!latitude || !longitude} // Disable jika lokasi belum tersedia
     />
-    {loading && <p>Loading...</p>}
+    {/* Menampilkan hasil pencarian */}
     {suggestions.length > 0 && (
-        <ul className="autocomplete-suggestions">
-        {suggestions.map((location) => (
-            <li key={location.place_id} className="autocomplete-suggestion">
-            {location.name}
-            </li>
-        ))}
+        <ul className="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-lg mt-1 shadow-lg z-50 max-h-60 overflow-y-auto ">
+            {loading && <li className="p-2 text-gray-500">Loading...</li>}
+            {suggestions.map((location) => (
+                <li
+                    key={location.place_id}
+                    className="p-2 hover:bg-gray-100 cursor-pointer"
+                    onMouseDown={() => handleSelectLocation(location.name)}
+                >
+                    {location.name}
+                </li>
+            ))}
         </ul>
     )}
     </div>

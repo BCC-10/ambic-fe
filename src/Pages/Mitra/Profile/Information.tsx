@@ -7,7 +7,7 @@ interface Inputs {
     onChange?: (e: any) => void;
     width?:string;
     color?:string
-    text:string
+    text:string | number
 }
 
 const Information: React.FC<Inputs> = ({ className, content, onChange, width , color, text}) => {

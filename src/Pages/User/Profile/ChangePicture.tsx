@@ -13,7 +13,7 @@ const ChangePicture: React.FC = () => {
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
     const [cropedImage, setCropedImage] = useState<Blob | null>(null)
     const [loading, setLoading] = useState<boolean>(false);
-    const [preview, setPreview] = useState<userData | null >({ photo: Profile  } ) ;
+    const [preview, setPreview] = useState<userData | null >({ photo: ' '  } ) ;
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
             useEffect(() => {
             const token = localStorage.getItem("token");
@@ -39,6 +39,32 @@ const ChangePicture: React.FC = () => {
             })
     };
 
+    
+    const fecthUserData = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.get("https://ambic.live:443/api/v1/users/profile", {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            if (response.data.status_code == 200) {
+                // Pastikan mengambil data dari response dengan struktur yang benar
+                const apiUser = response.data.payload.user; // Ambil data dari "user"
+                
+                setPreview({
+                    photo: apiUser.photo 
+                });
+                console.log(preview)
+                console.log(response.data.payload.user.photo)
+            }
+        } catch (err: any) {
+            console.log("Error Fetching user data:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+    
         useEffect(() => {
             if(token) {
                 setIsLoggedIn(true);
@@ -48,36 +74,13 @@ const ChangePicture: React.FC = () => {
             }
         }, [])
 
-    const fecthUserData = async () => {
-        try {
-            setLoading(true);
-            const response = await axios.get("https://ambic.live:443/api/v1/users/profile", {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                }
-            });
-    
-            if (response.data.status_code === 200) {
-                // Pastikan mengambil data dari response dengan struktur yang benar
-                const apiUser = response.data.payload.user; // Ambil data dari "user"
-                
-                setPreview({
-                    photo: apiUser.photo
-                });
-            }
-        } catch (err: any) {
-            console.log("Error Fetching user data:", err);
-        } finally {
-            setLoading(false);
-        }
-    };
-
 
     const uploadProfilePicture = async () => {
         if(!cropedImage) {
             alert("Pilih Gambar Dulu")
             return;
         }
+        
 
         try {
             const formData = new FormData();
@@ -126,11 +129,8 @@ const ChangePicture: React.FC = () => {
             <div className="relative flex flex-col justify-center items-center w-[100px] h-[100px]">
                 {/* Preview Gambar */}
                 <img
-                    src={typeof preview === "string"
-                        ? preview
-                        : preview instanceof Blob || preview instanceof File
-                        ? URL.createObjectURL(preview)
-                        : Profile}
+                    src={typeof preview?.photo === "string"
+                        ? preview?.photo : (preview instanceof Blob || preview instanceof File ? URL.createObjectURL(preview) : Profile)}
                     alt="Profile"
                     className="w-[120px] h-[120px] rounded-full object-cover bg-none drop-shadow-xl"
                 />

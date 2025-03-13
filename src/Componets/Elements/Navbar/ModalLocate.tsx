@@ -3,6 +3,7 @@ import { IoArrowBack } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
 import { LuLocateFixed } from "react-icons/lu";
 import { FaBookBookmark } from "react-icons/fa6";
+import SearchLocate from "./SeacrhLocate"
 
 interface ModalProps {
     open: boolean;
@@ -44,9 +45,8 @@ const ModalLocate: React.FC<ModalProps> = ({ open, onClose }) => {
 
                 {/* Isi Modal */}
                 <div className='w-full h-auto p-5 flex items-center justify-center flex-col gap-7'>
-                    <div className='w-full h-15 rounded-2xl bg-white/85 p-6 flex items-center justify-between transition-transform duration-300 hover:scale-105'>
-                        <h4 className='text-xl font-Poppins font-semibold'>Masukkan Alamat Tujuan</h4>
-                        <FaSearch />
+                    <div className='w-full h-15 '>
+                        <SearchLocate/>
                     </div>
                     <div className='w-full h-15 rounded-2xl bg-white/85 p-6 flex items-center justify-between transition-transform duration-300 hover:scale-105'>
                         <h4 className='text-xl font-Poppins font-semibold'>Alamat Tersimpan</h4>

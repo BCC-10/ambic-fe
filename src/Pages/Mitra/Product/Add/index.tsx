@@ -12,7 +12,7 @@ const index = () => {
         <div>
             <Navbar setOpen={setOpen} open={undefined}/>
         </div>
-        <div className='min-h-screen flex flex-row items-center justify-start bg-[#FFF8F4] w-full'>
+        <div className='min-h-[120vh] flex flex-row items-center justify-start bg-[#FFF8F4] w-full'>
             <div className='w-full h-full flex items-center justify-center flex-col'>
                 <Add/>
             </div>

@@ -11,13 +11,17 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 
 interface Produk {
-  id: number;
+  id:  string;
   name: string;
   initial_price: number;
   final_price: number;
   stock: number;
   pickup_time: string;
   description: string;
+  partner_id:string;
+  photo: File | undefined;
+  star: number;
+  count_rating: number;
 }
 
 const Datatable = ({ className }: { className?: string }) => {
@@ -73,9 +77,9 @@ const Datatable = ({ className }: { className?: string }) => {
         <Column body={actionBodyTemplate} header="Aksi" />
       </DataTable>
 
-      <Dialog header="Edit Produk" visible={visible} style={{ width: "30vw" }} onHide={() => setVisible(false)}>
+      <Dialog header="Edit Produk" visible={visible} style={{ width: "16vw" }} onHide={() => setVisible(false)}>
         {selectedProduct && (
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 items-center justify-center ">
             <Input 
               type="text" 
               name="name" 
@@ -108,9 +112,9 @@ const Datatable = ({ className }: { className?: string }) => {
               onChange={(e) => setSelectedProduct((prev) => prev ? { ...prev, pickup_time: e.target.value } : null)} />
             <Input type="text" name="description" content="Deskripsi" value={selectedProduct.description} 
               onChange={(e) => setSelectedProduct((prev) => prev ? { ...prev, description: e.target.value } : null)} />
+            <Button label="Simpan" onClick={handleSave} className="p-button-success w-1/2" rounded/>
           </div>
         )}
-        <Button label="Simpan" onClick={handleSave} className="p-button-success" />
       </Dialog>
     </div>
   );
