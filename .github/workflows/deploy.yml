@@ -13,28 +13,30 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: 'npm'
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
+          SSH_HOST: ${{ secrets.VPS_HOST }}
 
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Build Project
-        run: npm run build
-
-      - name: Deploy ke VPS
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            cd ${{ secrets.VPS_PATH }}
-            git restore .
-            git pull origin main
-            npm install --legacy-peer-deps --no-package-lock
-            npm run build
-            sudo systemctl restart nginx
+      - name: Deploy to VPS
+        run: |
+          ssh -i ~/.ssh/id_rsa root@$VPS_HOST << 'EOF'
+          set -e
+          git config --global --add safe.directory /var/www/ambic-fe
+          cd /var/www/ambic-fe
+          git restore .
+          git pull origin main
+          npm install --legacy-peer-deps
+          npm run build
+          sudo systemctl restart nginx
+          cd /var/www
+          chmod +x ambic-fe
+          systemctl restart nginx
+          EOF
+        env:
+          SSH_HOST: ${{ secrets.VPS_HOST }}
