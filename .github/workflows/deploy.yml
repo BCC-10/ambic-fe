@@ -35,6 +35,6 @@ jobs:
             cd ${{ secrets.VPS_PATH }}
             git restore .
             git pull origin main
-            npm install --legacy-peer-deps
+            npm install --legacy-peer-deps --no-package-lock
             npm run build
             sudo systemctl restart nginx
