@@ -28,14 +28,12 @@ jobs:
           ls 
           set -e
           git config --global --add safe.directory /var/www/ambic-fe
-          cd /var/www/ambic-fe
           git restore .
           git pull origin main
           npm install --legacy-peer-deps
           npm run build
           sudo systemctl restart nginx
-          cd /var/www
-          chmod +x ambic-fe
+          chmod +x .
           systemctl restart nginx
           EOF
         env:
