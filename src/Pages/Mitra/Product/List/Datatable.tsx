@@ -45,10 +45,11 @@ const Datatable = ({ className }: { className?: string }) => {
 
   const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);
-    
+  
     const pad = (num: number) => num.toString().padStart(2, "0");
   
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ` +
+          `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
   };
 
   const handleSave = () => {
@@ -64,10 +65,12 @@ const Datatable = ({ className }: { className?: string }) => {
       console.log(selectedProduct)
       setVisible(false);
     }
+    
   };
 
   const openDetailDialog = (product: Produk) => {
     setDetailProduct(product);
+    setSelectedProduct({ ...product }); 
     setVisibleDetail(true);
   };
 
@@ -94,7 +97,7 @@ const Datatable = ({ className }: { className?: string }) => {
         <Column body={actionBodyTemplate} header="Aksi" />
       </DataTable>
 
-      <Dialog header="Edit Produk" visible={visible} style={{ width: "30vw" }} onHide={() => setVisible(false)}>
+      <Dialog header="Edit Produk" visible={visible} style={{ width: "30vw" }} onHide={() => setVisible(false)} dismissableMask={true}>
         {selectedProduct && (
           <div className="flex flex-col gap-3 items-center justify-center w-full">
             <Input 
@@ -128,13 +131,22 @@ const Datatable = ({ className }: { className?: string }) => {
               name="pickup_time" 
               content="Waktu Awal Pengambilan"
               value={selectedProduct.pickup_time} 
-              onChange={(e) => setSelectedProduct((prev) => prev ? { ...prev, pickup_time: e.target.value } : null)} />
+              onChange={(e) => 
+                {
+                  console.log(selectedProduct.pickup_time)
+                  setSelectedProduct((prev) => 
+                    prev ? { ...prev, pickup_time: formatDateTime(e.target.value) } : null
+                  )
+                }}  />
             <Input 
               type="datetime-local" 
               name="end_pickup_time" 
               content="Waktu Akhir Pengambilan"
-              value={selectedProduct.end_pickup_time} 
-              onChange={(e) => setSelectedProduct((prev) => prev ? { ...prev, end_pickup_time: e.target.value } : null)} />
+              value={selectedProduct?.end_pickup_time ? formatDateTime(selectedProduct.end_pickup_time) : ""} 
+              onChange={(e) => 
+                setSelectedProduct((prev) => 
+                  prev ? { ...prev, end_pickup_time: formatDateTime(e.target.value) } : null
+                )}  />
             <Input 
               type="text" 
               name="description" 
@@ -142,6 +154,26 @@ const Datatable = ({ className }: { className?: string }) => {
               value={selectedProduct.description} 
               onChange={(e) => setSelectedProduct((prev) => prev ? { ...prev, description: e.target.value } : null)} />
             <Button label="Simpan" onClick={handleSave} className="p-button-success w-1/2" rounded/>
+          </div>
+        )}
+      </Dialog>
+      <Dialog
+        header="Detail Produk"
+        visible={visibleDetail}
+        style={{ width: "30vw" , backgroundColor: "#FFF8F4"}}
+        onHide={() => setVisibleDetail(false)}
+      >
+        {detailProduct && (
+          <div className="flex flex-col gap-3 items-start justify-start w-full">
+            <div className="flex flex-col items-start gap-3">
+            <p><strong>Nama Produk:</strong> {detailProduct.name}</p>
+            </div>
+            <p><strong>Harga Awal:</strong> Rp {detailProduct.initial_price}</p>
+            <p><strong>Harga Akhir:</strong> Rp {detailProduct.final_price}</p>
+            <p><strong>Stock:</strong> {detailProduct.stock}</p>
+            <p><strong>Waktu Awal Pengambilan:</strong> {detailProduct.pickup_time}</p>
+            <p><strong>Waktu Akhir Pengambilan:</strong> {detailProduct.end_pickup_time}</p>
+            <p><strong>Deskripsi:</strong> {detailProduct.description}</p>
           </div>
         )}
       </Dialog>

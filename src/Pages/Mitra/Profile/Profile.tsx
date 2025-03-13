@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../../../Layouts/Navbar";
 import Modal from "../../../Componets/Elements/Navbar/ModalLocate";
 import SideBar from "../Component/SideBar";
-import ChangePicture from "../../Mitra/Profile/ChangeProfile";
+import ChangePicture from "./ChangeProfile";
 import Information from "../Profile/Information";
 import Footer from "../../../Layouts/Footer";
 import axios from "axios";

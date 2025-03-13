@@ -157,7 +157,7 @@ const Login = () => {
 
         // Tangani error email
         if (apiErrors.identifier) {
-          if (apiErrors.identifier.includes("incorrect")) {
+          if (apiErrors.identifier.includes("Email or password is incorrect")) {
             newErrors.identifier = " Username atau Password Salah!";
           } else if (apiErrors.identifier.includes("required")) {
             newErrors.identifier = "Harus diisi ya..";
@@ -172,11 +172,15 @@ const Login = () => {
             newErrors.password = "Password Minimal 6 Karakter.";
           } else if (apiErrors.password.includes("required")) {
             newErrors.password = "Wajib isi yaa..";
-          } else if (apiErrors.password.includes("incorrect")) {
+          } else if (apiErrors.password.includes("Email or password is incorrect")) {
             newErrors.password = "Username atau Password salah!";
           } else {
             newErrors.password = apiErrors.password;
           }
+        }
+
+        if(err.response.data.status_code === 401){
+          newErrors.identifier = "Username atau Password salah!";
         }
 
         if (err.response.data.status_code === 403) {
@@ -233,12 +237,12 @@ const Login = () => {
             color="text-gray-600"
           />
           {errors[field.name] && (
-      <p className="text-red-500 text-sm mt-1">
-        {errors[field.name]}
-      </p>
-    )}
-  </div>
-))}
+            <p className="text-red-500 text-sm mt-1">
+              {errors[field.name]}
+            </p>
+          )}
+        </div>
+        ))}
         </div>
         <Link to="/reset"><p className="">Lupa Password?</p></Link>
         <button

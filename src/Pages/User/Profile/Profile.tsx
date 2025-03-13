@@ -182,12 +182,13 @@ const Profile: React.FC = () => {
                   key={idx}
                   name={_.name}
                   content={_.content}
-                  className="w-full h-auto px-4 rounded-xl"
+                  className={`w-full h-auto px-4 rounded-xl ${_.className}`}
                   type={_.type}
                   placeholder={_.placeholder}
                   width="w-100"
                   value={userData[_.name as keyof typeof userData] || ""}
                   onChange={handleInputChange}
+                  disabled={_.disabled}
                 />
               ))}
             </div>
@@ -197,12 +198,13 @@ const Profile: React.FC = () => {
                   key={idx}
                   name={_.name}
                   content={_.content}
-                  className="w-full h-auto px-4 rounded-xl"
+                  className={`w-full h-auto px-4 rounded-xl`}
                   type={_.type}
                   placeholder={_.placeholder}
                   width="w-100"
                   value={userData[_.name as keyof typeof userData] || ""}
                   onChange={handleInputChange}
+                  disabled={_.disabled}
                 />
               ))}
               {RegisterUser.slice(5, 6).map((_, idx) => (

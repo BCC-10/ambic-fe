@@ -21,6 +21,9 @@ const ChangePicture: React.FC = () => {
             }, [])
 
     const token = localStorage.getItem("token");
+    // const [formData, setFormData] = useState({
+    //     photo: '',
+    // })
 
     // Saat user memilih gambar
     const onClose = () => {
@@ -81,16 +84,25 @@ const ChangePicture: React.FC = () => {
         
 
         try {
+            Swal.fire({
+                title: "Sedang Memproses...",
+                text: "Mohon tunggu sebentar",
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
             const formData = new FormData();
             formData.append("photo", cropedImage);
             const response = await axios.patch("https://ambic.live:443/api/v1/partners", formData,  {
                 // withCredentials: true,
                 headers: {
                     "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json",
+                    "Content-Type": "multipart/form-data",
                 },
             }
         )
+        Swal.close();
         if( response.data.status_code === 200){
             Swal.fire("Berhasil", "Berhasil mengupdate data", "success");
             setIsDialogOpen(false);

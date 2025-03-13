@@ -62,6 +62,14 @@ const useProducts = () => {
             });
             setProducts((prevProducts) => [...prevProducts, newProduct, response.data]);
             Swal.close();
+            if(response.data.status_code === 200) {
+                Swal.fire({
+                    title: "Sukses Edit Data",
+                    text: " Silakan Refresh Tab!",
+                    icon: "success",
+                    draggable: false
+                });
+            }
         }catch(err){
             console.log(err);
         }
@@ -118,14 +126,14 @@ const useProducts = () => {
 
     const editProduct = async (updateProduct: product) => {
         try{
-            // Swal.fire({
-            //     title: "Sedang Memproses...",
-            //     text: "Mohon tunggu sebentar",
-            //     allowOutsideClick: false,
-            //     didOpen: () => {
-            //         Swal.showLoading();
-            //     }
-            // });
+            Swal.fire({
+                title: "Sedang Memproses...",
+                text: "Mohon tunggu sebentar",
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
             const response = await axios.patch(`https://ambic.live:443/api/v1/products/${updateProduct.id}`, updateProduct, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -136,8 +144,23 @@ const useProducts = () => {
                 prevProducts.map((p) => (p.id === updateProduct.id ? response.data : p))
         );
         Swal.close();
+        if(response.data.status_code === 200) {
+            Swal.fire({
+                title: "Sukses Edit Data",
+                text: " Silakan Refresh Tab!",
+                icon: "success",
+                draggable: false
+                });
+            }
         } catch (err){
             console.log(err);
+            if(err.response.data.status_code === 400){
+                    Swal.fire({
+                    title: "Date Pickup dimasukin Dulu yaa..",
+                    text: "tanggalnya diisi dulu gih!",
+                    icon: "warning" 
+                });
+            }
         }
     }
     return {products, addProduct, deleteProduct, editProduct, setNewProduct, fetchProducts}

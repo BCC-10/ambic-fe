@@ -31,7 +31,7 @@ import Footer3 from "../assets/ICons/Footer/Rectangle 41 (1).png"
 import { IoMdContact } from "react-icons/io";
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
-import React from "react"
+import React, {useState} from "react"
 import Mitra1 from "../assets/Hiasan/Mitra/Rectangle 42.png"
 import Mitra2 from "../assets/Hiasan/Mitra/Rectangle 42 (1).png"
 import Mitra3 from "../assets/Hiasan/Mitra/Rectangle 42 (2).png"
@@ -89,7 +89,7 @@ const Sponsors = [
     { id : 5, title : "Card 5", description: BCC},
     { id : 5, title : "Card 5", description: BPN},
 ]
-
+    
 const Logins: Array<{name:string, type: string, placeholder: string, icon?: React.ReactNode, content:string}> = [
     { name: "identifier", type : "identifier" , placeholder : "ex: farid@xml.com", icon: <MdEmail className='relative bottom-8 left-[100%]'/>, content: "Email"},
     { name:"password", type : "password" , placeholder : "ex: 1@bds;", icon: <FaLock className='relative bottom-8 left-[100%]'/>, content: "password"},
@@ -124,12 +124,12 @@ const RegisterMitra: Array<{content:string, type:string, placeholder:string, tex
 ]
 
 const RegisterUser = [
-    {name: "username",content: "Username", type: "text", placeholder:"Your username"},
-    {name: "name",content: "Nama", type: "text", placeholder:"Your Name"},
-    {name:"email", content: "Email", type: "email", placeholder:"Your Email"},
+    {name: "username",content: "Username", type: "text", placeholder:"Your username", disabled: true, className: "cursor-not-alowwed"},
+    {name: "name",content: "Nama", type: "text", placeholder:"Your Name", disabled: false},
+    {name:"email", content: "Email", type: "email", placeholder:"Your Email", disabled: true,className: "cursor-not-alowwed"},
     {name: "phone",content: "Nomor Telepon", type: "number", placeholder:"Your Number Phone"},
-    {name: "address",content: "Almat", type: "text", placeholder:"Your Address"},
-    {name: "gender",content: "jenis Kelamin", type: "text", placeholder:"male or female"},
+    {name: "address",content: "Almat", type: "text", placeholder:"Your Address", disabled: false},
+    {name: "gender",content: "jenis Kelamin", type: "text", placeholder:"male or female", disabled: false},
 ]
 
 const Footers: Array<{Image:string}> = [
