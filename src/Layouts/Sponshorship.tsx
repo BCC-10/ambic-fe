@@ -1,5 +1,5 @@
 import React from 'react'
-import Sponsors from "../Componets/Elements/Sponsor/SPonsor"
+import Sponsors from "../Componets/Elements/Sponsor/Sponsor"
 
 
 const Sponshorship: React.FC = () => {
