@@ -25,7 +25,6 @@ jobs:
 
       - name: Deploy to VPS
         run: |
-          ls 
           set -e
           git config --global --add safe.directory /var/www/ambic-fe
           git restore .
@@ -34,6 +33,5 @@ jobs:
           npm run build
           chmod +x .
           sudo systemctl restart nginx
-          EOF
         env:
           SSH_HOST: ${{ secrets.VPS_HOST }}
