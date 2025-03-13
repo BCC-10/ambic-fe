@@ -25,6 +25,7 @@ jobs:
 
       - name: Deploy to VPS
         run: |
+          ssh -i ~/.ssh/id_rsa root@$SSH_HOST << 'EOF'
           cd /var/www/ambic-fe
           ls
           pwd
