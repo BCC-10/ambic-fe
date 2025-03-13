@@ -32,9 +32,8 @@ jobs:
           git pull origin main
           npm install --legacy-peer-deps
           npm run build
-          sudo systemctl restart nginx
           chmod +x .
-          systemctl restart nginx
+          sudo systemctl restart nginx
           EOF
         env:
           SSH_HOST: ${{ secrets.VPS_HOST }}
