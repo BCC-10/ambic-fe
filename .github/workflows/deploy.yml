@@ -25,6 +25,9 @@ jobs:
 
       - name: Deploy to VPS
         run: |
+          cd /var/www/ambic-fe
+          ls
+          pwd
           set -e
           git config --global --add safe.directory /var/www/ambic-fe
           git restore .
