@@ -25,6 +25,7 @@ jobs:
 
       - name: Deploy to VPS
         run: |
+          ls 
           ssh -i ~/.ssh/id_rsa root@$VPS_HOST << 'EOF'
           set -e
           git config --global --add safe.directory /var/www/ambic-fe
