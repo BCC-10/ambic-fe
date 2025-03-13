@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { Button } from "primereact/button";
 import Input from "../../../../Componets/Elements/Input/input";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ import { LuPackageOpen } from "react-icons/lu";
 const AddProduct: React.FC = () => {
   const navigate = useNavigate();
   const [product, setProduct] = useState({
-    id: "",
+    // id: "",
     name: "",
     initial_price: "",
     final_price: "",
@@ -17,24 +17,42 @@ const AddProduct: React.FC = () => {
     pickup_time: "",
     end_pickup_time: "",
     description: "",
-    partner_id: "",
+    // partner_id: "",
     photo: undefined as File | undefined,
-    star: 3.5,
-    count_rating: 2,
+    // star: 3.5,
+    // count_rating: 2,
   });
 
   const { addProduct, products } = useProducts();
   const lastId = useRef(0)
 
+  const formatDateTime = (dateString: string) => {
+    const date = new Date(dateString);
+    
+    const pad = (num: number) => num.toString().padStart(2, "0");
+  
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    setProduct((prev) => ({
-      ...prev,
-        [name]: ["initial_price", "final_price", "stock", "star", "count_rating"].includes(name) ? Number(value) || 0 : value,
-    }));
+    let formattedValue = value;
+  if (name === "pickup_time" || name === "end_pickup_time") {
+    // formattedValue = value.replace("T", " ");
+    formattedValue = formatDateTime(value)// Menghilangkan "T"
+  }
+
+  setProduct((prev) => ({
+    ...prev,
+    [name]: ["initial_price", "final_price", "stock", "star", "count_rating"].includes(name) ? Number(value) || 0 : formattedValue,
+  }));
+};
+
+useEffect(() => {
     console.log(product)
-  };
+  },[product])
+
 
   const maxId =
   products.length > 0 ? Math.max(...products.map((p) => Number(p.id))) : 0;
@@ -43,16 +61,16 @@ const AddProduct: React.FC = () => {
   const handleSubmit = () => {
     const newProduct = {
       ...product,
-      id: Number(maxId + 1),
+      // id: Number(maxId + 1),
       initial_price: Number(product.initial_price) || 0,
       final_price: Number(product.final_price) || 0,
       stock: Number(product.stock) || 0,
       pickup_time: String(product.pickup_time) || "",
       description: String(product.description) || "",
-      partner_id: String(product.partner_id) || "",
+      // partner_id: String(product.partner_id) || "",
       photo: product.photo instanceof File ? product.photo : undefined,
-      star: Number(product.star) || 0,
-      count_rating: Number(product.count_rating) || 0,
+      // star: Number(product.star) || 0,
+      // count_rating: Number(product.count_rating) || 0,
     };
 
     addProduct(newProduct);

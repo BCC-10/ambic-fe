@@ -69,7 +69,7 @@ const Datatable = ({ className }: { className?: string }) => {
         <Button label="Tambah Produk" onClick={() => navigate(`/mitra/product/add`)} icon="pi pi-plus" />
       </div>
       <DataTable value={products} tableStyle={{ minWidth: "100%" }} scrollable scrollHeight="flex">
-        <Column field="id" header="No" />
+        <Column header="No" body={(_, { rowIndex }) => rowIndex + 1}/>
         <Column field="name" header="Nama Produk" />
         <Column field="initial_price" header="Harga Awal" body={(data) => `Rp ${data.initial_price}`} />
         <Column field="final_price" header="Harga Akhir" body={(data) => `Rp ${data.final_price}`} />

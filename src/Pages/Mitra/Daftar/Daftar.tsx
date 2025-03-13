@@ -65,21 +65,15 @@ const Daftar: React.FC = () => {
             });
             return;
         }
-    
-        // const formData = new FormData();
-        // formData.append("address", "Jalan Bandung");
-        // formData.append("city", "Malang");
-        // formData.append("place_id", "ChIJiSzfyEMp1i0R_hqb1eKPcw4");
-        // formData.append("name", "JCO");
-        // formData.append("instagram", "@jco");
-        // formData.append("photo", files[0]); // Pastikan file dipilih
-        // formData.append("business_type_id", "e16681dc-fb9b-11ef-ba7c-6c02e0b53d44");
-    
-        // console.log("Data yang dikirim:");
-        // formData.forEach((value, key) => {
-        // console.log(`${key}:`, value);
-        // });
         try{
+            Swal.fire({
+                title: "Sedang Memproses...",
+                text: "Mohon tunggu sebentar",
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
             console.log(dataUsers)
             const response = await axios.post("https://ambic.live:443/api/v1/partners", dataUsers, {
                 headers: {
@@ -88,6 +82,7 @@ const Daftar: React.FC = () => {
                 },
             })
             localStorage.setItem("token", response.data.payload.token)
+            Swal.close();
             if(response.data.status_code === 200) {
                 Swal.fire({
                     title: "Sukses Mendaftarkan diri sebagai mitra",
