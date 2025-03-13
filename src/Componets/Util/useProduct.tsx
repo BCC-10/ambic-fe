@@ -118,17 +118,26 @@ const useProducts = () => {
 
     const editProduct = async (updateProduct: product) => {
         try{
+            // Swal.fire({
+            //     title: "Sedang Memproses...",
+            //     text: "Mohon tunggu sebentar",
+            //     allowOutsideClick: false,
+            //     didOpen: () => {
+            //         Swal.showLoading();
+            //     }
+            // });
             const response = await axios.patch(`https://ambic.live:443/api/v1/products/${updateProduct.id}`, updateProduct, {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${localStorage.getItem("token")}`,
                 }
             })
             setProducts((prevProducts) =>
                 prevProducts.map((p) => (p.id === updateProduct.id ? response.data : p))
-            );
+        );
+        Swal.close();
         } catch (err){
-
+            console.log(err);
         }
     }
     return {products, addProduct, deleteProduct, editProduct, setNewProduct, fetchProducts}

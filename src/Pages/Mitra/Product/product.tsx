@@ -9,7 +9,7 @@ import Datatable from './List/Datatable'
 const product = () => {
     const [open, setOpen] = useState<boolean>(false);
     return (
-        <main className='w-full min-h-screen flex flex-col overflow-hidden '>
+        <main className='w-full min-h-screen flex flex-col overflow-hidden min-w-[560px]'>
         <div>
             <Navbar setOpen={setOpen} open={undefined}/>
         </div>

@@ -16,6 +16,7 @@ interface Produk {
   initial_price: number;
   final_price: number;
   stock: number;
+  end_pickup_time: string;
   pickup_time: string;
   description: string;
   partner_id:string;
@@ -42,9 +43,25 @@ const Datatable = ({ className }: { className?: string }) => {
     setVisible(true);
   };
 
+  const formatDateTime = (dateString: string) => {
+    const date = new Date(dateString);
+    
+    const pad = (num: number) => num.toString().padStart(2, "0");
+  
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+  };
+
   const handleSave = () => {
     if (selectedProduct) {
+      if (selectedProduct.end_pickup_time) {
+        selectedProduct.end_pickup_time = formatDateTime(selectedProduct.end_pickup_time);
+    }
+
+    if (selectedProduct.pickup_time) {
+        selectedProduct.pickup_time = formatDateTime(selectedProduct.pickup_time);
+    }
       editProduct(selectedProduct);
+      console.log(selectedProduct)
       setVisible(false);
     }
   };
@@ -77,14 +94,16 @@ const Datatable = ({ className }: { className?: string }) => {
         <Column body={actionBodyTemplate} header="Aksi" />
       </DataTable>
 
-      <Dialog header="Edit Produk" visible={visible} style={{ width: "16vw" }} onHide={() => setVisible(false)}>
+      <Dialog header="Edit Produk" visible={visible} style={{ width: "30vw" }} onHide={() => setVisible(false)}>
         {selectedProduct && (
-          <div className="flex flex-col gap-3 items-center justify-center ">
+          <div className="flex flex-col gap-3 items-center justify-center w-full">
             <Input 
               type="text" 
               name="name" 
               content="Nama Produk" 
+              className=""
               value={selectedProduct.name} 
+              width="flex justify-center"
               onChange={(e) => setSelectedProduct((prev) => prev ? { ...prev, name: e.target.value } : null)} />
             <Input 
               type="number" 
@@ -105,12 +124,22 @@ const Datatable = ({ className }: { className?: string }) => {
               value={selectedProduct.stock} 
               onChange={(e) => setSelectedProduct((prev) => prev ? { ...prev, stock: Number(e.target.value) } : null)} />
             <Input 
-              type="text" 
+              type="datetime-local" 
               name="pickup_time" 
-              content="Waktu Pengambilan"
+              content="Waktu Awal Pengambilan"
               value={selectedProduct.pickup_time} 
               onChange={(e) => setSelectedProduct((prev) => prev ? { ...prev, pickup_time: e.target.value } : null)} />
-            <Input type="text" name="description" content="Deskripsi" value={selectedProduct.description} 
+            <Input 
+              type="datetime-local" 
+              name="end_pickup_time" 
+              content="Waktu Akhir Pengambilan"
+              value={selectedProduct.end_pickup_time} 
+              onChange={(e) => setSelectedProduct((prev) => prev ? { ...prev, end_pickup_time: e.target.value } : null)} />
+            <Input 
+              type="text" 
+              name="description" 
+              content="Deskripsi" 
+              value={selectedProduct.description} 
               onChange={(e) => setSelectedProduct((prev) => prev ? { ...prev, description: e.target.value } : null)} />
             <Button label="Simpan" onClick={handleSave} className="p-button-success w-1/2" rounded/>
           </div>

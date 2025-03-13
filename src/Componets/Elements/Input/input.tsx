@@ -16,8 +16,8 @@ interface Inputs {
 
 const Input: React.FC<Inputs> = ({ type, placeholder, className, content, icon, value, onChange, width , color, name, select}) => {
     return (
-        <div className={`flex flex-col gap-2 items-start ${width}`}>
-            {content && <label className={`font-semibold ${color}`}>{content}</label>}
+        <div className={`flex flex-col gap-2 items-start  ${width}`}>
+            {content && <label className={`font-semibold  ${color}`}>{content}</label>}
             <div className="relative w-full flex items-center ">
                 <input
                     name={name}
