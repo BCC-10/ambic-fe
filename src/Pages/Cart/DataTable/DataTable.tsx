@@ -7,6 +7,7 @@ import { Column } from "primereact/column";
 import { Checkbox } from "primereact/checkbox";
 import {useNavigate} from "react-router-dom"
 import Swal from "sweetalert2";
+import axios from "axios";
 
 interface Carts {
     isVisible: boolean
@@ -19,7 +20,7 @@ const { cart, updateQuantity, removeItem, toggleChecked, checkedTotalPrice, togg
         return (
             <Checkbox
             checked={rowData.checked}
-            onChange={() => toggleChecked(rowData.id)}
+            onChange={() => toggleChecked(rowData?.id ?? "")}
             />
         );
     };
@@ -27,7 +28,7 @@ const { cart, updateQuantity, removeItem, toggleChecked, checkedTotalPrice, togg
 // Kolom Gambar & Nama Produk
 const productTemplate = (rowData: cartItem) => (
     <div className="flex align-items-center gap-2">
-    <img src={rowData.image} alt={rowData.name} width="50" height="50" />
+    <img src={rowData.photo} alt={rowData.name} width="50" height="50" />
     <span>{rowData.name}</span>
     </div>
 );
@@ -49,13 +50,15 @@ const quantityTemplate = (rowData: cartItem) => (
     <Button
         icon="pi pi-plus"
         className="p-button-rounded p-button-text"
-        onClick={() => updateQuantity(rowData.id, rowData.quantity + 1)}
+        onClick={() => {
+            if(rowData.quantity === rowData.stock) return;
+            updateQuantity(rowData.id, rowData.quantity + 1)
+        }}
     />
     </div>
 );
-
 // Kolom Total Harga
-const totalTemplate = (rowData: cartItem) => `Rp ${new Intl.NumberFormat("id-ID").format(rowData.price * rowData.quantity)}`;
+const totalTemplate = (rowData: cartItem) => `Rp ${new Intl.NumberFormat("id-ID").format(rowData.final_price * rowData.quantity)}`;
 
 // Kolom Hapus Produk
 const deleteTemplate = (rowData: cartItem) => (
@@ -70,16 +73,46 @@ const Total = () => {
 
 const Checkout = () => {
     
+    const handleCheckOut = async () => {
+        console.log("Check")
+        const token = localStorage.getItem("token");
+
+
+        const checkoutItems = cart.filter(item => item.checked)
+        try{
+            const response = await axios.post(
+                "https://ambic.live:443/api/v1/transactions",
+                {
+                    // partner_id: "12345",  // Gantilah dengan ID mitra yang valid
+                    partner_id: checkoutItems[0].partner_id,
+                    items: cart.map(item => ({
+                        qty: item.quantity,
+                        product_id: item.id
+                    })),
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            if(response.data.status_code === 200){
+                const remainingItems = cart.filter(item => item.checked)
+                localStorage.setItem("cart", JSON.stringify(remainingItems));
+                const url = response.data.payload.payment_url;
+                window.location.href = url
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    
     return (
         <button
         className="bg-teal-700/85 px-4 py-2 text-white rounded-full drop-shadow-xl transition-transform duration-200 hover:scale-95 cursor-pointer"
         onClick={() => {
-            Swal.fire({
-                title: "Checkout Berhasil!",
-                text: "Pesanan kamu sedang diproses",
-                icon: "success",
-                draggable: false
-            });
+            handleCheckOut()
         }}
         >
         Checkout
@@ -100,10 +133,10 @@ const navigate = useNavigate()
 return (
     <div className="flex flex-col gap-80 h-auto">
         <div className="flex flex-col justify-center gap-7 items-center w-full ">
-        <DataTable value={cart} responsiveLayout="scroll" className="bg-white drop-shadow-xl" style={{width: "85rem"}}>
+        <DataTable value={cart} responsiveLayout="scroll" className="bg-white drop-shadow-xl" style={{width: "90vw"}}>
             <Column body={checkboxTemplate} style={{ width: "3rem" }} headerStyle={{backgroundColor: "var(--teal-700)", color: "white"}}/>
             <Column header="Produk" body={productTemplate} headerStyle={{backgroundColor: "var(--teal-700)", color: "white"}}/>
-            <Column field="price" header="Harga" body={(rowData) => `Rp ${new Intl.NumberFormat("id-ID").format(rowData.price)}`} headerStyle={{backgroundColor: "var(--teal-700)", color: "white"}}/>
+            <Column field="final_price" header="Harga" body={(rowData) => `Rp ${new Intl.NumberFormat("id-ID").format(rowData.final_price)}`} headerStyle={{backgroundColor: "var(--teal-700)", color: "white"}}/>
             <Column  header={<span style={{ color: "white", fontWeight: "bold", position: "relative", left:"200px" }}>Jumlah</span>} body={quantityTemplate} headerStyle={{backgroundColor: "var(--teal-700)", color: "white"}} className="custom-header" bodyStyle={{position:"relative", left: "50px"}}/>
             <Column header="Total" body={totalTemplate} headerStyle={{backgroundColor: "var(--teal-700)", color: "white"}}/>
             <Column header="Aksi" body={deleteTemplate} headerStyle={{backgroundColor: "var(--teal-700)", color: "white"}}/>

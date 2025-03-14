@@ -14,8 +14,6 @@ interface OrderItem{
     // star?: number;
     // count_rating?: number;
     // photo?: string
-
-    
 }
 
 const OrderItem : React.FC<OrderItem> = ({onClick, text, product, onAddToCart}) => {

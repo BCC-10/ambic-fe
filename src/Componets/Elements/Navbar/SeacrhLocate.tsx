@@ -10,7 +10,7 @@ interface Location {
     long: number;
 }
 
-const Autocomplete = () => {
+const   Autocomplete = () => {
     const [query, setQuery] = useState<string>("");
     const [suggestions, setSuggestions] = useState<Location[]>([]);
     const [loading, setLoading] = useState(false);

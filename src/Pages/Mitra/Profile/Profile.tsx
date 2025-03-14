@@ -18,6 +18,7 @@ interface partnerData {
   logitude: number;
   latitude: number;
   photo: File | null;
+  place_id: string;
 }
 
 const Profile: React.FC = () => {
@@ -32,6 +33,7 @@ const Profile: React.FC = () => {
     logitude: 0,
     latitude: 0,
     photo: null,
+    place_id: "",
   });
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -122,9 +124,7 @@ const Profile: React.FC = () => {
                   <Information
                     content="Posisi Alamat Bisnis"
                     className="w-full h-full px-4 rounded-xl "
-                    text={
-                      (partnerData.latitude && partnerData.latitude) || 9465132
-                    }
+                    children={<a href={`https://google.com/maps/place/?q=place_id:${partnerData.place_id}`} className="font-Poppins text-lg font-semibold">Link Google maps</a>}
                     color="text-teal-700"
                   />
                   <Information

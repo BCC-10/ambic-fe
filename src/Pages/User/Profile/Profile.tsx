@@ -221,6 +221,7 @@ const Profile: React.FC = () => {
                     value={userData[_.name as keyof typeof userData] || ""}
                     onChange={handleInputChange}
                   >
+                    <option value="">-- Pilih Gender --</option>
                     <option value="male">Laki-laki</option>
                     <option value="female">Perempuan</option>
                   </select>

@@ -20,7 +20,6 @@ const Cart = () => {
                     <h1 className='font-Poppins font-semibold text-2xl '>Keranjang</h1>
                 </div>
                 <div className='w-full h-auto relative flex flex-col  justify-center '>
-                    
                     <DataTable isVisible={true}/>
                 </div>
             </div>

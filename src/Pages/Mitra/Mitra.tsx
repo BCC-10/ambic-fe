@@ -29,7 +29,7 @@ const Mitra: React.FC = () => {
     return (
         <main className='min-screen relative flex flex-col overflow-hidden'>
             <Navbar setOpen={setOpen} open={undefined}/>
-            <div className='pt-35 min-h-[30vh] flex items-center justify-center bg-[#FFF8F4] '>
+            <div className='pt-35 min-h-[25vw] flex items-center justify-center bg-[#FFF8F4] '>
                 <div className='flex items-center justify-center w-3/4 h-1/2 gap-30 flex-wrap'>
                     
                     <Link to="/mitra/profile" className='w-[20%] h-auto p-2 flex items-center justify-center bg-teal-700/85 drop-shadow-xl rounded-full text-white font-Poppins font-semibold cursor-pointer trasition-transform duration-300 hover:scale-95 '>

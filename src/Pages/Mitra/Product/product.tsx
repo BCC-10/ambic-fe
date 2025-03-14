@@ -9,11 +9,11 @@ import Datatable from './List/Datatable'
 const product = () => {
     const [open, setOpen] = useState<boolean>(false);
     return (
-        <main className='w-full min-h-screen flex flex-col overflow-hidden min-w-[560px]'>
+        <main className='w-full min-h-auto flex flex-col overflow-y-auto flex-grow  min-w-[560px]'>
         <div>
             <Navbar setOpen={setOpen} open={undefined}/>
         </div>
-        <div className='min-h-screen flex flex-row items-center justify-start bg-[#FFF8F4] w-full'>
+        <div className='min-h-[60vw] flex flex-row items-center justify-start bg-[#FFF8F4] w-full'>
             <SideBar/>
             <div className='w-full h-full flex items-center justify-center '>
                 <Datatable className='w-[90%]'/>
