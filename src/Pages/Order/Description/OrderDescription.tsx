@@ -27,30 +27,58 @@ interface Produk {
 }
 
 
+interface Rating {
+    id: string;
+    name: string
+    product_id: string;
+    user_id: string;
+    star: number;
+    feedback: string,
+    photo: string,
+    date: string,
+}
 
-const Comment = () => {
+
+const Comment = ({ratings} : {ratings : Rating}) => {
+
+    const [rating, setRating] = useState<Rating[]>([])
+
+    useEffect(() => {
+        const fetchRating = async () => {
+            try{
+                const response = await axios.get("https://ambic.live:443/api/v1/ratings", {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    }
+                })
+                setRating(response.data.payload.ratings)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        fetchRating()
+    },[])
     
     return (
         <>
             <div className='w-[90%] flex items-center justify-between '>
                 <div className='w-full flex items-start justify-center flex-col gap-2 text-wrap '>
                     <div className='w-[20%] flex gap-3 irems-center justify-center'>
-                        <img src={Kucing} alt="" className='w-[40%]'/>
+                        <img src={ratings.photo} alt="" className='w-[40%]'/>
                         <div className='flex items-start justify-start flex-col w-full '>
-                            <h1 className='font-Poppins text-lg font-semibold'>Vitroos</h1>
+                            <h1 className='font-Poppins text-lg font-semibold'>{ratings.name}</h1>
                             <div className='flex items-start'>
                                 {[...Array(5)].map((_,idx) => (
-                                    <img src={Stars} alt="" className='w-[15%]'key={idx}/>
+                                    <img src={idx < ratings.star ? Stars : "" } alt="Stars" className='w-[15%]'key={idx}/>
                                 ))}
                                 
                             </div>
-                            <h4 className='mt-2 font-semibold font-Poppins text-xs '>19-02-2025 11:42</h4>
+                            <h4 className='mt-2 font-semibold font-Poppins text-xs '>{ratings.date}</h4>
                         </div>
                     </div>
-                    <p className=''>Inisiatif yang sangat bagus! Produknya masih layak konsumsi dan rasanya enak. Semoga lebih banyak 
-                    orang sadar akan pentingnya mengurangi food waste.</p>
+                    <p className=''>{ratings.feedback}.</p>
                 </div>
-                <img src={Roti} alt="" className='w-[7%]'/>
+                <img src={ratings.photo} alt="" className='w-[7%]'/>
             </div>
         </>
     )
@@ -72,6 +100,24 @@ const OrderDescription = () => {
         return `${hours}:${minutes}`; // Format "HH:MM"
     };
 
+    const [rating, setRating] = useState<Rating[]>([])
+
+    // useEffect(() => {
+    //     const fetchRating = async () => {
+    //         try{
+    //             const response = await axios.get("https://ambic.live:443/api/v1/ratings", {
+    //                 headers: {
+    //                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    //                 }
+    //             })
+    //             setRating(response.data.payload.ratings)
+    //         } catch (err) {
+    //             console.log(err)
+    //         }
+    //     }
+    //     fetchRating()
+    // },[])
+
     useEffect(() => {
         const fatchingDescription = async () => {
             try {
@@ -86,6 +132,19 @@ const OrderDescription = () => {
                 console.log(err)
             }
         }
+        const fetchRating = async () => {
+            try{
+                const response = await axios.get("https://ambic.live:443/api/v1/ratings", {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    }
+                })
+                setRating(response.data.payload.ratings)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        fetchRating()
         fatchingDescription()
     }, [])
 
@@ -122,8 +181,9 @@ const OrderDescription = () => {
                     </div>
                 </div>
                 <div className='relative w-[70%] h-[50%] bg-white py-5 flex items-start justify-between flex-col pl-20 gap-17'>
-                    <Comment/>
-                    <Comment/>
+                    {rating.map((rating, idx) => (
+                        <Comment key={idx} ratings={rating}/>
+                    ))}
                 </div>
             </div>
             <div>

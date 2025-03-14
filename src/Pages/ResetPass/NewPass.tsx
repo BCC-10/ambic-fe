@@ -16,11 +16,11 @@ interface Data {
 
 const NewPass: React.FC = () => {
 
-  const token = localStorage.getItem("token");
+  
 
   const [formData, setFormData] = useState<Data>({
     email: '',
-    token: token,
+    token: '',
     password: '',
   })
   const [password, setPassword] = useState("");
@@ -29,27 +29,39 @@ const NewPass: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if(!token){
-      navigate("/login");
-      return;
-    }
-  },[token, navigate])
+  // useEffect(() => {
+  //   if(!token){
+  //     navigate("/login");
+  //     return;
+  //   }
+  // },[token, navigate])
 
   const handleResetPassword = async() => {
     if (password !== confirmPassword) {
       Swal.fire("Oops...", "Password tidak cocok!", "error");
       return;
     }
+
+    const email = searchParams.get("email")
+    const token = searchParams.get("token")
+    const passwords = searchParams.get("password")
     setLoading(true)
     try{
-      const response = await axios.patch("https://ambic.live:443/api/v1/auth/reset-password", formData);
+      const response = await axios.patch("https://ambic.live:443/api/v1/auth/reset-password",  {
+        email,
+        token,  
+        password,
+      }, {
+        headers: {
+          'Content-Type' : 'application/json',
+        },
+      });
       if(response.data.status_code === 200){
         Swal.fire("Berhasil", "Berhasil merubah password", "success");
         navigate("/login");
       }
     }catch(err){
-      console.log("pesan eror : " + err)
+      console.log( err)
     } finally {
       setLoading(false)
     }

@@ -33,7 +33,8 @@ import Penilaian from "./Pages/Mitra/Penilaian/Index"
 import DragDropUpload from "./Componets/Elements/Input/DragDropUpload";
 import Transaction from "./Pages/Mitra/Order/Order";
 import VerifyMitra from "./Pages/Mitra/Daftar/Verify"
-
+import ChangePassword from "./Pages/ResetPass/ChangePassword"
+ 
 const app: React.FC = () => {
 
     return (
@@ -48,7 +49,8 @@ const app: React.FC = () => {
                     <Route path="/verify" element={<VerifyPage />} />
                     <Route path="/google/callback" element={<Google />} />
                     <Route path="/reset" element={<Reset/>}/>
-                    <Route path="/new-password" element={<NewPass/>}/>
+                    <Route path="/reset-password" element={<NewPass/>}/>
+                    <Route path="/change-password" element={<ChangePassword/>}/>    
                     <Route path="/mitra" element={<Mitra/>}/>
                     <Route path="/mitra/register" element={<DaftarMitra/>}/>
                     <Route path="/mitra/verify" element={<VerifyMitra/>}/>

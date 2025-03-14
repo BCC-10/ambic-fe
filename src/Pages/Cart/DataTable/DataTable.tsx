@@ -43,7 +43,14 @@ const quantityTemplate = (rowData: cartItem) => (
     />
     <InputNumber
         value={rowData.quantity}
-        onValueChange={(e) => updateQuantity(rowData.id, e.value ?? rowData.quantity)}
+        onValueChange={(e) => {
+            if(rowData.quantity >= rowData.stock) {
+                console.log("object")
+                updateQuantity(rowData.id, rowData.stock)
+            } else {
+                updateQuantity(rowData.id, e.value ?? rowData.quantity)
+            }
+        }}
         min={1}
         style={{width: '50%', }}
     />
@@ -51,7 +58,7 @@ const quantityTemplate = (rowData: cartItem) => (
         icon="pi pi-plus"
         className="p-button-rounded p-button-text"
         onClick={() => {
-            if(rowData.quantity === rowData.stock) return;
+            if(rowData.quantity >= rowData.stock) return;
             updateQuantity(rowData.id, rowData.quantity + 1)
         }}
     />
@@ -105,6 +112,36 @@ const Checkout = () => {
             }
         } catch (err) {
             console.log(err)
+            if(err.response.data.status_code === 400)  {
+                if(err.response.data.message.includes(`Insufficient stock for`)  ){
+                    Swal.fire({
+                        title: "Stock produk kurang!",
+                        text: "Silakan kurangi checkout anda!",
+                        icon: "warning"
+                    });
+                } else if (err.response.data.message.includes("Transaction items are missing")){
+                    Swal.fire({
+                        title: "Anda belum memilih apapun!",
+                        text: "Pilih terlebih dahulu apa yang mau dicheckout!",
+                        icon: "warning"
+                    });
+                } else if(err.response.data.message.includes("The product with id")) {
+                    const removedProductId = err.response.data.message.match(/\d+/)?.[0]; // Ambil ID produk dari pesan error
+                    if (removedProductId) {
+                        // Ambil cart dari localStorage
+                        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+                        // Filter produk yang masih tersedia
+                        const updatedCart = cart.filter((item: cartItem) => item.id !== removedProductId);
+                        // Simpan kembali cart ke localStorage
+                        localStorage.setItem("cart", JSON.stringify(updatedCart));
+                        Swal.fire({
+                            title: "Produk sudah tidak tersedia!",
+                            text: "Produk ini akan dihapus dari keranjang.",
+                            icon: "warning"
+                        });
+                    }
+                }
+            }
         }
     }
     

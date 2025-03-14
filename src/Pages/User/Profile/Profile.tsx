@@ -261,6 +261,9 @@ const Profile: React.FC = () => {
                   backgroundColor: "var(--cyan-500)",
                   outline: "none",
                 }}
+                onClick={() => {
+                  Navigate("/change-password");
+                }}
               />
             </div>
           </div>

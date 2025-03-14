@@ -8,6 +8,30 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import { SwiperRef } from "swiper/react";
 import { dummyProducts } from '../../../data';
+import { useCart, cartItem } from "../../../Componets/Util/useCart";
+import axios from 'axios';
+
+interface transaction {
+    id: string;
+    payment: {
+        id: string;
+        order_id: string;
+        custom_field1: string
+        transaction_status: string;
+        status_message: string;
+        payment_type: string;
+        fraud_status: string;
+        transaction_time: string;
+        settlement_time: string;
+    }
+    invoice: string;
+    total: number;
+    status: string;
+    note: string
+    datetime: string
+}
+
+
 
 const OrderDone = () => {
     const [open, setOpen] = useState<boolean>(false);
@@ -15,6 +39,9 @@ const OrderDone = () => {
     const nextRef = useRef<HTMLButtonElement | null>(null);
     const swiperRef = useRef<SwiperType | null>(null); // Simpan referensi Swiper
     const SwiperRef = useRef<SwiperRef  | null>(null);
+    const [transaction, setTransaction] = useState<transaction>()
+    const [product, setProduct] = useState<cartItem[]>([])
+
 
     // Pastikan referensi tombol navigasi tersedia sebelum menginisialisasi swiper
     useEffect(() => {
@@ -25,6 +52,35 @@ const OrderDone = () => {
             swiperRef.current.navigation.update();
         }
     }, []);
+
+    useEffect(() => {
+        const fatchingDoneOrder = async () => {
+            try{
+                const response = await axios.get("https://ambic.live:443/api/v1/transactions?status=finish",  {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    }
+                })
+                setTransaction(response.data.payload.transactions)
+                for (const transaction of response.data.payload.transactions) {
+                    const responseProduct = await axios.get(`https://ambic.live:443/api/v1/transactions/${transaction.id}`, {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        }
+                    })
+                    responseProduct.data.payload.transaction_details.items.forEach((item) => {
+                        item.transaction_id = transaction.id
+                    })
+                    setProduct([...product,...responseProduct.data.payload.transaction_details.items])
+                    // console.log(responseProduct.data.payload.transaction_details.items)
+                }
+            }catch (err) {
+                console.log(err)
+            }
+        }
+        fatchingDoneOrder()
+    },[])
+
     return (
         <main className='w-full min-h-screen flex flex-col overflow-hidden '>
             <div>
@@ -60,10 +116,10 @@ const OrderDone = () => {
                         swiperRef.current = swiper as SwiperType; 
                     }}
                     ref={SwiperRef}
-                    className='swiper w-[80%]'
+                    className='swiper w-full'
                 >
-                        {dummyProducts.map((_, idx)=> (
-                            <SwiperSlide><OrderItem text="Nilai" key={idx}/></SwiperSlide>
+                        {product.map((_, idex)=> (
+                            <SwiperSlide key={idex}><OrderItem text="Nilai"  product={_}/></SwiperSlide>
                         ))}
                         
                     </Swiper>

@@ -6,7 +6,7 @@ import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import { SwiperRef } from "swiper/react";
-import OrderItem from "../User/MyOrder/Component/OrderItem";
+import OrderItem from "./ProductContext/OrderItem";
 import {cards} from "../../data/index";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart, cartItem } from "../../Componets/Util/useCart";

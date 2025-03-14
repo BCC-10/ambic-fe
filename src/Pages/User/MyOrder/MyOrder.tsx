@@ -9,6 +9,33 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import { SwiperRef } from "swiper/react";
 import { dummyProducts } from '../../../data';
+import {  cartItem } from "../../../Componets/Util/useCart";
+import { Dialog } from 'primereact/dialog';
+import { Rating } from 'primereact/rating';
+import { InputText } from 'primereact/inputtext';
+import { Button } from 'primereact/button';
+import { FileUpload } from 'primereact/fileupload';
+import axios from 'axios';
+
+interface transaction {
+    id: string;
+    payment: {
+        id: string;
+        order_id: string;
+        custom_field1: string
+        transaction_status: string;
+        status_message: string;
+        payment_type: string;
+        fraud_status: string;
+        transaction_time: string;
+        settlement_time: string;
+    }
+    invoice: string;
+    total: number;
+    status: string;
+    note: string
+    datetime: string
+}
 
 const MyOrder = () => {
     const [open, setOpen] = useState<boolean>(false);
@@ -16,6 +43,8 @@ const MyOrder = () => {
     const nextRef = useRef<HTMLButtonElement | null>(null);
     const swiperRef = useRef<SwiperType | null>(null); // Simpan referensi Swiper
     const SwiperRef = useRef<SwiperRef  | null>(null);
+        const [transaction, setTransaction] = useState<transaction>()
+        const [product, setProduct] = useState<cartItem[]>([])
 
     // Pastikan referensi tombol navigasi tersedia sebelum menginisialisasi swiper
     useEffect(() => {
@@ -27,6 +56,66 @@ const MyOrder = () => {
         }
     }, []);
 
+    useEffect(() => {
+        const fatchingDoneOrder = async () => {
+            try{
+                const response = await axios.get("https://ambic.live:443/api/v1/transactions?status=finish",  {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    }
+                })
+                setTransaction(response.data.payload.transactions)
+                for (const transaction of response.data.payload.transactions) {
+                    const responseProduct = await axios.get(`https://ambic.live:443/api/v1/transactions/${transaction.id}`, {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        }
+                    })
+                    responseProduct.data.payload.transaction_details.items.forEach((item) => {
+                        item.transaction_id = transaction.id
+                    })
+                    setProduct([...product,...responseProduct.data.payload.transaction_details.items])
+                    // console.log(responseProduct.data.payload.transaction_details.items)
+                }
+            }catch (err) {
+                console.log(err)
+            }
+        }
+        fatchingDoneOrder()
+    },[])
+
+        const [visible, setVisible] = useState(false);
+        const [rating, setRating] = useState(0);
+        const [comment, setComment] = useState('');
+        const [file, setFile] = useState(null);
+        // console.log("Raw Pickup Time after parsing: ", formatTime(product?.pickup_time));
+        // console.log("Raw End Pickup Time after parsing:", formatTime(product?.end_pickup_time));
+        const handleHideDialog = () => {
+            setVisible(false);
+            setRating(0);
+            setComment('');
+            setFile(null);
+        };
+    
+        const handleSubmit = () => {
+            // Logic to handle upload, for example, send data to server
+            console.log({
+                rating,
+                comment,
+                file
+            });
+            handleHideDialog();
+        };
+
+        const handleFileUpload = (e) => {
+            setFile(e.files[0]);
+        };
+
+        const handleOpenDialog = () => {
+            setVisible(true);
+            console.log("KEBUKAAAAAA")
+        }
+    
 
     return (
         <main className='min-h-auto w-full overflow-hidden flex flex-col'>
@@ -66,10 +155,10 @@ const MyOrder = () => {
                                     swiperRef.current = swiper as SwiperType; 
                                 }}
                                 ref={SwiperRef}
-                                className='swiper '
+                                className='swiper w-full'
                             >
-                                {dummyProducts.map((_, idx)=> (
-                                    <SwiperSlide><OrderItem text="Nilai" product={_} key={idx}/></SwiperSlide>
+                                {product.map((_, idx)=> (
+                                    <SwiperSlide key={idx}><OrderItem text="Nilai" product={_} /></SwiperSlide>
                                 ))}
                             </Swiper>
                         </div>
