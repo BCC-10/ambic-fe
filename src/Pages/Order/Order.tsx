@@ -135,7 +135,7 @@ const Order = () => {
                     className='swiper w-[70%]'
                 >
                         {product.map((_,idx)=> (
-                            <SwiperSlide  key={`${_.name}-${idx}`}><OrderItem onClick={() => navigate("/order/description")} text="+ Keranjang" product={_} onAddToCart={() => _ && addToCart(_)}/></SwiperSlide>
+                            <SwiperSlide  key={`${_.name}-${idx}`}><OrderItem onClick={() => navigate("/order/description?id="+_.id)} text="+ Keranjang" product={_} onAddToCart={() => _ && addToCart(_)}/></SwiperSlide>
                         ))}
                         
                 </Swiper>

@@ -1,7 +1,7 @@
 import {useState, useEffect, useMemo} from 'react'
 
 export interface cartItem {
-    id?: string
+    id: string
     name: string
     initial_price: number
     final_price: number
@@ -15,7 +15,7 @@ export interface cartItem {
     distance: number
     // image : string 
     checked: boolean,
-    partner_id?: string
+    partner_id: string
     description?: string
 }
 

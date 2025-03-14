@@ -10,7 +10,7 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 
-interface Produk {
+export interface Produk {
   id: string;
   name: string;
   initial_price: number;
