@@ -5,21 +5,32 @@ interface Inputs {
     content?: string;
     icon?: React.ReactNode;
     onChange?: (e: any) => void;
-    width?:string;
-    color?:string
-    text:string | number
+    width?: string;
+    color?: string;
+    text: string | number;
 }
 
-const Information: React.FC<Inputs> = ({ className, content, onChange, width , color, text}) => {
+const Information: React.FC<Inputs> = ({
+    className,
+    content,
+    onChange,
+    width,
+    color,
+    text,
+}) => {
     return (
         <div className={`flex flex-col gap-2 items-start ${width}`}>
-            <label className={`font-semibold font-Poppins ${color}`}>{content}</label>
+            <label className={`font-semibold font-Poppins ${color}`}>
+                {content}
+            </label>
             <div className="relative w-full flex items-center ">
                 <div
                     className={` p-2 pr-12 rounded-2xl bg-gray-200 focus:outline-none flex items-center justify-center ${className}`}
                     onChange={onChange}
                 >
-                    <h1 className='font-Poppins text-lg font-semibold '>{text}</h1>
+                    <h1 className="font-Poppins text-lg font-semibold ">
+                        {text}
+                    </h1>
                 </div>
             </div>
         </div>
