@@ -11,7 +11,7 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 
 interface Produk {
-  id:  string;
+  id: string;
   name: string;
   initial_price: number;
   final_price: number;
@@ -19,7 +19,7 @@ interface Produk {
   end_pickup_time: string;
   pickup_time: string;
   description: string;
-  partner_id:string;
+  partner_id: string;
   photo: File | undefined;
   star: number;
   count_rating: number;
@@ -44,41 +44,60 @@ const Datatable = ({ className }: { className?: string }) => {
   };
 
   const formatDateTime = (dateString: string) => {
+    const tlg = new Date(dateString.replace("WIB", ""));
+
     const date = new Date(dateString);
-  
+
     const pad = (num: number) => num.toString().padStart(2, "0");
-  
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ` +
-          `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+
+    return (
+      `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
+        date.getDate()
+      )} ` +
+      `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(
+        date.getSeconds()
+      )}`
+    );
   };
 
   const handleSave = () => {
     if (selectedProduct) {
       if (selectedProduct.end_pickup_time) {
-        selectedProduct.end_pickup_time = formatDateTime(selectedProduct.end_pickup_time);
-    }
+        selectedProduct.end_pickup_time = formatDateTime(
+          selectedProduct.end_pickup_time
+        );
+      }
 
-    if (selectedProduct.pickup_time) {
-        selectedProduct.pickup_time = formatDateTime(selectedProduct.pickup_time);
-    }
+      if (selectedProduct.pickup_time) {
+        selectedProduct.pickup_time = formatDateTime(
+          selectedProduct.pickup_time
+        );
+      }
       editProduct(selectedProduct);
-      console.log(selectedProduct)
+      console.log(selectedProduct);
       setVisible(false);
     }
-    
   };
 
   const openDetailDialog = (product: Produk) => {
     setDetailProduct(product);
-    setSelectedProduct({ ...product }); 
+    setSelectedProduct({ ...product });
     setVisibleDetail(true);
   };
 
   const actionBodyTemplate = (rowData: Produk) => (
     <div className="flex gap-2">
       <Button onClick={() => openEditDialog(rowData)} icon="pi pi-pencil" />
-      <Button onClick={() => deleteProduct(rowData.id)} icon="pi pi-trash" severity="danger" />
-      <Button onClick={() => openDetailDialog(rowData)} icon="pi pi-eye" severity="info" />
+      <Button
+        onClick={() => deleteProduct(rowData.id)}
+        icon="pi pi-trash"
+        severity="danger"
+      />
+      <Button
+        onClick={() => openDetailDialog(rowData)}
+        icon="pi pi-eye"
+        severity="info"
+      />
     </div>
   );
 
@@ -86,94 +105,177 @@ const Datatable = ({ className }: { className?: string }) => {
     <div className={className}>
       <div className="flex justify-between mb-4 my-5 mx-5">
         <h2 className="text-xl font-Poppins font-semibold">Daftar Produk</h2>
-        <Button label="Tambah Produk" onClick={() => navigate(`/mitra/product/add`)} icon="pi pi-plus" />
+        <Button
+          label="Tambah Produk"
+          onClick={() => navigate(`/mitra/product/add`)}
+          icon="pi pi-plus"
+        />
       </div>
-      <DataTable value={products} tableStyle={{ minWidth: "100%" }} scrollable scrollHeight="flex">
-        <Column header="No" body={(_, { rowIndex }) => rowIndex + 1}/>
+      <DataTable
+        value={products}
+        tableStyle={{ minWidth: "100%" }}
+        scrollable
+        scrollHeight="flex"
+      >
+        <Column header="No" body={(_, { rowIndex }) => rowIndex + 1} />
         <Column field="name" header="Nama Produk" />
-        <Column field="initial_price" header="Harga Awal" body={(data) => `Rp ${data.initial_price}`} />
-        <Column field="final_price" header="Harga Akhir" body={(data) => `Rp ${data.final_price}`} />
+        <Column
+          field="initial_price"
+          header="Harga Awal"
+          body={(data) => `Rp ${data.initial_price}`}
+        />
+        <Column
+          field="final_price"
+          header="Harga Akhir"
+          body={(data) => `Rp ${data.final_price}`}
+        />
         <Column field="stock" header="Stok" />
         <Column body={actionBodyTemplate} header="Aksi" />
       </DataTable>
 
-      <Dialog header="Edit Produk" visible={visible} style={{ width: "30vw" }} onHide={() => setVisible(false)} dismissableMask={true}>
+      <Dialog
+        header="Edit Produk"
+        visible={visible}
+        style={{ width: "30vw" }}
+        onHide={() => setVisible(false)}
+        dismissableMask={true}
+      >
         {selectedProduct && (
           <div className="flex flex-col gap-3 items-center justify-center w-full">
-            <Input 
-              type="text" 
-              name="name" 
-              content="Nama Produk" 
+            <Input
+              type="text"
+              name="name"
+              content="Nama Produk"
               className=""
-              value={selectedProduct.name} 
+              value={selectedProduct.name}
               width="flex justify-center"
-              onChange={(e) => setSelectedProduct((prev) => prev ? { ...prev, name: e.target.value } : null)} />
-            <Input 
-              type="number" 
-              name="initial_price" 
-              content="Harga Awal" 
-              value={selectedProduct.initial_price} 
-              onChange={(e) => setSelectedProduct((prev) => prev ? { ...prev, initial_price: Number(e.target.value) } : null)} />
-            <Input 
-              type="number" 
-              name="final_price" 
-              content="Harga Akhir" 
-              value={selectedProduct.final_price} 
-              onChange={(e) => setSelectedProduct((prev) => prev ? { ...prev, final_price: Number(e.target.value) } : null)} />
-            <Input 
-              type="number" 
-              name="stock" 
-              content="Stock" 
-              value={selectedProduct.stock} 
-              onChange={(e) => setSelectedProduct((prev) => prev ? { ...prev, stock: Number(e.target.value) } : null)} />
-            <Input 
-              type="datetime-local" 
-              name="pickup_time" 
+              onChange={(e) =>
+                setSelectedProduct((prev) =>
+                  prev ? { ...prev, name: e.target.value } : null
+                )
+              }
+            />
+            <Input
+              type="number"
+              name="initial_price"
+              content="Harga Awal"
+              value={selectedProduct.initial_price}
+              onChange={(e) =>
+                setSelectedProduct((prev) =>
+                  prev
+                    ? { ...prev, initial_price: Number(e.target.value) }
+                    : null
+                )
+              }
+            />
+            <Input
+              type="number"
+              name="final_price"
+              content="Harga Akhir"
+              value={selectedProduct.final_price}
+              onChange={(e) =>
+                setSelectedProduct((prev) =>
+                  prev ? { ...prev, final_price: Number(e.target.value) } : null
+                )
+              }
+            />
+            <Input
+              type="number"
+              name="stock"
+              content="Stock"
+              value={selectedProduct.stock}
+              onChange={(e) =>
+                setSelectedProduct((prev) =>
+                  prev ? { ...prev, stock: Number(e.target.value) } : null
+                )
+              }
+            />
+            <Input
+              type="datetime-local"
+              name="pickup_time"
               content="Waktu Awal Pengambilan"
-              value={selectedProduct.pickup_time} 
-              onChange={(e) => 
-                {
-                  console.log(selectedProduct.pickup_time)
-                  setSelectedProduct((prev) => 
-                    prev ? { ...prev, pickup_time: formatDateTime(e.target.value) } : null
-                  )
-                }}  />
-            <Input 
-              type="datetime-local" 
-              name="end_pickup_time" 
+              value={selectedProduct.pickup_time}
+              onChange={(e) => {
+                setSelectedProduct((prev) =>
+                  prev
+                    ? { ...prev, pickup_time: formatDateTime(e.target.value) }
+                    : null
+                );
+              }}
+            />
+            <Input
+              type="datetime-local"
+              name="end_pickup_time"
               content="Waktu Akhir Pengambilan"
-              value={selectedProduct?.end_pickup_time ? formatDateTime(selectedProduct.end_pickup_time) : ""} 
-              onChange={(e) => 
-                setSelectedProduct((prev) => 
-                  prev ? { ...prev, end_pickup_time: formatDateTime(e.target.value) } : null
-                )}  />
-            <Input 
-              type="text" 
-              name="description" 
-              content="Deskripsi" 
-              value={selectedProduct.description} 
-              onChange={(e) => setSelectedProduct((prev) => prev ? { ...prev, description: e.target.value } : null)} />
-            <Button label="Simpan" onClick={handleSave} className="p-button-success w-1/2" rounded/>
+              value={
+                selectedProduct?.end_pickup_time
+                  ? formatDateTime(selectedProduct.end_pickup_time)
+                  : ""
+              }
+              onChange={(e) =>
+                setSelectedProduct((prev) =>
+                  prev
+                    ? {
+                        ...prev,
+                        end_pickup_time: formatDateTime(e.target.value),
+                      }
+                    : null
+                )
+              }
+            />
+            <Input
+              type="text"
+              name="description"
+              content="Deskripsi"
+              value={selectedProduct.description}
+              onChange={(e) =>
+                setSelectedProduct((prev) =>
+                  prev ? { ...prev, description: e.target.value } : null
+                )
+              }
+            />
+            <Button
+              label="Simpan"
+              onClick={handleSave}
+              className="p-button-success w-1/2"
+              rounded
+            />
           </div>
         )}
       </Dialog>
       <Dialog
         header="Detail Produk"
         visible={visibleDetail}
-        style={{ width: "30vw" , backgroundColor: "#FFF8F4"}}
+        style={{ width: "30vw", backgroundColor: "#FFF8F4" }}
         onHide={() => setVisibleDetail(false)}
       >
         {detailProduct && (
           <div className="flex flex-col gap-3 items-start justify-start w-full">
             <div className="flex flex-col items-start gap-3">
-            <p><strong>Nama Produk:</strong> {detailProduct.name}</p>
+              <p>
+                <strong>Nama Produk:</strong> {detailProduct.name}
+              </p>
             </div>
-            <p><strong>Harga Awal:</strong> Rp {detailProduct.initial_price}</p>
-            <p><strong>Harga Akhir:</strong> Rp {detailProduct.final_price}</p>
-            <p><strong>Stock:</strong> {detailProduct.stock}</p>
-            <p><strong>Waktu Awal Pengambilan:</strong> {detailProduct.pickup_time}</p>
-            <p><strong>Waktu Akhir Pengambilan:</strong> {detailProduct.end_pickup_time}</p>
-            <p><strong>Deskripsi:</strong> {detailProduct.description}</p>
+            <p>
+              <strong>Harga Awal:</strong> Rp {detailProduct.initial_price}
+            </p>
+            <p>
+              <strong>Harga Akhir:</strong> Rp {detailProduct.final_price}
+            </p>
+            <p>
+              <strong>Stock:</strong> {detailProduct.stock}
+            </p>
+            <p>
+              <strong>Waktu Awal Pengambilan:</strong>{" "}
+              {detailProduct.pickup_time}
+            </p>
+            <p>
+              <strong>Waktu Akhir Pengambilan:</strong>{" "}
+              {detailProduct.end_pickup_time}
+            </p>
+            <p>
+              <strong>Deskripsi:</strong> {detailProduct.description}
+            </p>
           </div>
         )}
       </Dialog>

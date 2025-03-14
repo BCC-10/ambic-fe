@@ -3,10 +3,20 @@ import {useState, useEffect, useMemo} from 'react'
 export interface cartItem {
     id?: string
     name: string
-    price: number
+    initial_price: number
+    final_price: number
     quantity: number
-    image : string 
+    stock: number
+    pickup_time: string
+    end_pickup_time: string
+    photo: string
+    star: number;
+    count_rating: number;
+    distance: number
+    // image : string 
     checked: boolean,
+    partner_id?: string
+    description?: string
 }
 
 export const useCart = () => {
@@ -43,7 +53,7 @@ const addToCart = (product : cartItem) => {
         setCart(prevCart => prevCart.filter(item => item.id!== id));
     }
 
-    const totalPrice = cart.reduce((total,item ) => total + item.price * item.quantity, 0); 
+    const totalPrice = cart.reduce((total,item ) => total + item.final_price * item.quantity, 0); 
     
     const toggleChecked = (id: string) => {
         setCart((prevCart) => {
@@ -58,7 +68,7 @@ const addToCart = (product : cartItem) => {
 
     const checkedTotalPrice = useMemo(() => {
         return cart.reduce((total, item) => {
-            return item.checked ? total + item.price * item.quantity : total;
+            return item.checked ? total + item.final_price * item.quantity : total;
         }, 0);
     }, [cart]);
 

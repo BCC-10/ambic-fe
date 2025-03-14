@@ -116,6 +116,7 @@ useEffect(() => {
         </div>
         <div className="mb-3">
           <Input
+            min={1}
             type="number"
             name="initial_price"
             content="Harga Awal"
@@ -127,6 +128,7 @@ useEffect(() => {
         </div>
         <div className="mb-3">
           <Input
+            min={1}
             type="number"
             name="final_price"
             content="Harga Akhir"
@@ -138,6 +140,7 @@ useEffect(() => {
         </div>
         <div className="mb-3">
           <Input
+            min={1}
             type="number"
             name="stock"
             content="Stok"

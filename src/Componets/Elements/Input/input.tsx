@@ -13,9 +13,10 @@ interface Inputs {
     color?:string
     select?: boolean
     disabled?: boolean
+    min?: number
 }
 
-const Input: React.FC<Inputs> = ({ type, placeholder, className, content, icon, value, onChange, width , color, name, select, disabled}) => {
+const Input: React.FC<Inputs> = ({ type, placeholder, className, content, icon, value, onChange, width , color, name, select, disabled, min}) => {
     return (
         <div className={`flex flex-col gap-2 items-start  ${width}`}>
             {content && <label className={`font-semibold  ${color}`}>{content}</label>}
@@ -28,6 +29,7 @@ const Input: React.FC<Inputs> = ({ type, placeholder, className, content, icon, 
                     value={value}
                     onChange={onChange}
                     disabled={disabled}
+                    min={min}
                 />
                 {select === true ? 
                 <select

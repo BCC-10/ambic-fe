@@ -1,6 +1,7 @@
 import {useState, useEffect, useRef} from "react"
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 interface product {
     id?: string | number,
@@ -63,12 +64,7 @@ const useProducts = () => {
             setProducts((prevProducts) => [...prevProducts, newProduct, response.data]);
             Swal.close();
             if(response.data.status_code === 200) {
-                Swal.fire({
-                    title: "Sukses Edit Data",
-                    text: " Silakan Refresh Tab!",
-                    icon: "success",
-                    draggable: false
-                });
+                window.location.reload();
             }
         }catch(err){
             console.log(err);
@@ -134,6 +130,7 @@ const useProducts = () => {
                     Swal.showLoading();
                 }
             });
+            
             const response = await axios.patch(`https://ambic.live:443/api/v1/products/${updateProduct.id}`, updateProduct, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -145,13 +142,8 @@ const useProducts = () => {
         );
         Swal.close();
         if(response.data.status_code === 200) {
-            Swal.fire({
-                title: "Sukses Edit Data",
-                text: " Silakan Refresh Tab!",
-                icon: "success",
-                draggable: false
-                });
-            }
+            window.location.reload()
+        }
         } catch (err){
             console.log(err);
             if(err.response.data.status_code === 400){

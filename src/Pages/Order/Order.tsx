@@ -9,8 +9,9 @@ import { SwiperRef } from "swiper/react";
 import OrderItem from "../User/MyOrder/Component/OrderItem";
 import {cards} from "../../data/index";
 import { Link, useNavigate } from "react-router-dom";
-import { useCart } from "../../Componets/Util/useCart";
+import { useCart, cartItem } from "../../Componets/Util/useCart";
 import { dummyProducts } from '../../data/index';
+import axios from 'axios';
 
 // interface CardItem {
 //     id: number;
@@ -24,6 +25,9 @@ const Order = () => {
     const SwiperRef = useRef<SwiperRef  | null>(null);
     const navigate = useNavigate();
     const {addToCart} = useCart();
+    const [product, setProduct] = useState<cartItem[]>([]);
+    const [latitude, setLatitude] = useState<string | null>(null);
+    const [longitude, setLongitude] = useState<string | null>(null);
 
     // Pastikan referensi tombol navigasi tersedia sebelum menginisialisasi swiper
     useEffect(() => {
@@ -34,6 +38,60 @@ const Order = () => {
             swiperRef.current.navigation.update();
         }
     }, []);
+
+    // Minta Akses Lokasi Terkini
+        useEffect(() => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                    setLatitude(position.coords.latitude.toString());
+                    setLongitude(position.coords.longitude.toString());
+                    },
+                    (error) => {
+                    console.error("Error getting location:", error);
+                    alert("Gagal mendapatkan lokasi, pastikan izin lokasi diaktifkan.");
+                    }
+                );
+                } else {
+                alert("Geolocation tidak didukung di browser ini.");
+                }
+            }, []);
+
+            useEffect(() => {
+                const fetchDataOrderItem = async () => {
+                    if (!latitude || !longitude) {
+                        // console.log("Latitude atau Longitude belum tersedia, request tidak dijalankan.");
+                        return;
+                    }
+            
+                    // console.log("Mengirim request ke API dengan data:");
+                    // console.log("Latitude:", latitude);
+                    // console.log("Longitude:", longitude);
+                    // console.log("Radius:", 15000);
+            
+                    try {
+                        const response = await axios.get("https://ambic.live:443/api/v1/products", {
+                            headers: {
+                                'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                                'Content-Type': 'application/json'
+                            },
+                            params: {
+                                lat: Number(latitude),
+                                long: Number(longitude),
+                                radius: 15000
+                            }
+                        });
+            
+                        console.log("Response dari API:", response.data); // Log hasil response dari API
+                        setProduct(response.data.payload.products);
+                    } catch (err) {
+                        console.error("Pesan Error:", err.response?.data || err.message);
+                    }
+                };
+            
+                fetchDataOrderItem();
+            }, [latitude, longitude]); // Dependensi diperbaiki agar request berjalan setelah lat/lon diperoleh
+            
 
     return (
         <main className='relative min-h-screen w-full flex flex-col overflow-hidden '>
@@ -76,7 +134,7 @@ const Order = () => {
                     ref={SwiperRef}
                     className='swiper w-[70%]'
                 >
-                        {dummyProducts.map((_,idx)=> (
+                        {product.map((_,idx)=> (
                             <SwiperSlide  key={`${_.name}-${idx}`}><OrderItem onClick={() => navigate("/order/description")} text="+ Keranjang" product={_} onAddToCart={() => _ && addToCart(_)}/></SwiperSlide>
                         ))}
                         
