@@ -5,6 +5,9 @@ import { Button } from "primereact/button";
 import Input from "../../../../Componets/Elements/Input/input";
 import { Dialog } from "primereact/dialog";
 import axios from "axios";
+import Swal from 'sweetalert2';
+
+
 
 interface Payment {
     id: string;
@@ -82,16 +85,45 @@ const TableTransaction = ({ className }: { className?: string }) => {
         setSelectedTransaction(transaction);
         setInfoVisible(true);
     };
+
+    const updateStatus = async () => {
+
+        // console.log(selectedTransaction?.id);
+        const token = localStorage.getItem("token")
+        // console.log(token)
+        try{
+            const response = await axios.patch(`https://ambic.live:443/api/v1/transactions/${selectedTransaction?.id}`, {
+                status: "finish",
+            }, { 
+                headers: {
+                    Authorization: `Bearer ${token}` ,
+                    "Content-Type": "application/json",
+                }
+            })
+            if(response.data.status_code === 200){
+                setVisible(false)
+                Swal.fire({
+                    title: "Sukses Merubah Status",
+                    icon: "success",
+                    confirmButtonText: "Ok",
+                    draggable: false
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        window.location.reload();
+                    } 
+                });
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
     
 
-    const deleteTransaction = (id: string) => {
-        // Implement delete functionality here
-    };
 
     const actionBodyTemplate = (rowData: Transaction) => (
         <div className="flex gap-2">
-            <Button onClick={() => openDetailDialog(rowData)} icon="pi pi-pencil" />
-            <Button onClick={() => deleteTransaction(rowData.id)} icon="pi pi-trash" severity="danger" />
+            <Button onClick={() => openDetailDialog(rowData)} icon="pi pi-shopping-cart" />
             <Button onClick={() => openInfoDialog(rowData)} icon="pi pi-eye" severity="info" />
         </div>
     );
@@ -102,7 +134,7 @@ const TableTransaction = ({ className }: { className?: string }) => {
 
     const DetailItem = ({ label, value }: { label: string; value: string }) => (
         <div className="flex flex-col">
-            <span className="text-blue-600 font-semibold">{label}</span>
+            <span className="text-teal-700/85 font-semibold">{label}</span>
             <span className="p-2 bg-white rounded-md border">{value}</span>
         </div>
     );
@@ -111,20 +143,20 @@ const TableTransaction = ({ className }: { className?: string }) => {
         <div className={className}>
             
             <DataTable value={transactions} tableStyle={{ minWidth: '100%' }} scrollable scrollHeight="flex">
-                <Column field="id" header="No" />
+                <Column  header="No" body={(_, { rowIndex }) => rowIndex + 1}/>
                 <Column field="invoice" header="Faktur" />
                 <Column field="total" header="Total" body={(data) => `Rp ${data.total}`} />
-                <Column field="status" header="Status" />
+                <Column header="Status" body={(status) => `${status.status === "waiting for payment" ? "Menunggu Pembayaran" : status.status === "process" ? "Sedang Proses" : status.status === "finish" ? "Selesai" : ""}`}/>
                 <Column field="datetime" header="Tanggal" />
                 <Column body={actionBodyTemplate} header="Aksi" />
             </DataTable>
             <Dialog header="Detail Transaksi" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
                 {selectedTransaction && (
                     <div className="p-4 bg-gray-100 rounded-lg shadow-md">
-                        <div className="grid gap-3">
+                        <div className="flex flex-col gap-3 ">
                             <DetailItem label="Faktur" value={selectedTransaction.invoice} />
                             <DetailItem label="Metode Pembayaran" value={selectedTransaction.payment.payment_type} />
-                            <DetailItem label="Status" value={selectedTransaction.status} />
+                            <DetailItem label="Status" value={selectedTransaction.status === "waiting for payment" ? "Menunggu Pembayaran" : selectedTransaction.status === "process" ? "Sedang Proses" : selectedTransaction.status === "finish" ? "Selesai" : ""  } />
                             <DetailItem label="Total" value={`Rp ${selectedTransaction.total.toLocaleString()}`} />
                             <DetailItem label="Waktu" value={new Date(selectedTransaction.datetime).toLocaleDateString("id-ID", {
                                 weekday: "long",
@@ -133,6 +165,7 @@ const TableTransaction = ({ className }: { className?: string }) => {
                                 year: "numeric"
                             })} />
                             <DetailItem label="Catatan" value={selectedTransaction.note || "-"} />
+                            <button className='w-[30%] items-center self-center bg-teal-700/85 text-white rounded-full py-2 focus:outline-none cursor-pointer transition duration-300 hover:bg-teal-500 ease-in' onClick={updateStatus}>Selesai</button>
                         </div>
                     </div>
                 )}

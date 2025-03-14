@@ -133,7 +133,7 @@ const navigate = useNavigate()
 return (
     <div className="flex flex-col gap-80 h-auto">
         <div className="flex flex-col justify-center gap-7 items-center w-full ">
-        <DataTable value={cart} responsiveLayout="scroll" className="bg-white drop-shadow-xl" style={{width: "85rem"}}>
+        <DataTable value={cart} responsiveLayout="scroll" className="bg-white drop-shadow-xl" style={{width: "90vw"}}>
             <Column body={checkboxTemplate} style={{ width: "3rem" }} headerStyle={{backgroundColor: "var(--teal-700)", color: "white"}}/>
             <Column header="Produk" body={productTemplate} headerStyle={{backgroundColor: "var(--teal-700)", color: "white"}}/>
             <Column field="final_price" header="Harga" body={(rowData) => `Rp ${new Intl.NumberFormat("id-ID").format(rowData.final_price)}`} headerStyle={{backgroundColor: "var(--teal-700)", color: "white"}}/>

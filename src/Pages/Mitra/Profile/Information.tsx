@@ -7,10 +7,11 @@ interface Inputs {
     onChange?: (e: any) => void;
     width?:string;
     color?:string
-    text:string | number
+    text?:string | number
+    children?: React.ReactNode
 }
 
-const Information: React.FC<Inputs> = ({ className, content, onChange, width , color, text}) => {
+const Information: React.FC<Inputs> = ({ className, content, onChange, width , color, text, children}) => {
     return (
         <div className={`flex flex-col gap-2 items-start ${width}`}>
             <label className={`font-semibold font-Poppins ${color}`}>{content}</label>
@@ -20,6 +21,7 @@ const Information: React.FC<Inputs> = ({ className, content, onChange, width , c
                     onChange={onChange}
                 >
                     <h1 className='font-Poppins text-lg font-semibold '>{text}</h1>
+                    {children}
                 </div>
             </div>
         </div>
