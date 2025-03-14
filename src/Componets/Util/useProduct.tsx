@@ -75,13 +75,15 @@ const useProducts = () => {
     const fetchProducts = async () => {
         try{
             Swal.fire({
-                title: "Sedang Memproses...",
-                text: "Mohon tunggu sebentar",
-                allowOutsideClick: false,
+                title: "Loading...",
+                text: "Mengambil data pengguna...",
+                allowOutsideClick: true,
+                timer: 2000,
+                timerProgressBar: true,
                 didOpen: () => {
                     Swal.showLoading();
-                }
-            });
+                },
+                });
             const response = await axios.get("https://ambic.live:443/api/v1/partners/products", {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`,

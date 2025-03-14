@@ -98,10 +98,8 @@ const Login = () => {
     setResendMessage("");
 
     try {
-      await axios.post(
-        "https://ambic.live:443/api/v1/auth/verification",
-        { email: email },
-        { headers: { "Content-Type": "application/json" } }
+      await axios.get(
+        "https://ambic.live:443/api/v1/auth/verification?email=" + email,
       );
 
       setResendMessage("Link verifikasi telah dikirim ulang ke email Anda.");
