@@ -69,7 +69,7 @@ const Comment = ({ratings} : {ratings : Rating}) => {
                             <h1 className='font-Poppins text-lg font-semibold'>{ratings.name}</h1>
                             <div className='flex items-start'>
                                 {[...Array(5)].map((_,idx) => (
-                                    <img src={idx < ratings.star ? Stars : "" } alt="Stars" className='w-[15%]'key={idx}/>
+                                    <img src={idx < ratings.star ? Stars : Stars } alt="Stars" className='w-[15%]'key={idx}/>
                                 ))}
                                 
                             </div>

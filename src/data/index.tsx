@@ -42,6 +42,11 @@ import Order1 from "../assets/Background/OrderItem/Rectangle 76.png"
 import Order2 from "../assets/Background/OrderItem/Rectangle 76 (1).png"
 import Order3 from "../assets/Background/OrderItem/Rectangle 76 (2).png"
 import Order4 from "../assets/Background/OrderItem/Rectangle 76 (3).png"
+import How1 from "../assets/Hiasan/How/WhatsApp Image 2025-03-14 at 17.37.55_e58b5777.jpg"
+import How2 from "../assets/Hiasan/How/WhatsApp Image 2025-03-14 at 17.37.57_99c71251.jpg"
+import How3 from "../assets/Hiasan/How/WhatsApp Image 2025-03-14 at 17.37.56_9c95999c.jpg"
+import How4 from "../assets/Hiasan/How/Rectangle 6.png"
+import How5 from "../assets/Hiasan/How/WhatsApp Image 2025-03-15 at 05.53.58_a27b05b2.jpg"
 
 
 const menuItems: Array<{text: string, to?:string}> = [
@@ -53,11 +58,11 @@ const menuItems: Array<{text: string, to?:string}> = [
 ];
 
 const Content: Array<{item: string, text: string, Image: string}> = [
-    {item: "Atur Lokasi", text:"Atur lokasi agar menemukan restoran terdekat.", Image: Image1},
-    {item: "Lihat Makanan Terdekat", text:"Jelajahi menu dari restoran di sekitar.", Image: Image2},
-    {item: "Pilih Makanan", text:"Pilih makanan sesuai selera dan kebutuhan", Image: Image3},
-    {item: "Beli Sekarang", text:"Tambahkan produk ke keranjang dan lanjut ke checkout", Image: Image4},
-    {item: "Bayar", text:"Melakukan pembayaran dan selesaikan transaksi", Image: Image5}
+    {item: "Atur Lokasi", text:"Atur lokasi agar menemukan restoran terdekat.", Image: How4},
+    {item: "Lihat Makanan Terdekat", text:"Jelajahi menu dari restoran di sekitar.", Image: How1},
+    {item: "Pilih Makanan", text:"Pilih makanan sesuai selera dan kebutuhan", Image: How2},
+    {item: "Beli Sekarang", text:"Tambahkan produk ke keranjang dan lanjut ke checkout", Image: How3},
+    {item: "Bayar", text:"Melakukan pembayaran dan selesaikan transaksi", Image: How5}
 ]
 
 const slides: Array<{Image: string}> = [{ Image: Banner1 }, { Image: Banner2 }, { Image: Banner3 }];
