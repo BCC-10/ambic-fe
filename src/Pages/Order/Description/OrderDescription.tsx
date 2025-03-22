@@ -11,6 +11,7 @@ import axios from 'axios';
 import { useSearchParams } from'react-router-dom';
 
 
+
 interface Produk {
     id: string;
     partner_id: string;
@@ -42,16 +43,19 @@ interface Rating {
 const Comment = ({ratings} : {ratings : Rating}) => {
 
     const [rating, setRating] = useState<Rating[]>([])
-
+    const [searchParams] = useSearchParams();
+    
     useEffect(() => {
+        const product_id = searchParams.get("id")
         const fetchRating = async () => {
             try{
-                const response = await axios.get("https://ambic.live:443/api/v1/ratings", {
+                const response = await axios.get(`https://ambic.live:443/api/v1/ratings?id=${product_id}`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     }
                 })
                 setRating(response.data.payload.ratings)
+                console.log(product_id)
             } catch (err) {
                 console.log(err)
             }
@@ -60,7 +64,7 @@ const Comment = ({ratings} : {ratings : Rating}) => {
     },[])
     
     return (
-        <>
+        <>``
             <div className='w-[90%] flex items-center justify-between '>
                 <div className='w-full flex items-start justify-center flex-col gap-2 text-wrap '>
                     <div className='w-[20%] flex gap-3 irems-center justify-center'>

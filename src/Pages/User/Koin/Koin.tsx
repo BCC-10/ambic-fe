@@ -29,9 +29,9 @@ const Koin = () => {
                             </div>
                         </div>
                         <div className='w-full'>
-                            {[...Array(4)].map((_,idx)=> (
-                                <Notif key={idx}/>
-                            ))}
+                            {/* {[...Array(4)].map((_,idx)=> (
+                                // <Notif key={idx}/>
+                            ))} */}
                         </div>
                     </div>
                 </div>
