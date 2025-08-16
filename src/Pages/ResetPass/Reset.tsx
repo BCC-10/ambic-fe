@@ -1,42 +1,45 @@
-import React, {useState} from "react";
-import Input from "../../Componets/Elements/Input/input";
-import { MdEmail } from "react-icons/md";
-import Logo from "../../assets/ICons/Reset/Frame 258.png";
-import Pattern from "../../assets/Pettern/image 11.png";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import Swal from 'sweetalert2'
+import React, { useState } from 'react';
+import Input from '../../Componets/Elements/Input/input';
+import { MdEmail } from 'react-icons/md';
+import Logo from '../../assets/ICons/Reset/Frame 258.png';
+import Pattern from '../../assets/Pettern/image 11.png';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Reset: React.FC = () => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [formdata, setFormData] = useState({
-    email: "",
-  })
+    email: '',
+  });
   const navigate = useNavigate();
 
-  const handleForgotPassword =  async () => {
-    if(!email.trim()){
+  const handleForgotPassword = async () => {
+    if (!email.trim()) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Kok Belum Masukin Emailnya siih...",
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Kok Belum Masukin Emailnya siih...',
       });
     }
-      setLoading(true);
-      try {
-        const response = await axios.post("https://ambic.live:443/api/v1/auth/forgot-password", {
-          email : email
-        })
-        if(response.data.status_code === 200){
-          navigate("/emailcheck")
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        import.meta.env.VITE_API_URL + '/api/v1/auth/forgot-password',
+        {
+          email: email,
         }
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
+      );
+      if (response.data.status_code === 200) {
+        navigate('/emailcheck');
       }
-  }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="relative min-h-screen bg-white flex flex-row items-center justify-center w-full p-5 gap-5">
@@ -50,7 +53,7 @@ const Reset: React.FC = () => {
           type="email"
           placeholder="Enter Your Email"
           content="Alamat Email"
-          icon={<MdEmail className="relative bottom-8 left-[100%]"/>}
+          icon={<MdEmail className="relative bottom-8 left-[100%]" />}
           className="w-full"
           color="text-gray-600"
           onChange={(e) => setEmail(e.target.value)}
@@ -62,7 +65,7 @@ const Reset: React.FC = () => {
             onClick={handleForgotPassword}
             disabled={loading}
           >
-            {loading ? "Mengirim... " : "Kirim email"}
+            {loading ? 'Mengirim... ' : 'Kirim email'}
           </button>
         </div>
       </div>

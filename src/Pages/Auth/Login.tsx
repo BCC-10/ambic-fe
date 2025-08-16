@@ -1,54 +1,56 @@
-import React, { useState, useEffect } from "react";
-import Input from "../../Componets/Elements/Input/input";
-import { Logins } from "../../data/index";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import Swal from "sweetalert2";
-import { useAuth } from "../../Componets/Util/AuthContext";
-import { FcGoogle } from "react-icons/fc";
-import Pettern from "../../assets/Pettern/image 11.png";
+import React, { useState, useEffect } from 'react';
+import Input from '../../Componets/Elements/Input/input';
+import { Logins } from '../../data/index';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import { useAuth } from '../../Componets/Util/AuthContext';
+import { FcGoogle } from 'react-icons/fc';
+import Pettern from '../../assets/Pettern/image 11.png';
 
 const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    identifier: "",
-    password: "",
+    identifier: '',
+    password: '',
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [successMessage, setSuccessMessage] = useState("");
-  const [email, setEmail] = useState("");
-  const [resendMessage, setResendMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState('');
+  const [email, setEmail] = useState('');
+  const [resendMessage, setResendMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [resendCount, setResendCount] = useState<number>(
-    parseInt(localStorage.getItem("resendCount") || "0", 10)
+    parseInt(localStorage.getItem('resendCount') || '0', 10)
   );
   const [resendDisabled, setResendDisabled] = useState<boolean>(false);
-  const [googleLink, setGoogleLink] = useState("");
-  const {isAuthenticated} = useAuth();
+  const [googleLink, setGoogleLink] = useState('');
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    if(isAuthenticated) {
-      navigate("/user/profile")
+    if (isAuthenticated) {
+      navigate('/user/profile');
     }
-  }, [isAuthenticated, navigate])
+  }, [isAuthenticated, navigate]);
 
   const handleLoginWithGoogle = async () => {
     try {
-      const response = await axios.get("https://ambic.live/api/v1/auth/google");
+      const response = await axios.get(
+        import.meta.env.VITE_API_URL + '/api/v1/auth/google'
+      );
       if (response.data.payload?.url) {
         window.location.href = response.data.payload.url; // Redirect ke URL yang diberikan API
       } else {
-        console.error("Google login URL not received");
+        console.error('Google login URL not received');
       }
     } catch (error) {
-      console.error("Error posting Google login request:", error);
+      console.error('Error posting Google login request:', error);
     }
   };
 
   useEffect(() => {
-    const lastResendTime = localStorage.getItem("lastResendTime");
+    const lastResendTime = localStorage.getItem('lastResendTime');
     if (lastResendTime) {
       const timePassed = Date.now() - parseInt(lastResendTime, 10);
       if (timePassed < 15 * 60 * 1000) {
@@ -58,28 +60,28 @@ const Login = () => {
         const remainingTime = 15 * 60 * 1000 - timePassed;
         setTimeout(() => {
           setResendDisabled(false);
-          localStorage.removeItem("resendCount");
-          localStorage.removeItem("lastResendTime");
+          localStorage.removeItem('resendCount');
+          localStorage.removeItem('lastResendTime');
         }, remainingTime);
       } else {
         // Jika sudah lebih dari 15 menit, reset data
-        localStorage.removeItem("resendCount");
-        localStorage.removeItem("lastResendTime");
+        localStorage.removeItem('resendCount');
+        localStorage.removeItem('lastResendTime');
       }
     }
   }, []);
 
   useEffect(() => {
     // Ambil pesan sukses dari sessionStorage
-    const message = sessionStorage.getItem("registrationSuccess");
-    const email = sessionStorage.getItem("email");
+    const message = sessionStorage.getItem('registrationSuccess');
+    const email = sessionStorage.getItem('email');
     if (message) {
       setSuccessMessage(message);
-      sessionStorage.removeItem("registrationSuccess"); // Hapus agar tidak muncul lagi setelah refresh
+      sessionStorage.removeItem('registrationSuccess'); // Hapus agar tidak muncul lagi setelah refresh
     }
     if (email) {
       setEmail(email);
-      sessionStorage.removeItem("email"); // Hapus agar tidak muncul lagi setelah refresh
+      sessionStorage.removeItem('email'); // Hapus agar tidak muncul lagi setelah refresh
     }
   }, []);
 
@@ -87,44 +89,46 @@ const Login = () => {
   const handleResendVerification = async () => {
     if (resendCount >= 2) {
       Swal.fire({
-        icon: "warning",
-        title: "Batas Tercapai",
-        text: "Anda telah mencapai batas pengiriman ulang verifikasi. Silakan coba lagi dalam 15 menit.",
+        icon: 'warning',
+        title: 'Batas Tercapai',
+        text: 'Anda telah mencapai batas pengiriman ulang verifikasi. Silakan coba lagi dalam 15 menit.',
       });
       return;
     }
 
     setLoading(true);
-    setResendMessage("");
+    setResendMessage('');
 
     try {
       await axios.get(
-        "https://ambic.live:443/api/v1/auth/verification?email=" + email,
+        import.meta.env.VITE_API_URL +
+          '/api/v1/auth/verification?email=' +
+          email
       );
 
-      setResendMessage("Link verifikasi telah dikirim ulang ke email Anda.");
+      setResendMessage('Link verifikasi telah dikirim ulang ke email Anda.');
       const newResendCount = resendCount + 1;
       setResendCount(newResendCount);
-      localStorage.setItem("resendCount", newResendCount.toString());
+      localStorage.setItem('resendCount', newResendCount.toString());
 
       if (newResendCount > 2) {
-        localStorage.setItem("lastResendTime", Date.now().toString());
+        localStorage.setItem('lastResendTime', Date.now().toString());
         setResendDisabled(true);
 
         Swal.fire({
-          icon: "info",
-          title: "Batas Tercapai",
-          text: "Anda harus menunggu 15 menit sebelum mencoba lagi.",
+          icon: 'info',
+          title: 'Batas Tercapai',
+          text: 'Anda harus menunggu 15 menit sebelum mencoba lagi.',
         });
 
         setTimeout(() => {
           setResendDisabled(false);
-          localStorage.removeItem("resendCount");
-          localStorage.removeItem("lastResendTime");
+          localStorage.removeItem('resendCount');
+          localStorage.removeItem('lastResendTime');
         }, 15 * 60 * 1000);
       }
     } catch (error) {
-      setResendMessage("Terjadi kesalahan saat mengirim ulang verifikasi.");
+      setResendMessage('Terjadi kesalahan saat mengirim ulang verifikasi.');
       console.error(error);
     } finally {
       setLoading(false);
@@ -136,17 +140,17 @@ const Login = () => {
 
     try {
       const { data } = await axios.post(
-        "https://ambic.live:443/api/v1/auth/login",
+        import.meta.env.VITE_API_URL + '/api/v1/auth/login',
         formData,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
-      localStorage.setItem("token", data.payload.token);
+      localStorage.setItem('token', data.payload.token);
       login();
-      navigate("/");
+      navigate('/');
     } catch (err: any) {
       if (err.response) {
         const apiErrors = err.response.data.payload?.errors || {};
@@ -155,44 +159,46 @@ const Login = () => {
 
         // Tangani error email
         if (apiErrors.identifier) {
-          if (apiErrors.identifier.includes("Email or password is incorrect")) {
-            newErrors.identifier = " Username atau Password Salah!";
-          } else if (apiErrors.identifier.includes("required")) {
-            newErrors.identifier = "Harus diisi ya..";
+          if (apiErrors.identifier.includes('Email or password is incorrect')) {
+            newErrors.identifier = ' Username atau Password Salah!';
+          } else if (apiErrors.identifier.includes('required')) {
+            newErrors.identifier = 'Harus diisi ya..';
           } else {
-            newErrors.identifier = ""; // Default dari API jika tidak dikenali
+            newErrors.identifier = ''; // Default dari API jika tidak dikenali
           }
         }
 
         // Tangani error password
         if (apiErrors.password) {
-          if (apiErrors.password.includes("min")) {
-            newErrors.password = "Password Minimal 6 Karakter.";
-          } else if (apiErrors.password.includes("required")) {
-            newErrors.password = "Wajib isi yaa..";
-          } else if (apiErrors.password.includes("Email or password is incorrect")) {
-            newErrors.password = "Username atau Password salah!";
+          if (apiErrors.password.includes('min')) {
+            newErrors.password = 'Password Minimal 6 Karakter.';
+          } else if (apiErrors.password.includes('required')) {
+            newErrors.password = 'Wajib isi yaa..';
+          } else if (
+            apiErrors.password.includes('Email or password is incorrect')
+          ) {
+            newErrors.password = 'Username atau Password salah!';
           } else {
             newErrors.password = apiErrors.password;
           }
         }
 
-        if(err.response.data.status_code === 401){
-          newErrors.identifier = "Username atau Password salah!";
+        if (err.response.data.status_code === 401) {
+          newErrors.identifier = 'Username atau Password salah!';
         }
 
         if (err.response.data.status_code === 403) {
           Swal.fire({
-            title: "Akun Belum diVerifikasi",
-            text: "Cek Emailmu untuk Memverifikasi!",
-            icon: "error",
-            confirmButtonText: "Oke",
+            title: 'Akun Belum diVerifikasi',
+            text: 'Cek Emailmu untuk Memverifikasi!',
+            icon: 'error',
+            confirmButtonText: 'Oke',
           });
         }
 
         setErrors(newErrors);
       } else {
-        setErrors({ general: "Terjadi kesalahan. Coba lagi nanti." });
+        setErrors({ general: 'Terjadi kesalahan. Coba lagi nanti.' });
       }
     }
   };
@@ -209,7 +215,7 @@ const Login = () => {
               className="text-blue-600 underline mt-2"
               disabled={loading}
             >
-              {loading ? "Mengirim..." : "Kirim ulang verifikasi"}
+              {loading ? 'Mengirim...' : 'Kirim ulang verifikasi'}
             </button>
           </div>
         )}
@@ -220,29 +226,31 @@ const Login = () => {
           </p>
         )}
         <div className="flex flex-col items-center justify-start p-2 gap-5 w-full">
-        {Logins.map((field, idx) => (
-          <div key={idx}>
-            <Input
-            type={field.type}
-            placeholder={field.placeholder}
-            content={field.content}
-            icon={field.icon}
-            className="focus:outline-none bg-[#D9D9D9] p-2 rounded-2xl w-full h-[10%] placeholder:text-sm"
-            value={formData[field.name as keyof typeof formData] || ""}
-            onChange={(e) =>
-            setFormData({ ...formData, [field.name]: e.target.value })
-            }
-            color="text-gray-600"
-          />
-          {errors[field.name] && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors[field.name]}
-            </p>
-          )}
+          {Logins.map((field, idx) => (
+            <div key={idx}>
+              <Input
+                type={field.type}
+                placeholder={field.placeholder}
+                content={field.content}
+                icon={field.icon}
+                className="focus:outline-none bg-[#D9D9D9] p-2 rounded-2xl w-full h-[10%] placeholder:text-sm"
+                value={formData[field.name as keyof typeof formData] || ''}
+                onChange={(e) =>
+                  setFormData({ ...formData, [field.name]: e.target.value })
+                }
+                color="text-gray-600"
+              />
+              {errors[field.name] && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors[field.name]}
+                </p>
+              )}
+            </div>
+          ))}
         </div>
-        ))}
-        </div>
-        <Link to="/reset"><p className="">Lupa Password?</p></Link>
+        <Link to="/reset">
+          <p className="">Lupa Password?</p>
+        </Link>
         <button
           type="submit"
           className="w-full py-2 rounded-2xl text-white font-Poppins font-semibold bg-teal-700/85 transition-transform duration-300 ease-in hover:scale-95 focus:outline-2 focus:outline-offset-2 focus:outline-offset-teal-700/85 cursor-pointer"

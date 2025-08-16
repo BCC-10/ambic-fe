@@ -1,43 +1,44 @@
-import React, { useState, useEffect } from "react";
-import { Registers } from "../../data/index";
-import Input from "../../Componets/Elements/Input/input";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import Swal from "sweetalert2";
-import { useAuth } from "../../Componets/Util/AuthContext";
-import { FcGoogle } from "react-icons/fc";
-import Pattern from "../../assets/Pettern/image 11.png";
+import React, { useState, useEffect } from 'react';
+import { Registers } from '../../data/index';
+import Input from '../../Componets/Elements/Input/input';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import { useAuth } from '../../Componets/Util/AuthContext';
+import { FcGoogle } from 'react-icons/fc';
+import Pattern from '../../assets/Pettern/image 11.png';
 
 const Register = () => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: "",
-    username: "",
-    password: "",
+    email: '',
+    username: '',
+    password: '',
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [successMessage, setSuccessMessage] = useState("");
-  const [googleLink, setGoogleLink] = useState("");
-  
+  const [successMessage, setSuccessMessage] = useState('');
+  const [googleLink, setGoogleLink] = useState('');
 
   const handleLoginWithGoogle = async () => {
     try {
-      const response = await axios.get("https://ambic.live/api/v1/auth/google");
+      const response = await axios.get(
+        import.meta.env.VITE_API_URL + '/api/v1/auth/google'
+      );
       if (response.data.payload?.url) {
         window.location.href = response.data.payload.url; // Redirect ke URL yang diberikan API
       } else {
-        console.error("Google login URL not received");
+        console.error('Google login URL not received');
       }
     } catch (error) {
-      console.error("Error posting Google login request:", error);
+      console.error('Error posting Google login request:', error);
     }
   };
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/user/profile");
+      navigate('/user/profile');
     }
   }, [isAuthenticated, navigate]);
 
@@ -46,8 +47,8 @@ const Register = () => {
 
     // Menampilkan loading SweetAlert
     Swal.fire({
-      title: "Sedang memproses...",
-      text: "Mohon tunggu sebentar",
+      title: 'Sedang memproses...',
+      text: 'Mohon tunggu sebentar',
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
@@ -56,72 +57,72 @@ const Register = () => {
 
     try {
       const { data } = await axios.post(
-        "https://ambic.live:443/api/v1/auth/register",
+        import.meta.env.VITE_API_URL + '/api/v1/auth/register',
         formData,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
 
       // Simpan pesan sukses
       sessionStorage.setItem(
-        "registrationSuccess",
-        "Pendaftaran berhasil! Cek email untuk verifikasi."
+        'registrationSuccess',
+        'Pendaftaran berhasil! Cek email untuk verifikasi.'
       );
-      sessionStorage.setItem("email", formData.email);
+      sessionStorage.setItem('email', formData.email);
 
       // Tampilkan pesan sukses dan redirect setelah 2 detik
       Swal.fire({
-        icon: "success",
-        title: "Pendaftaran Berhasil!",
-        text: "Cek email untuk verifikasi.",
+        icon: 'success',
+        title: 'Pendaftaran Berhasil!',
+        text: 'Cek email untuk verifikasi.',
         timer: 5000,
         showConfirmButton: false,
       }).then(() => {
-        navigate("/login");
+        navigate('/login');
       });
     } catch (err: any) {
       Swal.close(); // Tutup loading
 
       if (err.response) {
-        console.log("Error Response Data:", err.response.data);
+        console.log('Error Response Data:', err.response.data);
 
         const apiErrors = err.response.data.payload?.errors || {};
         let newErrors: Record<string, string> = {};
 
         if (apiErrors.email) {
-          newErrors.email = apiErrors.email.includes("already exists")
-            ? "Email ini sudah digunakan! Coba yang lain."
-            : "Mohon diperhatikan format email ya..";
+          newErrors.email = apiErrors.email.includes('already exists')
+            ? 'Email ini sudah digunakan! Coba yang lain.'
+            : 'Mohon diperhatikan format email ya..';
         }
         if (apiErrors.username) {
-          newErrors.username = apiErrors.username.includes("already exists")
-            ? "Username sudah dipakai!."
-            : "Username harus valid.";
+          newErrors.username = apiErrors.username.includes('already exists')
+            ? 'Username sudah dipakai!.'
+            : 'Username harus valid.';
         }
         if (apiErrors.password) {
-          newErrors.password = apiErrors.password.includes("min")
-            ? "Password Minimal 6 Karakter."
-            : "Password wajib diisi.";
+          newErrors.password = apiErrors.password.includes('min')
+            ? 'Password Minimal 6 Karakter.'
+            : 'Password wajib diisi.';
         }
 
         setErrors(newErrors);
 
         // Tampilkan error di SweetAlert
         Swal.fire({
-          icon: "error",
-          title: "Pendaftaran Gagal",
-          text: "Cek kembali data yang dimasukkan.",
+          icon: 'error',
+          title: 'Pendaftaran Gagal',
+          text: 'Cek kembali data yang dimasukkan.',
         });
       } else {
-        setErrors({ general: "Terjadi kesalahan. Coba lagi nanti." });
+        setErrors({ general: 'Terjadi kesalahan. Coba lagi nanti.' });
 
         Swal.fire({
-          icon: "error",
-          title: "Terjadi Kesalahan",
-          text: "Silakan coba lagi nanti.",
+          icon: 'error',
+          title: 'Terjadi Kesalahan',
+          text: 'Silakan coba lagi nanti.',
         });
       }
     }
@@ -144,7 +145,7 @@ const Register = () => {
                 placeholder={field.placeholder}
                 content={field.content}
                 icon={field.icon}
-                value={formData[field.name as keyof typeof formData] || ""}
+                value={formData[field.name as keyof typeof formData] || ''}
                 onChange={(e) =>
                   setFormData({ ...formData, [field.name]: e.target.value })
                 }
@@ -189,22 +190,22 @@ const Register = () => {
         </div>
       </div>
       <div className="bg-teal-700/85 absolute top-0 right-0 min-h-screen w-[30%] rounded-l-[300px] flex items-center justify-center flex-col gap-2 overflow-hidden max-lg:hidden">
-      <div className="z-10 flex flex-col items-center text-center px-5 gap-3">
-      <h1 className="text-white font-bold font-Poppins text-3xl">
-          Hello, Welcome!
-        </h1>
-        <p className="text-white font-medium font-Poppins text-lg">
-          Sudah punya akun?
-        </p>
-        <button className="w-[25%] py-2 rounded-2xl text-black font-Poppins font-semibold bg-white/85 transition-transform duration-300 ease-in hover:scale-95 cursor-pointer ">
-          <Link
-            to="/login"
-            className="w-full h-full flex items-center justify-center"
-          >
-            Masuk
-          </Link>
-        </button>
-      </div>
+        <div className="z-10 flex flex-col items-center text-center px-5 gap-3">
+          <h1 className="text-white font-bold font-Poppins text-3xl">
+            Hello, Welcome!
+          </h1>
+          <p className="text-white font-medium font-Poppins text-lg">
+            Sudah punya akun?
+          </p>
+          <button className="w-[25%] py-2 rounded-2xl text-black font-Poppins font-semibold bg-white/85 transition-transform duration-300 ease-in hover:scale-95 cursor-pointer ">
+            <Link
+              to="/login"
+              className="w-full h-full flex items-center justify-center"
+            >
+              Masuk
+            </Link>
+          </button>
+        </div>
         <img
           src={Pattern}
           alt=""

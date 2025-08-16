@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import Sidebar from "../SideBar/SideBar";
-import Navbar from "../../../Layouts/Navbar";
-import Modal from "../../../Componets/Elements/Navbar/ModalLocate";
-import Footer from "../../../Layouts/Footer";
-import ChangePicture from "./ChangePicture";
-import Input from "../../../Componets/Elements/Input/input";
-import { Button } from "primereact/button";
-import { RegisterUser } from "../../../data/index";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import Sidebar from '../SideBar/SideBar';
+import Navbar from '../../../Layouts/Navbar';
+import Modal from '../../../Componets/Elements/Navbar/ModalLocate';
+import Footer from '../../../Layouts/Footer';
+import ChangePicture from './ChangePicture';
+import Input from '../../../Componets/Elements/Input/input';
+import { Button } from 'primereact/button';
+import { RegisterUser } from '../../../data/index';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import axios from 'axios';
 
 interface userData {
   username?: string;
@@ -24,56 +24,56 @@ const Profile: React.FC = () => {
   const Navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
   }, []);
   const handleLogOut = () => {
     Swal.fire({
-      title: "Logout!",
-      text: "Apakah Anda yakin untuk logout?",
-      icon: "warning",
+      title: 'Logout!',
+      text: 'Apakah Anda yakin untuk logout?',
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      cancelButtonText: "Batal",
-      confirmButtonText: "Lanjut!",
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      cancelButtonText: 'Batal',
+      confirmButtonText: 'Lanjut!',
     }).then((result) => {
       if (result.isConfirmed) {
-        localStorage.removeItem("token");
+        localStorage.removeItem('token');
         setIsLoggedIn(false);
-        Navigate("/");
+        Navigate('/');
         Swal.fire(
-          "Logged Out",
-          "You have been logged out successfully.",
-          "success"
+          'Logged Out',
+          'You have been logged out successfully.',
+          'success'
         );
       }
     });
   };
   const [open, setOpen] = useState<boolean>(false);
   const [userData, setUserData] = useState<userData>({
-    name: "",
-    phone: "",
-    address: "",
-    gender: "",
+    name: '',
+    phone: '',
+    address: '',
+    gender: '',
   });
   const [loading, setLoading] = useState<boolean>(false);
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   useEffect(() => {
     if (token) {
       setIsLoggedIn(true);
       fecthUserData();
     } else {
       setIsLoggedIn(false);
-      Navigate("/login");
+      Navigate('/login');
     }
   }, []);
 
   const fecthUserData = async () => {
     try {
       Swal.fire({
-        title: "Loading...",
-        text: "Mengambil data pengguna...",
+        title: 'Loading...',
+        text: 'Mengambil data pengguna...',
         allowOutsideClick: true,
         timer: 2000,
         timerProgressBar: true,
@@ -83,7 +83,7 @@ const Profile: React.FC = () => {
       });
       setLoading(true);
       const response = await axios.get(
-        "https://ambic.live:443/api/v1/users/profile",
+        import.meta.env.VITE_API_URL + '/api/v1/users/profile',
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -96,17 +96,17 @@ const Profile: React.FC = () => {
         const apiUser = response.data.payload.user; // Ambil data dari "user"
 
         setUserData({
-          username: apiUser.username || "",
-          email: apiUser.email || "",
-          name: apiUser.name || "",
-          phone: apiUser.phone || "",
-          address: apiUser.address || "",
-          gender: apiUser.gender || "",
+          username: apiUser.username || '',
+          email: apiUser.email || '',
+          name: apiUser.name || '',
+          phone: apiUser.phone || '',
+          address: apiUser.address || '',
+          gender: apiUser.gender || '',
         });
       }
       Swal.close();
     } catch (err: any) {
-      console.log("Error Fetching user data:", err);
+      console.log('Error Fetching user data:', err);
     } finally {
       setLoading(false);
     }
@@ -115,8 +115,8 @@ const Profile: React.FC = () => {
   const updateUserData = async () => {
     try {
       Swal.fire({
-        title: "Loading...",
-        text: "Mengambil data pengguna...",
+        title: 'Loading...',
+        text: 'Mengambil data pengguna...',
         allowOutsideClick: false,
         didOpen: () => {
           Swal.showLoading();
@@ -125,33 +125,33 @@ const Profile: React.FC = () => {
       setLoading(true);
 
       const response = await axios.patch(
-        "https://ambic.live:443/api/v1/users",
+        import.meta.env.VITE_API_URL + '/api/v1/users',
         userData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
         }
       );
       if (response.data.status_code === 200) {
         Swal.fire({
-          title: "Do you want to save the changes?",
+          title: 'Do you want to save the changes?',
           showDenyButton: true,
           showCancelButton: true,
-          confirmButtonText: "Save",
+          confirmButtonText: 'Save',
           denyButtonText: `Don't save`,
         }).then((result) => {
           /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
-            Swal.fire("Saved!", "", "success");
+            Swal.fire('Saved!', '', 'success');
           } else if (result.isDenied) {
-            Swal.fire("Changes are not saved", "", "info");
+            Swal.fire('Changes are not saved', '', 'info');
           }
         });
       }
     } catch (err: any) {
-      console.log("Eror Updating user data : ", err);
+      console.log('Eror Updating user data : ', err);
     } finally {
       setLoading(false);
     }
@@ -186,7 +186,7 @@ const Profile: React.FC = () => {
                   type={_.type}
                   placeholder={_.placeholder}
                   width="w-100"
-                  value={userData[_.name as keyof typeof userData] || ""}
+                  value={userData[_.name as keyof typeof userData] || ''}
                   onChange={handleInputChange}
                   disabled={_.disabled}
                 />
@@ -202,7 +202,7 @@ const Profile: React.FC = () => {
                   type={_.type}
                   placeholder={_.placeholder}
                   width="w-100"
-                  value={userData[_.name as keyof typeof userData] || ""}
+                  value={userData[_.name as keyof typeof userData] || ''}
                   onChange={handleInputChange}
                   disabled={_.disabled}
                 />
@@ -218,7 +218,7 @@ const Profile: React.FC = () => {
                   <select
                     name={_.name}
                     className="p-2 pr-12 w-full rounded-xl bg-gray-200 focus:outline-none"
-                    value={userData[_.name as keyof typeof userData] || ""}
+                    value={userData[_.name as keyof typeof userData] || ''}
                     onChange={handleInputChange}
                   >
                     <option value="">-- Pilih Gender --</option>
@@ -236,7 +236,7 @@ const Profile: React.FC = () => {
                 label="Simpen"
                 rounded
                 className="w-1/4 h-1/2 px-5 py-3 text-white font-Poppins font-semibold text-xl bg-teal-700/85 rounded-full drop-shadow-xl"
-                style={{ backgroundColor: "var(--teal-700)", border: "none" }}
+                style={{ backgroundColor: 'var(--teal-700)', border: 'none' }}
                 onClick={updateUserData}
                 disabled={loading}
               />
@@ -247,7 +247,7 @@ const Profile: React.FC = () => {
                 label="Logout"
                 rounded
                 className="w-1/4 h-1/2 px-5 py-3 text-white font-Poppins font-semibold text-xl bg-teal-700/85 rounded-full drop-shadow-xl"
-                style={{ border: "none" }}
+                style={{ border: 'none' }}
                 severity="danger"
                 onClick={handleLogOut}
               />
@@ -257,12 +257,12 @@ const Profile: React.FC = () => {
                 rounded
                 className="w-48 h-1/2 px-5 py-3 text-white font-Poppins font-semibold text-xl bg-teal-700/85 rounded-full drop-shadow-xl focus:outline-none"
                 style={{
-                  border: "none",
-                  backgroundColor: "var(--cyan-500)",
-                  outline: "none",
+                  border: 'none',
+                  backgroundColor: 'var(--cyan-500)',
+                  outline: 'none',
                 }}
                 onClick={() => {
-                  Navigate("/change-password");
+                  Navigate('/change-password');
                 }}
               />
             </div>

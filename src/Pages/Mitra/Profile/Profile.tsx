@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import Navbar from "../../../Layouts/Navbar";
-import Modal from "../../../Componets/Elements/Navbar/ModalLocate";
-import SideBar from "../Component/SideBar";
-import ChangePicture from "./ChangeProfile";
-import Information from "../Profile/Information";
-import Footer from "../../../Layouts/Footer";
-import axios from "axios";
-import Swal from "sweetalert2";
+import React, { useState, useEffect } from 'react';
+import Navbar from '../../../Layouts/Navbar';
+import Modal from '../../../Componets/Elements/Navbar/ModalLocate';
+import SideBar from '../Component/SideBar';
+import ChangePicture from './ChangeProfile';
+import Information from '../Profile/Information';
+import Footer from '../../../Layouts/Footer';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 interface partnerData {
   id: string;
@@ -24,16 +24,16 @@ interface partnerData {
 const Profile: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [partnerData, setPartnerData] = useState<partnerData>({
-    id: "",
-    name: "",
-    address: "",
-    business_type: "",
-    city: "",
-    instagram: "",
+    id: '',
+    name: '',
+    address: '',
+    business_type: '',
+    city: '',
+    instagram: '',
     logitude: 0,
     latitude: 0,
     photo: null,
-    place_id: "",
+    place_id: '',
   });
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -41,8 +41,8 @@ const Profile: React.FC = () => {
   useEffect(() => {
     const fetchDataPartner = async () => {
       Swal.fire({
-        title: "Loading...",
-        text: "Mengambil data Mitra...",
+        title: 'Loading...',
+        text: 'Mengambil data Mitra...',
         timer: 2000,
         timerProgressBar: true,
         allowOutsideClick: true,
@@ -53,17 +53,18 @@ const Profile: React.FC = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          "https://ambic.live:443/api/v1/partners", {
+          import.meta.env.VITE_API_URL + '/api/v1/partners',
+          {
             headers: {
-              'Authorization': `Bearer ${localStorage.getItem("token")}`,
-            }, 
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
           }
         );
         setPartnerData(response.data.payload.partner);
         setLoading(false);
         Swal.close();
       } catch (err) {
-        setError("Gagal mengambil data mitra.");
+        setError('Gagal mengambil data mitra.');
         console.log(err);
       } finally {
         setLoading(false);
@@ -98,19 +99,19 @@ const Profile: React.FC = () => {
                   <Information
                     content="Nama Bisnis"
                     className="w-full h-full px-4 rounded-xl "
-                    text={partnerData.name || "Nama Bisnis"}
+                    text={partnerData.name || 'Nama Bisnis'}
                     color="text-teal-700"
                   />
                   <Information
                     content="Jenis Bisnis"
                     className="w-full h-full px-4 rounded-xl "
-                    text={partnerData.business_type || "Jenis Bisnis"}
+                    text={partnerData.business_type || 'Jenis Bisnis'}
                     color="text-teal-700"
                   />
                   <Information
                     content="Instagram Bisnis"
                     className="w-full h-full px-4 rounded-xl "
-                    text={partnerData.instagram || "Instagram"}
+                    text={partnerData.instagram || 'Instagram'}
                     color="text-teal-700"
                   />
                 </div>
@@ -118,19 +119,26 @@ const Profile: React.FC = () => {
                   <Information
                     content="Alamat Bisnis"
                     className="w-full h-full px-4 rounded-xl "
-                    text={partnerData.address || "Alamat"}
+                    text={partnerData.address || 'Alamat'}
                     color="text-teal-700"
                   />
                   <Information
                     content="Posisi Alamat Bisnis"
                     className="w-full h-full px-4 rounded-xl "
-                    children={<a href={`https://google.com/maps/place/?q=place_id:${partnerData.place_id}`} className="font-Poppins text-lg font-semibold">Link Google maps</a>}
+                    children={
+                      <a
+                        href={`https://google.com/maps/place/?q=place_id:${partnerData.place_id}`}
+                        className="font-Poppins text-lg font-semibold"
+                      >
+                        Link Google maps
+                      </a>
+                    }
                     color="text-teal-700"
                   />
                   <Information
                     content="Kota"
                     className="w-full h-full px-4 rounded-xl "
-                    text={partnerData.city || "Malang"}
+                    text={partnerData.city || 'Malang'}
                     color="text-teal-700"
                   />
                 </div>

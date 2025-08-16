@@ -1,12 +1,11 @@
-import React, {useState, useEffect} from "react";
-import Input from "../../Componets/Elements/Input/input";
-import Logo from "../../assets/ICons/Reset/Frame 258.png";
-import Pattern from "../../assets/Pettern/image 11.png";
-import axios from "axios";
-import { useSearchParams, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import { FaLock } from "react-icons/fa";
-
+import React, { useState, useEffect } from 'react';
+import Input from '../../Componets/Elements/Input/input';
+import Logo from '../../assets/ICons/Reset/Frame 258.png';
+import Pattern from '../../assets/Pettern/image 11.png';
+import axios from 'axios';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { FaLock } from 'react-icons/fa';
 
 interface Data {
   email: string;
@@ -15,16 +14,13 @@ interface Data {
 }
 
 const NewPass: React.FC = () => {
-
-  
-
   const [formData, setFormData] = useState<Data>({
     email: '',
     token: '',
     password: '',
-  })
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  });
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -36,36 +32,40 @@ const NewPass: React.FC = () => {
   //   }
   // },[token, navigate])
 
-  const handleResetPassword = async() => {
+  const handleResetPassword = async () => {
     if (password !== confirmPassword) {
-      Swal.fire("Oops...", "Password tidak cocok!", "error");
+      Swal.fire('Oops...', 'Password tidak cocok!', 'error');
       return;
     }
 
-    const email = searchParams.get("email")
-    const token = searchParams.get("token")
-    const passwords = searchParams.get("password")
-    setLoading(true)
-    try{
-      const response = await axios.patch("https://ambic.live:443/api/v1/auth/reset-password",  {
-        email,
-        token,  
-        password,
-      }, {
-        headers: {
-          'Content-Type' : 'application/json',
+    const email = searchParams.get('email');
+    const token = searchParams.get('token');
+    const passwords = searchParams.get('password');
+    setLoading(true);
+    try {
+      const response = await axios.patch(
+        import.meta.env.VITE_API_URL + '/api/v1/auth/reset-password',
+        {
+          email,
+          token,
+          password,
         },
-      });
-      if(response.data.status_code === 200){
-        Swal.fire("Berhasil", "Berhasil merubah password", "success");
-        navigate("/login");
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (response.data.status_code === 200) {
+        Swal.fire('Berhasil', 'Berhasil merubah password', 'success');
+        navigate('/login');
       }
-    }catch(err){
-      console.log( err)
+    } catch (err) {
+      console.log(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="relative min-h-screen bg-white flex flex-row-reverse items-center justify-center w-full p-5 gap-5">
@@ -77,33 +77,33 @@ const NewPass: React.FC = () => {
           Kata sandi baru Anda harus berbeda dari kata sandi yang digunakan
           sebelumnya
         </p>
-          <Input
-            type="password"
-            placeholder="ex: 67bhjlg"
-            content="New Password"
-            icon={ <FaLock className='relative bottom-8 left-[100%]'/>}
-            className="w-full"
-            color="text-gray-600"
-            value={password}
-            onChange={(e) => setPassword(e.target.value) }
-          />
-          <Input
-            type="password"
-            placeholder="ex: 67bhjlg"
-            content="Confirm Password"
-            icon={ <FaLock className='relative bottom-8 left-[100%]'/>}
-            className="w-full"
-            color="text-gray-600"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value) }
-          />
+        <Input
+          type="password"
+          placeholder="ex: 67bhjlg"
+          content="New Password"
+          icon={<FaLock className="relative bottom-8 left-[100%]" />}
+          className="w-full"
+          color="text-gray-600"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Input
+          type="password"
+          placeholder="ex: 67bhjlg"
+          content="Confirm Password"
+          icon={<FaLock className="relative bottom-8 left-[100%]" />}
+          className="w-full"
+          color="text-gray-600"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
         <div className="flex justify-center">
           <button
             type="submit"
             className="w-[60%] h-[20%] p-2 text-white font-Poppins font-semibold text-lg bg-teal-700/85 rounded-full drop-shadow-xl "
             onClick={handleResetPassword}
           >
-            {loading ? "Mengirim..." : "Reset Password"}
+            {loading ? 'Mengirim...' : 'Reset Password'}
           </button>
         </div>
       </div>
