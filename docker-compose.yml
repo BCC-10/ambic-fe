@@ -1,0 +1,15 @@
+services:
+  ambic-fe:
+    container_name: ambic-fe
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    networks:
+      - ambic
+
+networks:
+  ambic:
+    driver: bridge
