@@ -16,6 +16,9 @@ RUN pnpm build
 # Stage 2: Serve dengan nginx
 FROM nginx:alpine
 
+RUN apk --no-cache add curl tzdata
+ENV TZ=Asia/Jakarta
+
 # hapus default nginx config
 RUN rm /etc/nginx/conf.d/default.conf
 
